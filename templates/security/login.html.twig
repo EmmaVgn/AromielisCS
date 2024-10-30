@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!
+{% endblock %}
+
+{% block body %}
+	<div class="login-container">
+		<div class="login-box">
+			<div class="login-header">
+				<img src="{{ asset('images/Logo.png') }}" alt="Aromielis" class="login-logo">
+				<h1 class="login-title">Connexion</h1>
+				<p class="login-subtitle">Ravi de vous revoir chez Aromielis</p>
+			</div>
+
+			<form method="post">
+				{% if error %}
+					<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+				{% endif %}
+				{% if app.user %}
+					<div class="mb-3">
+						Vous êtes connecté en tant que
+						{{ app.user.userIdentifier }},
+						<a href="{{ path('app_logout') }}">Se déconnecter</a>
+					</div>
+				{% endif %}
+
+				<div class="form-group mb-4">
+					<label for="inputEmail">Adresse e-mail</label>
+					<input type="email" value="{{ last_username }}" name="_username" id="inputEmail" class="form-control" autocomplete="email" required autofocus placeholder="votreemail@example.com">
+				</div>
+
+				<div class="form-group mb-4">
+					<label for="inputPassword">Mot de passe</label>
+					<input type="password" name="_password" id="inputPassword" class="form-control" autocomplete="current-password" required placeholder="••••••••">
+				</div>
+
+				<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+				<div class="form-check mb-3">
+					<input type="checkbox" name="_remember_me" id="rememberMe" class="form-check-input">
+					<label for="rememberMe" class="form-check-label">Se souvenir de moi</label>
+				</div>
+				<button class="btn-login w-100" type="submit">Se connecter</button>
+
+			</form>
+		</div>
+	</div>
+{% endblock %}
