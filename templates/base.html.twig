@@ -22,10 +22,16 @@
 			{% include "shared/_navbar.html.twig" %}
 		</header>
 		<main role="main">
-			{% block body %}
-				{% include "shared/_flash.html.twig" %}
-			{% endblock %}
+			{% include "shared/_flash.html.twig" %}
+			{% set margin = '' %}
+			{% if carousel is defined %}
+				{% include "shared/_carousel.html.twig" %}
+			{% else %}
+				{% set margin = 'mt-5' %}
+			{% endif %}
+			<div class="container marketing {{ margin }}"> {% block body %}{% endblock %}
+				</div>
+			</main>
 			{% include "shared/_footer.html.twig" %}
-		</main>
-	</body>
-</html>
+		</body>
+	</html>
