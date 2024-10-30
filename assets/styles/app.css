@@ -1,3 +1,256 @@
+/*--------------------------------------------------------------
+# Général
+--------------------------------------------------------------*/
+@font-face {
+  font-family: "Open Sans";
+  src: url("../Font/Open_Sans,Playfair_Display/Open_Sans-Regular.woff2")
+      format("woff2"),
+    url("../Font/Open_Sans,Playfair_Display/Open_Sans-Regular.woff")
+      format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Playfair Display";
+  src: url("../Font/Open_Sans,Playfair_Display/PlayfairDisplay-Regular.woff2")
+      format("woff2"),
+    url("../Font/Open_Sans,Playfair_Display/PlayfairDisplay-Regular.woff")
+      format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+html,
 body {
-    background-color: skyblue;
+  font-family: "Open Sans", serif;
+  position: relative;
+  height: 100%;
+  text-decoration: none;
+  list-style: none;
+  background-color: #fff;
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+a {
+  text-decoration: none;
+  list-style: none;
+  color: black;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Playfair Display", serif;
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 0.9rem;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 1200px) {
+  body {
+    font-size: 1rem;
+  }
+}
+
+/*--------------------------------------------------------------
+#Boutons
+--------------------------------------------------------------*/
+.btn-custom {
+  background-color: #bae498;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn-custom:hover {
+  background-color: #cdfeaa;
+  transform: scale(1.05);
+}
+
+/*--------------------------------------------------------------
+#Liens
+--------------------------------------------------------------*/
+
+a {
+  color: #28a745;
+  outline: none;
+  text-decoration: none;
+  padding: 2px 1px 0;
+  transition: color 0.3s ease; /* Transition pour l'effet de survol */
+}
+
+a:link {
+  color: #265301;
+}
+
+a:visited {
+  color: #437a16;
+}
+
+a:focus {
+  border-bottom: 1px solid;
+  background: #bae498;
+}
+
+a:hover {
+  border-bottom: 1px solid;
+  background: #cdfeaa;
+}
+
+a:active {
+  background: #265301;
+  color: #cdfeaa;
+}
+
+/*--------------------------------------------------------------
+# navbar
+--------------------------------------------------------------*/
+
+.nav-item a {
+  text-decoration: none;
+  color: #333;
+  position: relative;
+  display: inline-block;
+}
+
+.fusion-secondary-header {
+  color: #747474;
+  font-size: 12px;
+  height: 30px;
+  background-color: #3e3e3e;
+  display: flex;
+  justify-content: center;
+}
+
+@media only screen and (max-width: 768px) {
+  .fusion-secondary-header {
+    display: none;
+  }
+}
+
+.bd-placeholder-img {
+  font-size: 1.125rem;
+  text-anchor: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+@media (min-width: 768px) {
+  .bd-placeholder-img-lg {
+    font-size: 3.5rem;
+  }
+}
+
+.navbar-custom {
+  background-color: #fefee2;
+}
+
+.navbar-custom .navbar-brand,
+.navbar-custom .nav-link,
+.navbar-custom .navbar-toggler-icon {
+  color: #000;
+}
+
+.navbar-custom .nav-link.active {
+  color: #555;
+}
+
+.navbar-custom .nav-link {
+  position: relative; 
+  display: inline-block; 
+  text-decoration: none !important; 
+  color: #000 !important; /
+}
+
+.navbar-custom .nav-link::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.1);
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.navbar-custom .nav-link:hover::before {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+  background: rgba(0, 0, 0, 0.097);
+}
+
+.navbar-custom .nav-link:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+/*--------------------------------------------------------------
+# Footer
+--------------------------------------------------------------*/
+.footer-custom {
+  background-color: #fefee2;
+}
+
+.footer-custom .text-dark {
+  color: #000 !important;
+}
+
+.footer-custom a {
+  text-decoration: none !important;
+  color: #000 !important;
+  position: relative;
+  display: inline-block;
+}
+
+.footer-custom a::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.1);
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.footer-custom a:hover::before {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+  background: rgba(0, 0, 0, 0.097);
+}
+
+.footer-custom a:hover {
+  background-color: rgba(0, 0, 0, 0.1); /* Transparent noir pour le hover */
+}
+
+.footer-custom .copyright {
+  background-color: rgba(0, 0, 0, 0.2);
 }

@@ -1,4 +1,8 @@
 import './bootstrap.js';
+import './styles/app.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import 'bootstrap';
+
 /*
  * Welcome to your app's main JavaScript file!
  *
