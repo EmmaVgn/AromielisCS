@@ -3,4 +3,50 @@
 {% block title %}Bienvenue chez Aromielis
 {% endblock %}
 
-{% block body %}{% endblock %}
+{% block body %}
+	<!-- Three columns of text below the carousel -->
+	<div class="row">
+		<div class="col-lg-4">
+			<img class="bd-placeholder-img rounded-circle mt-3" src="/images/products/essential-oil-4065187-640-6658b17a85073486584172.jpg" width="140" height="140" alt="Description de votre image">
+			<title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em"></text>
+			<h2>Huiles essentielles</h2>
+			<p>Découverez toute ma gamme d'huile essentielle bio.</p>
+			<p>
+				<a class="custom-btn" href="https://localhost:8000/huiles-essentielles" role="button">Voir produits &raquo;</a>
+			</p>
+		</div>
+		<!-- /.col-lg-4 -->
+		<div class="col-lg-4">
+			<img class="bd-placeholder-img rounded-circle mt-3" src="/images/products/tree-4211887-640-6658b0b7f3c7c112403014.jpg" width="140" height="140" alt="Description de votre image">
+			<title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em"></text>
+			<h2>Sprays hydrolats</h2>
+			<p>Toute la gamme de spray hydrolat.
+			</p>
+			<p>
+				<a class="custom-btn" href="https://localhost:8000/spray-hydrolat" role="button">Voir produits &raquo;</a>
+			</p>
+		</div>
+		<!-- /.col-lg-4 -->
+		<div class="col-lg-4">
+			<img class="bd-placeholder-img rounded-circle mt-3" src="images/products/cosmetic-oil-3164684-640-6659dbbaa464c194224339.jpg" width="140" height="140" alt="Description de votre image">
+			<title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em"></text>
+
+			<h2>Recharges hydrolats</h2>
+			<p>Liste des recharges hydrolats que je produis</p>
+			<p>
+				<a class="custom-btn" href="https://localhost:8000/recharges-hydrolats" role="button">Voir produits &raquo;</a>
+			</p>
+		</div>
+	</div>
+	<!-- /.row -->
+
+	<!-- START THE FEATURETTES -->
+	<h2>Nos produits phares</h2>
+	<div class="row">
+		{% for p in products %}
+			<div class="col">
+				{% include "_partials/_product_card.html.twig" %}
+			</div>
+		{% endfor %}
+	</div>
+{% endblock %}

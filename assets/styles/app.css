@@ -73,19 +73,137 @@ h4 {
   }
 }
 
+.custom-container {
+  padding-left: 35px;  /* Ajustez la marge gauche */
+  padding-right: 35px; /* Ajustez la marge droite */
+}
+
+
 /*--------------------------------------------------------------
 #Cards
 --------------------------------------------------------------*/
-/* Form Styling */
+
+/* Styling des cartes */
 .card {
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   border: none;
+  display: flex;
+  min-height: 450px; /* Hauteur minimale des cartes */
+  height: 100%; /* La carte prend la hauteur de son conteneur sans débordement */
 }
 
+/* Styling du corps de la carte */
 .card-body {
-  padding: 2rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Répartir les éléments en haut et bas de la carte */
+  flex-grow: 1; /* Permet au contenu de s'ajuster à l'intérieur de la carte */
+  overflow: hidden; /* Empêche tout débordement interne */
+}
+
+/* Limiter le titre */
+.card-title {
+  font-size: 1.25rem; /* Taille du titre plus petite */
+  font-weight: bold;
+  display: -webkit-box;
+  -webkit-line-clamp: 4; /* Limite le titre à 4 lignes */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4;
+  margin-bottom: 10px;
+}
+
+/* Styling de l'image */
+.card img {
+  object-fit: cover; /* L'image couvre l'espace sans déformation */
+  height: 250px; /* Limite la hauteur de l'image */
+  width: 100%; /* L'image prend toute la largeur */
+}
+
+/* Limiter la description à 5 lignes */
+.card-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 7; /* Limite la description à 5 lignes */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4;
+  margin-bottom: 20px;
+  font-size: 1rem;
+  height: calc(1.4em * 5); /* Limite la hauteur à 5 lignes */
+}
+
+/* Styling des boutons positionnés côte à côte */
+.d-flex {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: auto; /* Les boutons sont poussés vers le bas */
+  overflow: hidden; /* Évite tout débordement de bouton */
+}
+
+/*--------------------------------------------------------------
+#Checkbox
+--------------------------------------------------------------*/
+/* Style général des checkboxes */
+input[type="checkbox"] {
+  -webkit-appearance: none; /* Supprime le style par défaut sur Webkit */
+  -moz-appearance: none; /* Supprime le style par défaut sur Firefox */
+  appearance: none; /* Supprime le style par défaut */
+  width: 20px;
+  height: 20px;
+  border: 2px solid #4CAF50; /* Bordure verte */
+  border-radius: 4px;
+  background-color: #fff; /* Fond blanc */
+  cursor: pointer;
+  position: relative;
+}
+
+/* Réinitialiser les styles par défaut des cases à cocher */
+input[type="checkbox"] {
+  -webkit-appearance: none; /* Supprime le style par défaut sur Webkit (Chrome, Safari) */
+  -moz-appearance: none;    /* Supprime le style par défaut sur Firefox */
+  appearance: none;         /* Supprime le style par défaut */
+  width: 20px;
+  height: 20px;
+  border: 2px solid #4CAF50; /* Bordure verte personnalisée */
+  border-radius: 4px;
+  background-color: #fff; /* Fond blanc */
+  cursor: pointer;
+  position: relative;
+  outline: none;            /* Supprime l'effet de contour au focus */
+}
+
+/* Style lorsque la checkbox est cochée */
+input[type="checkbox"]:checked::before {
+  content: '';
+  display: block;
+  width: 14px;
+  height: 14px;
+  background-color: #4CAF50; /* Couleur de fond verte */
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  border-radius: 2px;
+}
+
+.form-check-input:checked {
+  background-color: #f5f5f5; 
+  border-color: #f5f5f5;
+}
+
+/* Style au survol de la checkbox */
+input[type="checkbox"]:hover {
+  border-color: #388E3C; /* Couleur de bordure au survol */
+}
+
+/* Style lorsque la checkbox est focalisée */
+input[type="checkbox"]:focus {
+  outline: none; /* Supprime le contour par défaut du focus */
 }
 
 /*--------------------------------------------------------------
@@ -120,6 +238,46 @@ h4 {
   background-color: #fefee2;
   color: black;
 }
+
+/*--------------------------------------------------------------
+# Customisation des boutons (boutons des card produits)
+--------------------------------------------------------------*/
+.custom-btn-primary {  /* Couleur d'en savoir plus'*/
+  background-color: #6F4F28; 
+  border-color: #6F4F28; 
+  color: white; 
+  border-radius: 5px; 
+  padding: 8px 16px; 
+  font-size: 14px; 
+  text-decoration: none; 
+  display: inline-block; 
+  transition: background-color 0.3s, border-color 0.3s; 
+}
+
+.custom-btn-primary:hover {
+  background-color: rgba(201, 224, 26, 0.407);
+  border-color: rgba(201, 224, 26, 0.407);
+  color: #0d161b;
+}
+
+.custom-btn-success { /* Couleur d'ajouter au panier */
+  background-color: #2C6B4F; 
+  border-color: #2C6B4F; 
+  color: white; 
+  border-radius: 5px; 
+  padding: 8px 16px; 
+  font-size: 14px; 
+  text-decoration: none; 
+  display: inline-block; 
+  transition: background-color 0.3s, border-color 0.3s; 
+}
+
+.custom-btn-success:hover {
+  background-color: rgba(201, 224, 26, 0.407);
+  border-color: rgba(201, 224, 26, 0.407);
+  color: #0d161b;
+}
+
 
 /*--------------------------------------------------------------
 #Liens
@@ -414,3 +572,140 @@ a:active {
 }
 
 
+/*--------------------------------------------------------------
+# Filtre de recherche
+--------------------------------------------------------------*/.box {
+  padding: 10px;
+}
+
+#collapseSections,
+#collapseNavigation {
+  height: 300px;
+  margin-right: 0.3rem !important;
+  overflow-y: scroll;
+}
+
+#collapseSections::-webkit-scrollbar,
+#collapseNavigation::-webkit-scrollbar {
+  width: 6px;
+}
+
+#collapseSections::-webkit-scrollbar-thumb,
+#collapseNavigation::-webkit-scrollbar-thumb {
+  background-color: #333;
+  border-radius: 2px;
+}
+
+#collapseSections::-webkit-scrollbar-track,
+#collapseNavigation::-webkit-scrollbar-track {
+  background-color: #ddd;
+  border-radius: 2px;
+}
+
+.box-label {
+  color: #1d2939;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.box-label .btn {
+  background-color: #fff;
+  padding: 0;
+}
+
+.box-label .btn:focus {
+  box-shadow: none;
+}
+
+.box-label .btn:active,
+.box-label .btn:hover {
+  color: #212529;
+  background-color: #fff;
+  border-color: transparent;
+}
+
+.filter {
+  display: block;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 20px;
+}
+
+.js-filter-sorting {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Aligne le contenu à gauche */
+}
+
+/*--------------------------------------------------------------
+# Couleur badge catégories
+--------------------------------------------------------------*/
+.badge.category-huiles-essentielles {
+  background-color: #007bff; 
+  color: #fff;
+}
+
+.badge.category-recharges-hydrolats{
+  background-color: #28a745; 
+  color: #fff;
+}
+
+.badge.category-spray-hydrolat {
+  background-color: #ffc107; 
+  color: #000;
+}
+
+.badge.category-coffret {
+  background-color: #17a2b8;
+  color: #fff;
+}
+
+/*--------------------------------------------------------------
+# Page product_display
+--------------------------------------------------------------*/
+.text-custom {
+  color: #333;
+  text-align: center;
+}
+
+
+
+/* Style spécifique pour le bouton "Tout effacer" */
+.btn-reset {
+  background-color: transparent; 
+  border: 1px solid #ffd700;
+  color: #ffd700;
+}
+
+.btn-reset:hover {
+  background-color: #ffd700; 
+  color: #000; 
+}
+
+/* Style spécifique pour le bouton "+" */
+.btn-categories {
+  color: #ffd700; 
+  border: 1px solid #ffd700; 
+}
+
+.btn-categories:hover {
+  background-color: #ffd700; 
+  color: #000; 
+}
+
+/* Style spécifique pour le bouton "Filtrer" */
+.btn-filter {
+  background-color: rgba(201, 224, 26, 0.407); 
+  color: #000; 
+  border: 1px solid rgba(201, 224, 26, 0.407);
+}
+
+.btn-filter:hover {
+  background-color: rgba(201, 224, 26, 0.407);
+  border-color: rgba(201, 224, 26, 0.407);
+}
+
+.accordion-header {
+  background-color: #cdfeaa;
+
+}

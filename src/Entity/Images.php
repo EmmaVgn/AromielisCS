@@ -58,12 +58,12 @@ class Images
         return $this;
     }
 
-    public function getImages(): ?Product
+    public function getProduct(): ?Product
     {
         return $this->product;
     }
 
-    public function setImages(?Product $product): static
+    public function setProduct(?Product $product): static
     {
         $this->product = $product;
 
