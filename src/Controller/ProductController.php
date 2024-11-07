@@ -8,12 +8,11 @@ use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ProductController extends AbstractController
 {
-  
     #[Route('/{slug}', name: 'product_category', priority: -1)]
     public function category($slug, CategoryRepository $categoryRepository): Response
     {
@@ -30,7 +29,7 @@ class ProductController extends AbstractController
     }
 
     #[Route('/{category_slug}/{slug}', name: 'product_show', priority: -1)]
-    public function show($slug, ProductRepository $productRepository): Response
+    public function show($category_slug, $slug, ProductRepository $productRepository): Response
     {
         $product = $productRepository->findOneBy([
             'slug' => $slug
@@ -47,23 +46,26 @@ class ProductController extends AbstractController
     public function display(ProductRepository $productRepository, Request $request): Response
     {
         $data = new SearchData();
-        $data->page = $request->get('page', 1); // récupère la page actuelle
-
+        $data->page = $request->get('page', 1);
+        $data->category = $request->get('category');  // This assumes category is passed by its ID or slug
+        $data->minPrice = $request->get('minPrice');
+        $data->maxPrice = $request->get('maxPrice');
+    
         $form = $this->createForm(SearchFormType::class, $data);
         $form->handleRequest($request);
-
-        // Récupère les prix min et max (si nécessaire)
-        [$minPrice, $maxPrice] = $productRepository->findMinMaxPrice($data);
-
-        // Récupère la pagination des produits
+    
+        // Fetch products based on the filters
         $pagination = $productRepository->findSearch($data);
-
+    
+        // Get min and max prices if needed
+        [$minPrice, $maxPrice] = $productRepository->findMinMaxPrice($data);
+    
         return $this->render('product/display.html.twig', [
-            'products' => $pagination, // Assurez-vous que $pagination est l'objet paginé
-            'form' => $form,
+            'products' => $pagination,
+            'form' => $form->createView(),
             'minPrice' => $minPrice,
             'maxPrice' => $maxPrice,
         ]);
-    }
-
+    }    
+    
 }

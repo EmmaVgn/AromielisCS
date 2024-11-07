@@ -74,6 +74,21 @@ h4 {
 }
 
 /*--------------------------------------------------------------
+#Cards
+--------------------------------------------------------------*/
+/* Form Styling */
+.card {
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  border: none;
+}
+
+.card-body {
+  padding: 2rem;
+}
+
+/*--------------------------------------------------------------
 #Boutons
 --------------------------------------------------------------*/
 .btn-custom {
@@ -324,5 +339,65 @@ a:active {
   color: black;
 }
 
+/*--------------------------------------------------------------
+# Register
+--------------------------------------------------------------*/
+/* Form Fields */
+.form-control-login {
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 12px;
+  font-size: 1rem;
+  width: 100%;
+  transition: border-color 0.3s ease;
+}
+
+.form-control-login:focus {
+  border-color: #6c757d;  /* Change this to match Bootstrap's default focus color */
+  box-shadow: 0 0 5px rgba(108, 117, 125, 0.5); /* Subtle shadow for focus */
+}
+
+/* Submit Button */
+.btn-dark {
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: 600;
+  padding: 12px 24px;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
+}
+
+.btn-dark:hover {
+  background-color: #555;
+}
+
+/* Agreement Text */
+.text-muted a {
+  color: #265301;
+  text-decoration: none;
+}
+
+.text-muted a:hover {
+  text-decoration: underline;
+}
+
+.d-inline-flex {
+  display: inline-flex;
+  align-items: center;
+}
+
+
+/* Responsive Styling */
+@media (max-width: 767px) {
+  .row {
+      flex-direction: column;
+  }
+
+  .col-md-6 {
+      width: 100%;
+  }
+}
 
 

@@ -2,7 +2,6 @@
 
 namespace App\Data;
 
-
 use App\Entity\Category;
 
 class SearchData
@@ -18,10 +17,9 @@ class SearchData
     public $q = '';
 
     /**
-     * @var Category[]
+     * @var Category|null
      */
-    public $categories = [];
-
+    public $category = null; // Can be a Category object or category identifier
 
     /**
      * @var null|integer
