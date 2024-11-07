@@ -103,9 +103,22 @@ h4 {
 
 .btn-custom:hover {
   background-color: #fefee2;
-  transform: scale(1.05);
   color: black;
   
+}
+
+.btn-link {
+  color: black;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn-link:hover {
+  background-color: #fefee2;
+  color: black;
 }
 
 /*--------------------------------------------------------------
