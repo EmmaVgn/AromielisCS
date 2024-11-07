@@ -94,4 +94,35 @@ class ProductRepository extends ServiceEntityRepository
         $query->orderBy('p.name', 'ASC');
         return $query;
     }
+
+    // Dans ProductRepository.php
+    public function getFirstImage(Product $product)
+    {
+        if ($product->getImages()->count() > 0) {
+            return $product->getImages()->first();
+        }
+        // Retourne un chemin d'image par défaut
+        return 'path/to/default-image.jpg';
+    }
+    
+
+        public function getFormattedPrice(Product $product)
+    {
+        return number_format($product->getPrice(), 2, '.', ',') . ' €';
+    }
+
+    public function findByCategoryAndPriceRange(string $categorySlug, float $minPrice, float $maxPrice)
+    {
+        return $this->createQueryBuilder('p')
+            ->leftJoin('p.category', 'c')
+            ->where('c.slug = :slug')
+            ->andWhere('p.price BETWEEN :minPrice AND :maxPrice')
+            ->setParameter('slug', $categorySlug)
+            ->setParameter('minPrice', $minPrice)
+            ->setParameter('maxPrice', $maxPrice)
+            ->getQuery()
+            ->getResult();
+    }
+    
+
 }

@@ -28,6 +28,7 @@ class ProductController extends AbstractController
             'category' => $category,
         ]);
     }
+
     #[Route('/{category_slug}/{slug}', name: 'product_show', priority: -1)]
     public function show($slug, ProductRepository $productRepository): Response
     {
@@ -41,20 +42,28 @@ class ProductController extends AbstractController
             'product' => $product
         ]);
     }
+
     #[Route('/produits', name: 'product_display')]
     public function display(ProductRepository $productRepository, Request $request): Response
     {
-        $data = new SearchData;
-        $data->page = $request->get('page', 1);
+        $data = new SearchData();
+        $data->page = $request->get('page', 1); // récupère la page actuelle
+
         $form = $this->createForm(SearchFormType::class, $data);
         $form->handleRequest($request);
+
+        // Récupère les prix min et max (si nécessaire)
         [$minPrice, $maxPrice] = $productRepository->findMinMaxPrice($data);
-        $products = $productRepository->findSearch($data);
+
+        // Récupère la pagination des produits
+        $pagination = $productRepository->findSearch($data);
+
         return $this->render('product/display.html.twig', [
-            'products' => $products,
+            'products' => $pagination, // Assurez-vous que $pagination est l'objet paginé
             'form' => $form,
             'minPrice' => $minPrice,
             'maxPrice' => $maxPrice,
         ]);
     }
+
 }
