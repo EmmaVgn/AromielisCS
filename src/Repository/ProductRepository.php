@@ -78,11 +78,9 @@ public function findMinMaxPrice(SearchData $search): array
      *
      * @param SearchData $search
      * @param bool $ignorePrice
-     * @param bool $ignoreKms
-     * @param bool $ignoreDate
      * @return QueryBuilder
      */
-    public function getSearchQuery(SearchData $search, bool $ignorePrice = false, bool $ignoreKms = false, bool $ignoreDate = false): QueryBuilder
+    public function getSearchQuery(SearchData $search, bool $ignorePrice = false, ): QueryBuilder
     {
         $query = $this->createQueryBuilder('p')
             ->select('c', 'p')
@@ -105,9 +103,9 @@ public function findMinMaxPrice(SearchData $search): array
                 ->setParameter('max', $max);
         }
 
-        if (!empty($search->categories)) {
-            $query->andWhere('c.id IN (:categories)')
-                ->setParameter('categories', $search->category);
+        if (!empty($search->category)) {
+            $query->andWhere('c.id IN (:category)')
+                ->setParameter('category', $search->category);
         }
 
         $query->orderBy('p.name', 'ASC');
