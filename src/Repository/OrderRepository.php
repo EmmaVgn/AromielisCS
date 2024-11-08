@@ -35,16 +35,17 @@ class OrderRepository extends ServiceEntityRepository
         ;
     }
 
-        // Define custom methods if needed
-        public function findOneByReference($reference)
-        {
-            return $this->findOneBy(['reference' => $reference]);
-        }
-    
-        public function findOneByStripeSession($stripeSession)
-        {
-            return $this->findOneBy(['stripeSession' => $stripeSession]);
-        }
-    
+    // Define custom methods if needed
+    public function findOneByReference($reference)
+    {
+        return $this->findOneBy(['reference' => $reference]);
+    }
+
+    public function findOneByStripeSession($stripeSession)
+    {
+        return $this->findOneBy(['stripeSession' => $stripeSession]);
+    }       
+
 
 }
+    

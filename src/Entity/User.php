@@ -28,6 +28,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private ?string $password = null;
+    
     private ?string $plainPassword = null;
 
     #[ORM\Column(length: 255)]
@@ -63,10 +64,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Order::class)]
     private $orders;
 
+    #[ORM\Column( options: ['default' => 'CURRENT_TIMESTAMP'])]
+    private ?\DateTimeImmutable $createdAt = null ;
+
     public function __construct()
     {
         $this->addresses = new ArrayCollection();
         $this->orders = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -93,7 +98,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        $roles[] = 'ROLE_USER'; // Ajoutez un rôle par défaut
+        $roles[] = 'ROLE_USER'; // Default role
         return array_unique($roles);
     }
 
@@ -103,7 +108,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    // Ajout de getter et setter pour plainPassword
     public function getPlainPassword(): ?string
     {
         return $this->plainPassword;
@@ -115,7 +119,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    // Mise à jour du mot de passe haché
     public function setPassword(string $password): self
     {
         $this->password = $password;
@@ -127,7 +130,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
-    // Implémentation de PasswordAuthenticatedUserInterface
     public function eraseCredentials(): void
     {
         $this->plainPassword = null;
@@ -153,6 +155,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->lastname = $lastname;
         return $this;
+    }
+
+    public function getFullName(): ?string
+    {
+        return $this->firstname . ' ' . $this->lastname;
     }
 
     public function getAddress(): ?string
@@ -232,7 +239,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-            /**
+    /**
      * @return Collection|Address[]
      */
     public function getAddresses(): Collection
@@ -246,6 +253,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             $this->addresses[] = $address;
             $address->setUser($this);
         }
+
         return $this;
     }
 
@@ -257,24 +265,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $address->setUser(null);
             }
         }
+
         return $this;
     }
 
-            /**
+        /**
      * @return Collection|Order[]
      */
     public function getOrders(): Collection
     {
         return $this->orders;
     }
+
     public function addOrder(Order $order): self
     {
         if (!$this->orders->contains($order)) {
             $this->orders[] = $order;
             $order->setUser($this);
         }
+
         return $this;
     }
+
     public function removeOrder(Order $order): self
     {
         if ($this->orders->removeElement($order)) {
@@ -283,6 +295,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $order->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
         return $this;
     }
 }

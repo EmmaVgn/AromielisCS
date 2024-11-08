@@ -189,6 +189,12 @@ class Product
         return $this;
     }
 
+    public function getFirstImage(): ?Images
+    {
+        return $this->images->first() ?: null;
+    }
+
+
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
@@ -306,5 +312,19 @@ class Product
 
         return $this;
     }
+
+    public function getImagePath(): ?string
+    {
+        // Vérifiez s'il y a des images associées au produit
+        if (!$this->images->isEmpty()) {
+            // Récupérez le chemin de la première image
+            $firstImage = $this->images->first();
+            return '/images/products/' . $firstImage->getPath();
+        }
+        // Si aucune image n'est associée, retournez une image par défaut
+        return '/uploads/default-image.jpg';
+    }
+    
+
 
 }
