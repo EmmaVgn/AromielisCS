@@ -2,24 +2,13 @@
 # Général
 --------------------------------------------------------------*/
 @font-face {
-  font-family: "Open Sans";
-  src: url("../Font/Open_Sans,Playfair_Display/Open_Sans-Regular.woff2")
-      format("woff2"),
-    url("../Font/Open_Sans,Playfair_Display/Open_Sans-Regular.woff")
-      format("woff");
+  font-family: 'Open Sans';
+  src: url('/assets/fonts/Open_Sans-Regular.woff2') format('woff2'),
+       url('/assets/fonts/Open_Sans-Regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
-@font-face {
-  font-family: "Playfair Display";
-  src: url("../Font/Open_Sans,Playfair_Display/PlayfairDisplay-Regular.woff2")
-      format("woff2"),
-    url("../Font/Open_Sans,Playfair_Display/PlayfairDisplay-Regular.woff")
-      format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
 
 * {
   margin: 0;
@@ -110,6 +99,7 @@ h4 {
   font-weight: bold;
   display: -webkit-box;
   -webkit-line-clamp: 4; /* Limite le titre à 4 lignes */
+  line-clamp: 4; /* Limite le titre à 4 lignes */
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -128,6 +118,7 @@ h4 {
 .card-text {
   display: -webkit-box;
   -webkit-line-clamp: 7; /* Limite la description à 5 lignes */
+  line-clamp: 7; /* Limite la description à 5 lignes */
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -146,65 +137,6 @@ h4 {
   overflow: hidden; /* Évite tout débordement de bouton */
 }
 
-/*--------------------------------------------------------------
-#Checkbox
---------------------------------------------------------------*/
-/* Style général des checkboxes */
-input[type="checkbox"] {
-  -webkit-appearance: none; /* Supprime le style par défaut sur Webkit */
-  -moz-appearance: none; /* Supprime le style par défaut sur Firefox */
-  appearance: none; /* Supprime le style par défaut */
-  width: 20px;
-  height: 20px;
-  border: 2px solid #4CAF50; /* Bordure verte */
-  border-radius: 4px;
-  background-color: #fff; /* Fond blanc */
-  cursor: pointer;
-  position: relative;
-}
-
-/* Réinitialiser les styles par défaut des cases à cocher */
-input[type="checkbox"] {
-  -webkit-appearance: none; /* Supprime le style par défaut sur Webkit (Chrome, Safari) */
-  -moz-appearance: none;    /* Supprime le style par défaut sur Firefox */
-  appearance: none;         /* Supprime le style par défaut */
-  width: 20px;
-  height: 20px;
-  border: 2px solid #4CAF50; /* Bordure verte personnalisée */
-  border-radius: 4px;
-  background-color: #fff; /* Fond blanc */
-  cursor: pointer;
-  position: relative;
-  outline: none;            /* Supprime l'effet de contour au focus */
-}
-
-/* Style lorsque la checkbox est cochée */
-input[type="checkbox"]:checked::before {
-  content: '';
-  display: block;
-  width: 14px;
-  height: 14px;
-  background-color: #4CAF50; /* Couleur de fond verte */
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  border-radius: 2px;
-}
-
-.form-check-input:checked {
-  background-color: #f5f5f5; 
-  border-color: #f5f5f5;
-}
-
-/* Style au survol de la checkbox */
-input[type="checkbox"]:hover {
-  border-color: #388E3C; /* Couleur de bordure au survol */
-}
-
-/* Style lorsque la checkbox est focalisée */
-input[type="checkbox"]:focus {
-  outline: none; /* Supprime le contour par défaut du focus */
-}
 
 /*--------------------------------------------------------------
 #Boutons
@@ -705,7 +637,49 @@ a:active {
   border-color: rgba(201, 224, 26, 0.407);
 }
 
-.accordion-header {
-  background-color: #cdfeaa;
 
+/*--------------------------------------------------------------
+# Page product_show
+--------------------------------------------------------------*/
+
+.product-card-details {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.product-card-details .product-title {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.product-card-details .product-price {
+  color: #4caf50; /* Vert pour le prix */
+}
+
+.product-short-description {
+  padding: 5px;
+  font-size: 0.9rem;
+}
+
+/*--------------------------------------------------------------
+  # Spinner
+  --------------------------------------------------------------*/
+  .is-loading::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #FFF;
+    opacity: 0.5;
+    z-index: 4;
+}
+.is-loading .spinner-border {
+    position: absolute;
+    top: calc(50% - 1rem);
+    left: calc(50% - 1rem);
+    z-index: 5;
 }

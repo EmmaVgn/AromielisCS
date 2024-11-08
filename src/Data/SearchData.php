@@ -17,9 +17,9 @@ class SearchData
     public $q = '';
 
     /**
-     * @var Category|null
+     * @var Category[]
      */
-    public $category = null; // Can be a Category object or category identifier
+    public $category = []; 
 
     /**
      * @var null|integer

@@ -6,10 +6,9 @@
 			{% block title %}
 				Aromielis
 			{% endblock %}
-
-
 		</title>
 		<link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}">
+
 		{% block stylesheets %}
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 		{% endblock %}
@@ -24,20 +23,19 @@
 		<header>
 			{% include "shared/_navbar.html.twig" %}
 		</header>
-		<main role="main">
-			{% include "shared/_flash.html.twig" %}
-			{% set margin = '' %}
-			{% if carousel is defined %}
-				{% include "shared/_carousel.html.twig" %}
-			{% else %}
-				{% set margin = 'mt-5' %}
-			{% endif %}
-			<div
-				class="container px-3 {{ margin }}">
-				<!-- Contenu ici -->
 
-				{% block body %}{% endblock %}
+
+		{% include "shared/_flash.html.twig" %}
+		{% set margin = '' %}
+		{% if carousel is defined %}
+			{% include "shared/_carousel.html.twig" %}
+		{% else %}
+			{% set margin = 'mt-5' %}
+		{% endif %}
+		<div class="container marketing {{ margin }}"> {% block body %}{% endblock %}
 			</div>
+
+
+			{% include "shared/_footer.html.twig" %}
 		</body>
-	</body>
-</html></main>{% include "shared/_footer.html.twig" %}</body></html>
+	</html>

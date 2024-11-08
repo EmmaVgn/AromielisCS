@@ -2,65 +2,85 @@
 
 namespace App\Controller;
 
+use App\Cart\CartService;
 use App\Repository\ProductRepository;
+use App\Form\CartConfirmationFormType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Utils\Cart;
 
 class CartController extends AbstractController
 {
-    /**
-     * Récupère le panier en session, puis récupère les objets produits de la bdd
-     * et calcule les totaux
-     *
-     * @param Cart $cart
-     * @param ProductRepository $repository
-     * @return Response
-     */
-    #[Route('/mon-panier', name: 'cart')]
-    public function index(Cart $cart, ProductRepository $repository): Response
+    protected $productRepository;
+    protected $cartService;
+
+    public function __construct(ProductRepository $productRepository, CartService $cartService)
     {
-        $cartProducts = [];
-        $totalQuantity = 0;
-        $totalPrice = 0;
-        foreach ($cart->get() as $id => $quantity) {
-            $currentProduct = $repository->find($id);
-            $cartProducts[] = [
-                'product' => $currentProduct,
-                'quantity' => $quantity
-            ];
-            $totalQuantity += $quantity;
-            $totalPrice += $currentProduct->getPrice() * $quantity;
+        $this->productRepository = $productRepository;
+        $this->cartService = $cartService;
+    }
+
+    #[Route('/cart/add/{id}', name: 'cart_add', requirements: ["id" => '\d+'])]
+    public function add($id, Request $request): Response
+    {
+        $product = $this->productRepository->find($id);
+        if (!$product) {
+            throw $this->createNotFoundException("Le produit $id n'existe pas");
         }
-        return $this->render('cart/index.html.twig', [
-            'cart' => $cartProducts,
-            'totalQuantity' => $totalQuantity,
-            'totalPrice' => $totalPrice
+
+        $this->cartService->add($id);
+        $this->addFlash('success', "Le produit a bien été ajouté au panier");
+
+        if ($request->query->get('returnToCart')) {
+            return $this->redirectToRoute('cart_show');
+        }
+
+        return $this->redirectToRoute('product_show', [
+            'category_slug' => $product->getCategory()->getSlug(),
+            'slug' => $product->getSlug()
         ]);
     }
-    /**
-     * Ajoute un article au panier (id du produit) et incrémente la quantitée (voir classe Cart)
-     * @param Cart $cart
-     * @param int $id
-     * @return Repsonse
-     */
-    #[Route('/panier/ajouter/{id}', name: 'add_to_cart')]
-    public function add(Cart $cart, $id): Response
+
+    #[Route('/cart', name: 'cart_show')]
+    public function show(): Response
     {
-        $cart->add($id);
-        return $this->redirectToRoute('cart');
+        $form = $this->createForm(CartConfirmationFormType::class);
+        $detailedCart = $this->cartService->getDetailedCartItems();
+        $total = $this->cartService->getTotal();
+        
+        return $this->render('cart/index.html.twig', [
+            'items' => $detailedCart,
+            'total' => $total,
+            'confirmationForm' => $form->createView()
+        ]);
     }
-    /**
-     * Vide le panier entièrement
-     *
-     * @param Cart $cart
-     * @return Response
-     */
-    #[Route('/panier/supprimer/', name: 'remove_cart')]
-    public function remove(Cart $cart): Response
+
+    #[Route('/cart/delete/{id}', name: "cart_delete", requirements: ["id" => '\d+'])]
+    public function delete($id): Response
     {
-        $cart->remove();
-        return $this->redirectToRoute('product');
+        $product = $this->productRepository->find($id);
+        if (!$product) {
+            throw $this->createNotFoundException("Le produit $id n'existe pas");
+        }
+
+        $this->cartService->remove($id);
+        $this->addFlash('success', 'Le produit a bien été supprimé du panier');
+
+        return $this->redirectToRoute('cart_show');
+    }
+
+    #[Route('/cart/decrement/{id}', name: 'cart_decrement', requirements: ["id" => '\d+'])]
+    public function decrement($id): Response
+    {
+        $product = $this->productRepository->find($id);
+        if (!$product) {
+            throw $this->createNotFoundException("Le produit $id n'existe pas");
+        }
+
+        $this->cartService->decrement($id);
+        $this->addFlash('success', 'Le produit a bien été décrémenté');
+        
+        return $this->redirectToRoute('cart_show');
     }
 }

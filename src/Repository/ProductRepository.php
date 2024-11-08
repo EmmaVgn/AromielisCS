@@ -24,11 +24,13 @@ class ProductRepository extends ServiceEntityRepository
      * @var PaginatorInterface
      */
     protected PaginatorInterface $paginator;
+
     public function __construct(ManagerRegistry $registry, PaginatorInterface $paginator)
     {
         parent::__construct($registry, Product::class);
         $this->paginator = $paginator;
     }
+
     /**
      * Récupère les produits en lien avec une recherche
      *
@@ -43,86 +45,112 @@ class ProductRepository extends ServiceEntityRepository
             6
         );
     }
+
     public function countItems(SearchData $search): int
     {
         $query = $this->getSearchQuery($search)->getQuery();
         return count($query->getResult());
     }
+
+/**
+ * Récupère le prix minimum et maximum correspondant à une recherche.
+ *
+ * @param SearchData $search
+ * @return int[] Tableau avec les prix minimum et maximum
+ */
+public function findMinMaxPrice(SearchData $search): array
+{
+    $queryBuilder = $this->getSearchQuery($search, true, false, false);
+
+    $queryBuilder
+        ->select('MIN(p.price) as minPrice', 'MAX(p.price) as maxPrice');
+
+    $results = $queryBuilder->getQuery()->getScalarResult();
+
+    $minPrice = $results[0]['minPrice'] ?? 0; // Valeur par défaut en cas de non-résultat
+    $maxPrice = $results[0]['maxPrice'] ?? 0; // Valeur par défaut en cas de non-résultat
+
+    return [(int)$minPrice, (int)$maxPrice];
+}
+
     /**
-     * Récupère le prix minimum et maximum correspondant à une recherche
+     * Crée une requête de recherche avec les critères spécifiés.
      *
      * @param SearchData $search
-     * @return integer[]
+     * @param bool $ignorePrice
+     * @param bool $ignoreKms
+     * @param bool $ignoreDate
+     * @return QueryBuilder
      */
-    public function findMinMaxPrice(SearchData $search): array
+    public function getSearchQuery(SearchData $search, bool $ignorePrice = false, bool $ignoreKms = false, bool $ignoreDate = false): QueryBuilder
     {
-        $results = $this->getSearchQuery($search, true, false, false)
-            ->select('MIN(p.price) as minPrice', 'MAX(p.price) as maxPrice')
-            ->getQuery()
-            ->getScalarResult();
-        return [(int)$results[0]['minPrice'], (int)$results[0]['maxPrice']];
-    }
-    public function getSearchQuery(SearchData $search, $ignorePrice = false, $ignoreKms = false, $ignoreDate = false): QueryBuilder
-    {
-        $query = $this
-            ->createQueryBuilder('p')
+        $query = $this->createQueryBuilder('p')
             ->select('c', 'p')
             ->join('p.category', 'c');
-            
+
         if (!empty($search->q)) {
-            $query = $query
-                ->andWhere('p.name LIKE :q')
+            $query->andWhere('p.name LIKE :q')
                 ->setParameter('q', "%{$search->q}%");
         }
-        if (!empty($search->minPrice) && $ignorePrice === false && $ignoreKms === false && $ignoreDate === false) {
-            $min = ($search->minPrice) * 100;
-            $query = $query
-                ->andWhere('p.price >= :min')
+
+        if (!$ignorePrice && !empty($search->minPrice)) {
+            $min = $search->minPrice * 100; // Assurez-vous que cette conversion est nécessaire
+            $query->andWhere('p.price >= :min')
                 ->setParameter('min', $min);
         }
-        if (!empty($search->maxPrice) && $ignorePrice === false && $ignoreKms === false && $ignoreDate === false) {
-            $max = ($search->maxPrice) * 100;
-            $query = $query
-                ->andWhere('p.price <= :max')
+
+        if (!$ignorePrice && !empty($search->maxPrice)) {
+            $max = $search->maxPrice * 100; // Assurez-vous que cette conversion est nécessaire
+            $query->andWhere('p.price <= :max')
                 ->setParameter('max', $max);
         }
+
         if (!empty($search->categories)) {
-            $query = $query
-                ->andWhere('c.id IN (:categories)')
-                ->setParameter('categories', $search->categories);
+            $query->andWhere('c.id IN (:categories)')
+                ->setParameter('categories', $search->category);
         }
+
         $query->orderBy('p.name', 'ASC');
+
         return $query;
     }
 
-    // Dans ProductRepository.php
-    public function getFirstImage(Product $product)
+    public function findSimilarProducts(Product $product): array
     {
-        if ($product->getImages()->count() > 0) {
-            return $product->getImages()->first();
-        }
-        // Retourne un chemin d'image par défaut
-        return 'path/to/default-image.jpg';
-    }
-    
+        $queryBuilder = $this->createQueryBuilder('p')
+            ->where('p.category = :category')
+            ->andWhere('p.id != :id') // Exclure le produit actuel
+            ->setParameter('category', $product->getCategory())
+            ->setParameter('id', $product->getId())
+            ->setMaxResults(4); // Limiter le nombre de produits similaires
 
-        public function getFormattedPrice(Product $product)
-    {
-        return number_format($product->getPrice(), 2, '.', ',') . ' €';
+        return $queryBuilder->getQuery()->getResult();
     }
 
-    public function findByCategoryAndPriceRange(string $categorySlug, float $minPrice, float $maxPrice)
-    {
-        return $this->createQueryBuilder('p')
-            ->leftJoin('p.category', 'c')
-            ->where('c.slug = :slug')
-            ->andWhere('p.price BETWEEN :minPrice AND :maxPrice')
-            ->setParameter('slug', $categorySlug)
-            ->setParameter('minPrice', $minPrice)
-            ->setParameter('maxPrice', $maxPrice)
-            ->getQuery()
-            ->getResult();
-    }
-    
 
+
+//    /**
+//     * @return Product[] Returns an array of Product objects
+//     */
+//    public function findByExampleField($value): array
+//    {
+//        return $this->createQueryBuilder('p')
+//            ->andWhere('p.exampleField = :val')
+//            ->setParameter('val', $value)
+//            ->orderBy('p.id', 'ASC')
+//            ->setMaxResults(10)
+//            ->getQuery()
+//            ->getResult()
+//        ;
+//    }
+
+//    public function findOneBySomeField($value): ?Product
+//    {
+//        return $this->createQueryBuilder('p')
+//            ->andWhere('p.exampleField = :val')
+//            ->setParameter('val', $value)
+//            ->getQuery()
+//            ->getOneOrNullResult()
+//        ;
+//    }
 }

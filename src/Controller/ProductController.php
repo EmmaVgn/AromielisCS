@@ -2,26 +2,38 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Data\SearchData;
 use App\Form\SearchFormType;
+use App\Form\CommentFormType;
+use App\Repository\CommentRepository;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ProductController extends AbstractController
 {
+    private $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
     #[Route('/{slug}', name: 'product_category', priority: -1)]
     public function category($slug, CategoryRepository $categoryRepository): Response
     {
-        $category = $categoryRepository->findOneBy([
-            'slug' => $slug
-        ]);
+        $category = $categoryRepository->findOneBy(['slug' => $slug]);
+
         if (!$category) {
             throw $this->createNotFoundException("La catégorie demandée n'existe pas");
         }
+
         return $this->render('product/category.html.twig', [
             'slug' => $slug,
             'category' => $category,
@@ -29,43 +41,55 @@ class ProductController extends AbstractController
     }
 
     #[Route('/{category_slug}/{slug}', name: 'product_show', priority: -1)]
-    public function show($category_slug, $slug, ProductRepository $productRepository): Response
-    {
-        $product = $productRepository->findOneBy([
-            'slug' => $slug
-        ]);
-        if (!$product) {
-            throw $this->createNotFoundException("Le véhicule demandé n'existe pas");
-        }
-        return $this->render('product/show.html.twig', [
-            'product' => $product
-        ]);
-    }
+    public function show(
+        ProductRepository $productRepository,
+        Request $request,
+        string $slug,
+        string $category_slug,
+        EntityManagerInterface $em
+    ): Response {
+        $product = $productRepository->findOneBy(['slug' => $slug]);
 
-    #[Route('/boutique', name: 'product_display')]
+        if (!$product) {
+            throw $this->createNotFoundException("La page demandée n'existe pas");
+        }
+
+    return $this->render('product/show.html.twig', [
+        'product' => $product,
+        'category_slug' => $category_slug
+    ]);
+}
+
+    #[Route('/produits', name: 'product_display')]
     public function display(ProductRepository $productRepository, Request $request): Response
     {
         $data = new SearchData();
         $data->page = $request->get('page', 1);
-        $data->category = $request->get('category');  // This assumes category is passed by its ID or slug
-        $data->minPrice = $request->get('minPrice');
-        $data->maxPrice = $request->get('maxPrice');
-    
+
         $form = $this->createForm(SearchFormType::class, $data);
         $form->handleRequest($request);
-    
-        // Fetch products based on the filters
-        $pagination = $productRepository->findSearch($data);
-    
-        // Get min and max prices if needed
+
         [$minPrice, $maxPrice] = $productRepository->findMinMaxPrice($data);
-    
+        $products = $productRepository->findSearch($data);
+        $totalItems = $productRepository->countItems($data);
+
+        if ($request->get('ajax')) {
+            return new JsonResponse([
+                'content' => $this->renderView('product/_products.html.twig', ['products' => $products]),
+                'sorting' => $this->renderView('product/_sorting.html.twig', ['products' => $products]),
+                'pagination' => $this->renderView('product/_pagination.html.twig', ['products' => $products]),
+                'minPrice' => $minPrice,
+                'maxPrice' => $maxPrice,
+            ]);
+        }
+
         return $this->render('product/display.html.twig', [
-            'products' => $pagination,
+            'products' => $products,
             'form' => $form->createView(),
             'minPrice' => $minPrice,
             'maxPrice' => $maxPrice,
+            'totalItems' => $totalItems,
         ]);
-    }    
-    
+    }
 }
+

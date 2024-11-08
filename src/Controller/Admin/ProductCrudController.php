@@ -59,7 +59,8 @@ class ProductCrudController extends AbstractCrudController
             ->setEntryType(ProductImageFormType::class)
             ->setFormTypeOption('by_reference', false)
             ->hideOnIndex(),
-
+            AssociationField::new('category', 'Catégorie du produit')
+            ->setFormTypeOption('choice_label', 'name') 
             //BooleanField::new('isHighlighted', 'Mettre en avant'),
         ];
     }
