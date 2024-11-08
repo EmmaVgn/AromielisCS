@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Confirmation de votre commande
+{% endblock %}
+
+{% block body %}
+	<h1>Merci pour votre commande !</h1>
+	<p>Votre commande a bien été enregistrée.</p>
+	<p>Numéro de commande :
+		{{ order.reference }}</p>
+	<p>Montant total :
+		{{ order.total | amount }}</p>
+	<p>Nous vous enverrons un e-mail de confirmation avec les détails de votre commande.</p>
+{% endblock %}

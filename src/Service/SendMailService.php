@@ -9,7 +9,6 @@ use Symfony\Component\Mime\Address;
 class SendMailService
 {
     protected $mailer;
-    protected $security;
 
     public function __construct(MailerInterface $mailer)
     {

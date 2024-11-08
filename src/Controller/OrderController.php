@@ -72,23 +72,22 @@ class OrderController extends AbstractController
     #[Route('/commande/recap', name: 'order_add', methods: 'POST')]
     public function summary(CartService $cart, Request $request, EntityManagerInterface $em): Response
     {
-        
         $cartProducts = $cart->getDetailedCartItems();
         $totalPrice = $cart->getTotal(); // Total price of the cart
-
+    
         $form = $this->createForm(OrderFormType::class, null, [
             'user' => $this->getUser()
         ]);
         $form->handleRequest($request);
-
+    
         if ($form->isSubmitted() && $form->isValid()) {
             $address = $form->get('addresses')->getData();
             $carrier = $form->get('carriers')->getData();
-
+    
             // Déterminer si la livraison est gratuite
             $isFreeShipping = ($totalPrice / 100) > 49;
             $carrierPrice = $isFreeShipping ? 0 : $carrier->getPrice();
-
+    
             $deliveryString = sprintf(
                 '%s %s<br>%s<br>%s%s<br>%s<br>%s<br>%s',
                 $address->getFirstname(),
@@ -100,7 +99,7 @@ class OrderController extends AbstractController
                 $address->getCity(),
                 $address->getCountry()
             );
-
+    
             $order = new Order();
             $order->setUser($this->getUser())
                 ->setCreatedAt(new \DateTimeImmutable())
@@ -110,9 +109,9 @@ class OrderController extends AbstractController
                 ->setState(0)
                 ->setReference((new \DateTime())->format('YmdHis') . '-' . uniqid())
                 ->setTotal($totalPrice); // Set the total price here
-
+    
             $em->persist($order);
-
+    
             foreach ($cartProducts as $item) {
                 $orderDetails = new OrderDetails();
                 $orderDetails->setBindedOrder($order)
@@ -120,19 +119,22 @@ class OrderController extends AbstractController
                     ->setQuantity($item->getQuantity())
                     ->setPrice($item->getProduct()->getPrice())
                     ->setTotal($item->getTotal());
-
+    
                 $em->persist($orderDetails);
             }
-
+    
             $em->flush();
-
+    
+            // Après soumission, afficher le résumé dans la même page (sans redirection HTTP classique)
             return $this->render('order/add.html.twig', [
                 'cart' => $cartProducts,
                 'totalPrice' => $totalPrice,
                 'order' => $order
             ]);
         }
-
+    
+        // Si le formulaire n'est pas valide, redirige vers le panier
         return $this->redirectToRoute('cart');
     }
+    
 }
