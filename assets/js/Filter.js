@@ -116,7 +116,7 @@ export default class Filter {
 
     async loadAllProducts() {
         if (!this.content) return;
-
+    
         this.showLoader();
     
         try {
@@ -127,11 +127,21 @@ export default class Filter {
             if (!response.ok) throw new Error('Erreur lors du chargement');
     
             const data = await response.json();
-            this.flipContent(data.content);
-
-            if (this.sorting && data.sorting) this.sorting.innerHTML = data.sorting;
-            if (this.pagination && data.pagination) this.pagination.innerHTML = data.pagination;
-
+    
+            // Vérification si la réponse contient des produits
+            if (data.content) {
+                this.content.innerHTML = data.content; // Remplacer le contenu avec les produits
+            }
+    
+            // Mettre à jour le tri et la pagination si disponible
+            if (this.sorting && data.sorting) {
+                this.sorting.innerHTML = data.sorting;
+            }
+    
+            if (this.pagination && data.pagination) {
+                this.pagination.innerHTML = data.pagination;
+            }
+    
             const totalItemsElement = document.getElementById('totalItems');
             if (totalItemsElement) {
                 totalItemsElement.innerText = `${data.totalItems} résultat(s)`;
@@ -143,13 +153,9 @@ export default class Filter {
             this.hideLoader();
         }
     }
-
     
 
-    
-    
-    
-    
+
 
     async loadForm() {
         if (!this.form) return;
