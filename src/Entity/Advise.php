@@ -48,7 +48,13 @@ class Advise
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
-        $this->updatedAt = new \DateTimeImmutable();
+    
+    }
+
+    public function __toString(): string
+    {
+        $this->updatedAt = new \DateTimeImmutable(); // Mettez à jour ici si nécessaire
+        return $this->name ?? 'Unnamed Article'; // Retourne le nom ou une valeur par défaut
     }
 
     public function getId(): ?int
