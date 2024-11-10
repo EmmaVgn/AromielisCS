@@ -43,4 +43,12 @@ return [
         'version' => '5.3.3',
         'type' => 'css',
     ],
+    'nouislider/nouislider.js'=> [
+        'version' => '15.8.1',
+        'entrypoint' => true,
+    ],
+    'nouislider/nouislider.css' => [
+        'version' => '15.8.1',
+        'type' => 'css',
+    ],
 ];

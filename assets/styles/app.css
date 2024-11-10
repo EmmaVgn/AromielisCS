@@ -3,12 +3,17 @@
 --------------------------------------------------------------*/
 @font-face {
   font-family: 'Open Sans';
-  src: url('/assets/fonts/Open_Sans-Regular.woff2') format('woff2'),
-       url('/assets/fonts/Open_Sans-Regular.woff') format('woff');
+  src: url('/assets/fonts/Open_Sans-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Playfair Display';
+  src: url('/assets/fonts/Playfair_Display.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
 * {
   margin: 0;

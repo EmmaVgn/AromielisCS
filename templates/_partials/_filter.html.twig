@@ -1,9 +1,22 @@
-{{ form_start(form, {'attr': {'class': 'filter'}}) }}
-{{ form_row(form.q) }}
+{{ form_start(form, {'attr': {'class': 'filter js-filter-form'}}) }}
+<div class="spinner-border js-loading" role="status" aria-hidden="true" style="display: none;">
+	<span class="visually-hidden">Loading...</span>
+</div>
+<div class="box border-top border-bottom ps-1">
+	<div class="box-label text-uppercase d-flex align-items-center justify-content-between">
+		Filtres
+		<button type="submit" class="btn btn-link btn-sm btn-reset" id="resetBtn">Tout effacer</button>
+	</div>
+</div>
+<div class="box border-bottom ps-1">
+	<div class="box-label text-uppercase d-flex align-items-center pt-3">
+		{{ form_row(form.q) }}
+	</div>
+</div>
 <div class="box border-top border-bottom ps-1">
 	<div class="box-label text-uppercase d-flex align-items-center">
 		Catégories
-		<button class="btn ms-auto" type="button" data-bs-toggle="collapse" href="#collapseCategories" aria-expanded="false" aria-controls="collapseCategories">
+		<button class="btn btn-categories ms-auto" type="button" data-bs-toggle="collapse" href="#collapseCategories" aria-expanded="false" aria-controls="collapseCategories">
 			<span class="fas fa-plus"></span>
 		</button>
 	</div>
@@ -34,5 +47,5 @@
 	</div>
 	<div id="price-slider" data-min="{{ minPrice }}" data-max="{{ maxPrice }}"></div>
 </div>
-<button class="btn btn-outline-success w-100 mt-3">Filtrer</button>
+<button class="btn btn-filter w-100 mt-3" type="submit">Filtrer</button>
 {{ form_end(form) }}

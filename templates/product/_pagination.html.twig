@@ -1,3 +1,5 @@
-<div class="pagination">
-	{{ knp_pagination_render(products) }}
-</div>
+{% if products.getTotalItemCount > 1 %}
+	<div class="pagination">
+		{{ knp_pagination_render(products) }}
+	</div>
+{% endif %}
