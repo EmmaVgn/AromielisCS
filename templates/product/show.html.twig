@@ -36,11 +36,11 @@
 					<div
 						class="product-card-details p-3 text-center">
 						<!-- Titre du produit -->
-						<h5 class="product-title fs-5 mb-3 text-truncate" style="max-width: 250px; margin: auto;">{{ product.name }}</h5>
+						<h5 class="product-title fs-5 mb-3" style="max-width: 250px; margin: auto;">{{ product.name }}</h5>
 
 						<!-- Prix du produit -->
 						<p class="product-price mb-3">
-							<span class="fw-bold fs-4 text-success">{{ product.price | amount }}</span>
+							<span class="fw-bold fs-1 text-success">{{ product.price | amount }}</span>
 						</p>
 
 						<!-- Détails du produit (contenance, MDD) -->
@@ -61,28 +61,26 @@
 						</div>
 
 						<!-- Formulaire d'ajout au panier -->
-						<div class="d-flex justify-content-center align-items-center mb-3">
-							<form id="addToCartForm" action="{{ path('cart_add', { id: product.id }) }}" method="get" class="d-flex align-items-center w-100">
-								<input
-								type="hidden" name="id" value="{{ product.id }}">
+						<form action="{{ path('cart_add', { id: product.id }) }}" method="get" id="addToCartForm">
+							<input
+							type="hidden" name="id" value="{{ product.id }}">
 
-								<!-- Sélecteur de quantité -->
-								<div class="quantity-selector d-flex align-items-center me-2">
-									<button type="button" class="btn btn-sm btn-outline-secondary" id="decrementBtn">-</button>
-									<input type="number" id="quantityInput" name="quantity" value="1" min="1" max="{{ product.stock }}" class="form-control form-control-sm mx-1 text-center" style="width: 50px;">
-									<button type="button" class="btn btn-sm btn-outline-secondary" id="incrementBtn">+</button>
-								</div>
+							<!-- Sélecteur de quantité -->
+							<div class="quantity-selector d-flex align-items-center me-2">
+								<button type="button" class="btn btn-sm btn-outline-secondary" id="decrementBtn">-</button>
+								<input type="number" id="quantityInput" name="quantity" value="1" min="1" max="{{ product.stock }}" class="form-control form-control-sm mx-1 text-center" style="width: 50px;">
+								<button type="button" class="btn btn-sm btn-outline-secondary" id="incrementBtn">+</button>
+							</div>
 
-								<!-- Bouton ajouter au panier ou message rupture de stock -->
-								<div>
-									{% if product.stock > 0 %}
-										<button type="submit" class="btn btn-success w-100">Ajouter au panier</button>
-									{% else %}
-										<p class="text-danger">Temporairement en rupture de stock</p>
-									{% endif %}
-								</div>
-							</form>
-						</div>
+							<!-- Bouton ajouter au panier -->
+							{% if product.stock > 0 %}
+								<button type="submit" class="btn btn-success w-100">Ajouter au panier</button>
+							{% else %}
+								<p class="text-danger">Temporairement en rupture de stock</p>
+							{% endif %}
+						</form>
+
+
 					</div>
 
 					<!-- Description courte sous la carte -->

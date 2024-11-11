@@ -10,57 +10,62 @@ class CartService
     // }
     protected $requestStack;
     protected $productRepository;
+    private $cart;
+
     public function __construct(RequestStack $requestStack, ProductRepository $productRepository)
     {
         $this->requestStack = $requestStack;
         $this->productRepository = $productRepository;
+        $this->cart = [];
     }
+
     protected function getCart(): array
     {
         $session = $this->requestStack->getSession();
         return $session->get('cart', []);
     }
+
     protected function saveCart(array $cart)
     {
         $session = $this->requestStack->getSession();
         $session->set('cart', $cart);
     }
-    public function add(int $id)
+
+    public function add(int $id, int $quantity = 1)
     {
-        // 1. Retrouver le panier dans la session (sous forme de tableau)
-        // 2. S'il n'existe pas encore, alors prendre un tableau vide
         $cart = $this->getCart();
-        // 3. Voir si le produit {id} existe déjà dans le tableau
-        // 4. Si c'est le cas, simplement augmenter la quantité
-        // 5. Sinon, ajouter le produit avec la quantité 1
-        // if (array_key_exists($id, $cart)) {
-        //     $cart[$id]++;
-        // } else {
-        //     $cart[$id] = 1;
-        // }
-        //Refactoring
+    
+        // Si le produit n'est pas encore dans le panier, on l'ajoute avec une quantité de 0
         if (!array_key_exists($id, $cart)) {
             $cart[$id] = 0;
         }
-        $cart[$id]++;
-        // 6. Enregistrer le tableau mis à jour dans la session
+    
+        // Ajouter la quantité spécifiée
+        $cart[$id] += $quantity;
+    
         $this->saveCart($cart);
     }
+    
+
+
     public function decrement(int $id)
     {
         $cart = $this->getCart();
         if (!array_key_exists($id, $cart)) {
             return;
         }
-        // Soit le produit = 1, alors il faut le supprimer
+    
+        // Si la quantité est 1, on supprime le produit
         if ($cart[$id] === 1) {
             $this->remove($id);
         } else {
-            // Soit le produit est > 1, alors il faut décrémenter
+            // Sinon, on décrémente la quantité
             $cart[$id]--;
             $this->saveCart($cart);
         }
     }
+    
+
     public function remove(int $id)
     {
         $cart = $this->getCart();
@@ -102,5 +107,30 @@ class CartService
     public function empty()
     {
         $this->saveCart([]);
+    }
+
+    public function getProductById($id)
+    {
+        // Retourner le produit à partir de son ID (logique à adapter)
+        return $this->cart[$id] ?? null;
+    }
+
+    public function getQuantity($id)
+    {
+        return $this->cart[$id]['quantity'] ?? 1; // Retourner la quantité actuelle
+    }
+
+    public function incrementQuantity($id)
+    {
+        if (isset($this->cart[$id])) {
+            $this->cart[$id]['quantity']++;
+        }
+    }
+
+    public function decrementQuantity($id)
+    {
+        if (isset($this->cart[$id]) && $this->cart[$id]['quantity'] > 1) {
+            $this->cart[$id]['quantity']--;
+        }
     }
 }

@@ -3,7 +3,7 @@ import './styles/app.css';
 import './styles/carousel.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap';
-import Filter from './js/Filter.js';
+
 
 
 /*

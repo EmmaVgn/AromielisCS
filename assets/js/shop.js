@@ -1,88 +1,43 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // Gestion des quantités
-    const quantityInput = document.getElementById('quantityInput');
+document.addEventListener('DOMContentLoaded', function() {
     const incrementBtn = document.getElementById('incrementBtn');
     const decrementBtn = document.getElementById('decrementBtn');
+    const quantityInput = document.getElementById('quantityInput');
+    const form = document.getElementById('addToCartForm');
 
-    if (quantityInput && incrementBtn && decrementBtn) {
-        incrementBtn.addEventListener('click', () => {
-            let currentQuantity = parseInt(quantityInput.value, 10);
-            if (currentQuantity < parseInt(quantityInput.max, 10)) {
-                quantityInput.value = currentQuantity + 1;
+    if (incrementBtn && decrementBtn && quantityInput && form) {
+        // Fonction pour incrémenter la quantité
+        incrementBtn.addEventListener('click', function() {
+            let currentValue = parseInt(quantityInput.value, 10);
+            const maxValue = parseInt(quantityInput.max, 10);
+
+            // S'assurer que la quantité ne dépasse pas le stock
+            if (currentValue < maxValue) {
+                quantityInput.value = currentValue + 1;
             }
         });
 
-        decrementBtn.addEventListener('click', () => {
-            let currentQuantity = parseInt(quantityInput.value, 10);
-            if (currentQuantity > 1) {
-                quantityInput.value = currentQuantity - 1;
+        // Fonction pour décrémenter la quantité
+        decrementBtn.addEventListener('click', function() {
+            let currentValue = parseInt(quantityInput.value, 10);
+
+            // S'assurer que la quantité ne soit pas inférieure à 1
+            if (currentValue > 1) {
+                quantityInput.value = currentValue - 1;
             }
         });
 
-        quantityInput.addEventListener('change', () => {
-            let currentQuantity = parseInt(quantityInput.value, 10);
-            if (currentQuantity < 1) {
-                quantityInput.value = 1;
-            } else if (currentQuantity > parseInt(quantityInput.max, 10)) {
-                quantityInput.value = parseInt(quantityInput.max, 10);
+        // Vérifier la quantité avant l'envoi du formulaire
+        form.addEventListener('submit', function(e) {
+            const quantity = parseInt(quantityInput.value, 10);
+
+            // Validation de la quantité
+            if (quantity < 1) {
+                e.preventDefault();  // Empêche l'envoi si la quantité est inférieure à 1
+                alert('La quantité doit être supérieure ou égale à 1');
+                return;
             }
         });
-    }
-
-    // Gestion de la notation
-    const ratingInput = document.querySelector('#ratingInput');
-    const starRating = document.querySelector('.star-rating');
-
-    if (starRating && ratingInput) {
-        starRating.addEventListener('click', function (event) {
-            if (event.target.matches('i')) {
-                const ratingValue = event.target.getAttribute('data-rating');
-                ratingInput.value = ratingValue;
-
-                // Mise à jour des étoiles affichées
-                starRating.querySelectorAll('i').forEach(function (star) {
-                    const starRatingValue = star.getAttribute('data-rating');
-                    if (starRatingValue <= ratingValue) {
-                        star.classList.remove('far');
-                        star.classList.add('fas');
-                    } else {
-                        star.classList.remove('fas');
-                        star.classList.add('far');
-                    }
-                });
-            }
-        });
-
-        // Met à jour l'affichage des étoiles lors du survol
-        starRating.addEventListener('mouseover', function (event) {
-            if (event.target.matches('i')) {
-                const ratingValue = event.target.getAttribute('data-rating');
-                starRating.querySelectorAll('i').forEach(function (star) {
-                    const starRatingValue = star.getAttribute('data-rating');
-                    if (starRatingValue <= ratingValue) {
-                        star.classList.add('fas');
-                        star.classList.remove('far');
-                    } else {
-                        star.classList.add('far');
-                        star.classList.remove('fas');
-                    }
-                });
-            }
-        });
-
-        // Réinitialise les étoiles lors du survol
-        starRating.addEventListener('mouseout', function () {
-            const currentRating = ratingInput.value;
-            starRating.querySelectorAll('i').forEach(function (star) {
-                const starRatingValue = star.getAttribute('data-rating');
-                if (starRatingValue <= currentRating) {
-                    star.classList.add('fas');
-                    star.classList.remove('far');
-                } else {
-                    star.classList.add('far');
-                    star.classList.remove('fas');
-                }
-            });
-        });
+    } else {
+        console.warn('Certains éléments du DOM sont manquants :', { incrementBtn, decrementBtn, quantityInput, form });
     }
 });
