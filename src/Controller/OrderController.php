@@ -30,35 +30,41 @@ class OrderController extends AbstractController
         /** @var User */
         $user = $this->getUser();
         $cartProducts = $cart->getDetailedCartItems();
-
+    
+        // Assurez-vous que le total est calculé en centimes
+        $totalPrice = $cart->getTotal(); // total en centimes
+        if (!is_numeric($totalPrice) || $totalPrice <= 0) {
+            $totalPrice = 0; // Valeur par défaut si le prix est invalide
+        }
+    
         // Redirection si panier vide
         if (empty($cartProducts)) {
             return $this->redirectToRoute('product_display');
         }
-            
+    
         // Redirection si l'utilisateur n'a pas encore d'adresse
-        if ($user->getAddresses()->isEmpty()) { 
+        if ($user->getAddresses()->isEmpty()) {
             $session->set('order', 1);
             return $this->redirectToRoute('account_address_new');
         }
-
-        
+    
         $form = $this->createForm(OrderFormType::class, null, [
-            'user' => $user     //Permet de passer l'utilisateur courant dans le tableau d'options du OrderType
-        ]); 
-
-        // Create an instance of the Order entity
+            'user' => $user
+        ]);
+    
+        // Créez une instance de la commande
         $order = new Order();
         $order->setUser($user);
-        $order->calculateCarrierPrice($cart->getTotal() / 100);
+        $order->calculateCarrierPrice($totalPrice / 100); // Assurez-vous que le prix total est en euros
     
         return $this->render('order/index.html.twig', [
             'form' => $form->createView(),
             'cart' => $cartProducts,
-            'totalPrice' => $cart->getTotal(),
-            'order' => $order // Pass the order object to the template
+            'totalPrice' => $totalPrice, // On envoie totalPrice en centimes
+            'order' => $order
         ]);
     }
+    
 
     /**
      * Enregistrement des données "en dur" de la commande contenant adresse, transporteur et produits

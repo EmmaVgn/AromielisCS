@@ -24,6 +24,10 @@ return [
         'path' => './assets/js/Filter.js',
         'entrypoint' => true,
     ],
+    'carrier' => [
+        'path' => './assets/js/carrier.js',
+        'entrypoint' => true,
+    ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],
@@ -49,6 +53,15 @@ return [
     ],
     'nouislider/nouislider.css' => [
         'version' => '15.8.1',
+        'type' => 'css',
+    ],
+    'alertify' => [
+        'path' => './vendor/alertify/dist/js/alertify.js' ,
+        'entrypoint' => true,
+    ],
+    'alertify.css' => [
+        'path' => './vendor/alertify/dist/css/alertify.css' ,
+        'entrypoint' => true,
         'type' => 'css',
     ],
 ];
