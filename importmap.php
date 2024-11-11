@@ -47,12 +47,12 @@ return [
         'version' => '5.3.3',
         'type' => 'css',
     ],
-    'nouislider/nouislider.js'=> [
-        'version' => '15.8.1',
+    'nouislider.js'=> [
+        'path' => './vendor/nouislider/nouislider.js',
         'entrypoint' => true,
     ],
-    'nouislider/nouislider.css' => [
-        'version' => '15.8.1',
+    'nouislider.css' => [
+        'path' => './vendor/nouislider/nouislider.css',
         'type' => 'css',
     ],
     'alertify' => [

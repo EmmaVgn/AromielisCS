@@ -1,6 +1,0 @@
-<th {% if products.isSorted('p.price') %} class="sorted" {% endif %}>
-	{{ knp_pagination_sortable(products, 'Prix', 'p.price') }}
-</th>
-<th {% if products.isSorted('p.name') %} class="sorted" {% endif %}>
-	{{ knp_pagination_sortable(products, 'Nom', 'p.name') }}
-</th>

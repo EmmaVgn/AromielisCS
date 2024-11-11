@@ -62,13 +62,16 @@ class ProductController extends AbstractController
 }
 
     #[Route('/produits', name: 'product_display')]
-    public function display(ProductRepository $productRepository, Request $request): Response
+    public function display(ProductRepository $productRepository, Request $request, PaginatorInterface $paginator): Response
     {
         $data = new SearchData();
         $data->page = $request->get('page', 1);
 
         $form = $this->createForm(SearchFormType::class, $data);
         $form->handleRequest($request);
+
+  
+ 
 
         [$minPrice, $maxPrice] = $productRepository->findMinMaxPrice($data);
         $products = $productRepository->findSearch($data);
@@ -90,6 +93,25 @@ class ProductController extends AbstractController
             'minPrice' => $minPrice,
             'maxPrice' => $maxPrice,
             'totalItems' => $totalItems,
+        ]);
+    }
+
+    public function list(Request $request, PaginatorInterface $paginator, ProductRepository $productRepository): Response
+    {
+        // Créez une requête pour récupérer les produits
+        $queryBuilder = $productRepository->createQueryBuilder('p');
+
+        // Paginer les résultats de la requête
+        $pagination = $paginator->paginate(
+            $queryBuilder, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            10 /*limit per page*/,
+            
+        );
+
+        // Rendre le template avec les produits paginés
+        return $this->render('product/list.html.twig', [
+            'products' => $pagination,
         ]);
     }
 }

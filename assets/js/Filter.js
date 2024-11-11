@@ -1,5 +1,5 @@
-import     'nouislider/nouislider.js';
-import 'nouislider/nouislider.css';
+import     'nouislider.js';
+import 'nouislider.css';
 
 
 /**

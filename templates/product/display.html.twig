@@ -25,9 +25,8 @@
 					</div>
 				</div>
 				<div class="d-flex flex-row-reverse">
-					<div class="col-md-12 px-1 js-filter-pagination">
-						{% include 'product/_pagination.html.twig' with {'products': products} %}
-
+					<div class="navigation">
+						{{ knp_pagination_render(products) }}
 					</div>
 				</div>
 			</div>
@@ -35,5 +34,7 @@
 	</div>
 {% endblock %}
 {% block importmap %}
+	{# do NOT call parent() #}
+
 	{{ importmap(['app', 'filter']) }}
 {% endblock %}
