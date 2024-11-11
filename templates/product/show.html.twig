@@ -66,18 +66,20 @@
 							type="hidden" name="id" value="{{ product.id }}">
 
 							<!-- Sélecteur de quantité -->
-							<div class="quantity-selector d-flex align-items-center me-2">
-								<button type="button" class="btn btn-sm btn-outline-secondary" id="decrementBtn">-</button>
-								<input type="number" id="quantityInput" name="quantity" value="1" min="1" max="{{ product.stock }}" class="form-control form-control-sm mx-1 text-center" style="width: 50px;">
-								<button type="button" class="btn btn-sm btn-outline-secondary" id="incrementBtn">+</button>
+							<div class="d-flex align-items-center me-2">
+								<div class="quantity-selector d-flex align-items-center me-2">
+									<button type="button" class="btn btn-outline-secondary" id="decrementBtn">-</button>
+									<input type="number" id="quantityInput" name="quantity" value="1" min="1" max="{{ product.stock }}" class="form-control mx-2" style="width: 60px;">
+									<button type="button" class="btn btn-outline-secondary" id="incrementBtn">+</button>
+								</div>
+								<div>
+									{% if product.stock > 0 %}
+										<button type="submit" class="btn btn-success">Ajouter au panier</button>
+									{% else %}
+										<p class="text-danger">Temporairement en rupture de stock</p>
+									{% endif %}
+								</div>
 							</div>
-
-							<!-- Bouton ajouter au panier -->
-							{% if product.stock > 0 %}
-								<button type="submit" class="btn btn-success w-100">Ajouter au panier</button>
-							{% else %}
-								<p class="text-danger">Temporairement en rupture de stock</p>
-							{% endif %}
 						</form>
 
 

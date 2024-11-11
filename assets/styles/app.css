@@ -163,7 +163,7 @@ h4 {
 }
 
 .btn-link {
-  color: black;
+  color: black !important;
   border: none;
   border-radius: 5px;
   padding: 10px 20px;
@@ -173,16 +173,15 @@ h4 {
 
 .btn-link:hover {
   background-color: #fefee2;
-  color: black;
+  color: black !important;
 }
 
 /*--------------------------------------------------------------
 # Customisation des boutons (boutons des card produits)
 --------------------------------------------------------------*/
 .custom-btn-primary {  /* Couleur d'en savoir plus'*/
-  background-color: #6F4F28; 
-  border-color: #6F4F28; 
-  color: white; 
+  background-color: #caaf8d; 
+  color: black !important; 
   border-radius: 5px; 
   padding: 8px 16px; 
   font-size: 14px; 
@@ -192,15 +191,15 @@ h4 {
 }
 
 .custom-btn-primary:hover {
-  background-color: rgba(201, 224, 26, 0.407);
+  background-color: #e9cba6 !important;
   border-color: rgba(201, 224, 26, 0.407);
-  color: #0d161b;
+  color: black;
 }
 
 .custom-btn-success { /* Couleur d'ajouter au panier */
   background-color: #2C6B4F; 
   border-color: #2C6B4F; 
-  color: white; 
+  color: white !important; 
   border-radius: 5px; 
   padding: 8px 16px; 
   font-size: 14px; 
@@ -210,12 +209,23 @@ h4 {
 }
 
 .custom-btn-success:hover {
-  background-color: rgba(201, 224, 26, 0.407);
+  background-color: #418f6c !important;
   border-color: rgba(201, 224, 26, 0.407);
   color: #0d161b;
 }
 
-
+/*--------------------------------------------------------------
+# Customisation des boutons (accordeoon)
+--------------------------------------------------------------*/
+.accordion-button {
+  background-color: #fefee2!important;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
 /*--------------------------------------------------------------
 #Liens
 --------------------------------------------------------------*/
