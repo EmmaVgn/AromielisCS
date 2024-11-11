@@ -10,8 +10,7 @@
 					<th scope="col">Articles</th>
 					<th scope="col">Statut</th>
 					<th scope="col">Total</th>
-					<th scope="col">Passée le
-					</th>
+					<th scope="col">Passée le</th>
 					<th scope="col">Référence</th>
 					<th></th>
 				</tr>
@@ -19,19 +18,14 @@
 			<tbody>
 				{% for order in orders %}
 					<tr>
-						<td>{{order.totalQuantity}}</td>
-						<td>{{
-                            order.state == 1 ? 'Paiment accepté' :
-                            order.state == 2 ? 'En préparation' : 'Expédiée'
-                        }}</td>
-						<td>{{((order.carrierPrice + order.total) / 100)|number_format(2,',','.') }}
+						<td>{{ order.totalQuantity }}</td>
+						<td>{{ order.state == 1 ? 'Paiement accepté' : order.state == 2 ? 'En préparation' : 'Expédiée' }}</td>
+						<td>{{ ((order.carrierPrice + order.total) / 100) | number_format(2, ',', '.') }}
 							€</td>
-						<td>{{order.createdAt|date('d/m/Y')}}</td>
+						<td>{{ order.createdAt | date('d/m/Y') }}</td>
+
 						<td>
-							<span class="badge badge-secondary">{{order.reference}}</span>
-						</td>
-						<td>
-							<a href="{{ path('account_order', {'reference' : order.reference}) }}">Consulter commande</a>
+							<a href="{{ path('account_order', {'reference': order.reference }) }}">Consulter commande</a>
 						</td>
 					</tr>
 				{% endfor %}

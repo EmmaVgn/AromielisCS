@@ -13,10 +13,13 @@
 			{{ message }}
 		</div>
 	{% endfor %}
-	<div class="list-group">
-		<a href="{{ path('account_order') }}" class="list-group-item list-group-item-action">
+	<div class="list-group mb-6">
+
+		<a href="{{ path('account_orders', {'reference': order.reference}) }}" class="list-group-item list-group-item-action">
 			Mes commandes
 		</a>
+
+
 		<a href="{{ path('account_address') }}" class="list-group-item list-group-item-action">
 			Gérer mes adresses
 		</a>

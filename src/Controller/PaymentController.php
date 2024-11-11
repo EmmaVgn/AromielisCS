@@ -73,7 +73,8 @@ class PaymentController extends AbstractController
         ];
 
         // Charger la clé API Stripe à partir des variables d'environnement
-        Stripe::setApiKey($_ENV['STRIPE_API_KEY']);
+        Stripe::setApiKey($_ENV['STRIPE_SECRET_KEY']);
+
 
         $YOUR_DOMAIN = 'http://localhost:8000';
 
@@ -85,6 +86,7 @@ class PaymentController extends AbstractController
                 'success_url' => $YOUR_DOMAIN . '/commande/valide/{CHECKOUT_SESSION_ID}',
                 'cancel_url' => $YOUR_DOMAIN . '/commande/echec/{CHECKOUT_SESSION_ID}',
             ]);
+            
         } catch (\Stripe\Exception\ApiErrorException $e) {
             // Gestion des erreurs Stripe
             $this->addFlash('error', 'Une erreur s\'est produite avec Stripe. Veuillez réessayer.');

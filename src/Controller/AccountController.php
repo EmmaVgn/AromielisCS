@@ -2,63 +2,108 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Entity\Order;
 use App\Repository\UserRepository;
+use App\Repository\OrderRepository;
 use App\Form\ChangePasswordFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use App\Entity\User; // Ensure this is the correct namespace for your User entity
 
+/**
+ * Espace membre (sécurisé)
+ */
 class AccountController extends AbstractController
 {
     #[Route('/compte', name: 'account')]
-    public function index(): Response
+    public function index(OrderRepository $orderRepository): Response
     {
+        // Récupérer toutes les commandes de l'utilisateur connecté
+        $orders = $orderRepository->findPaidOrdersByUser($this->getUser());
+    
         return $this->render('account/index.html.twig', [
+            'orders' => $orders,  // Passer les commandes à la vue
+            'order' => $orders[0] ?? null // Passer la première commande à la vue
         ]);
     }
-
-        /**
+    
+    /**
      * Permet la modification du mot de passe d'un utilisateur sur une page dédiée
      */
     #[Route('/compte/mot-de-passe', name: 'account_password')]
-    public function changePassword(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $em, UserRepository $user): Response
+    public function changePassword(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $em): Response
+{
+    // Get the currently authenticated user
+    $user = $this->getUser();
+    
+    if (!$user instanceof User) {
+        throw $this->createAccessDeniedException('User not found');
+    }
+    
+    $form = $this->createForm(ChangePasswordFormType::class, $user);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        $old_password = $form->get('old_password')->getData();
+        $new_password = $form->get('new_password')->getData();
+        $isOldPasswordValid = $passwordHasher->isPasswordValid($user, $old_password);
+        if ($isOldPasswordValid) {
+            $password = $passwordHasher->hashPassword($user, $new_password);
+            $user->setPassword($password);
+            $em->flush();
+            $this->addFlash(
+                'notice', 
+                'Mot de passe modifié :)'
+            );
+            return $this->redirectToRoute('account');
+        } else {
+            $this->addFlash(
+                'notice', 
+                'Mot de passe actuel erroné :('
+            );
+        }
+    }
+
+    return $this->render('account/password.html.twig', [
+        'form' => $form->createView(),
+    ]);
+}
+
+
+        /**
+     * Affiche la vue de toutes les commandes d'un utilisateur
+     */
+    #[Route('/compte/commandes', name: 'account_orders')]
+    public function showOrders(OrderRepository $repository): Response
     {
-        $user->getUser();
+        $orders = $repository->findPaidOrdersByUser($this->getUser());
+        return $this->render('account/orders.html.twig', [
+            'orders' => $orders
+        ]);
+    }
 
-        // Check if the user implements PasswordAuthenticatedUserInterface
-        if (!$user instanceof PasswordAuthenticatedUserInterface) {
-            throw new \LogicException('The user does not implement PasswordAuthenticatedUserInterface');
+    /**
+     * Affiche une commande
+     */
+    #[Route('/compte/commandes/{reference}', name: 'account_order')]
+    public function showOrder($reference, OrderRepository $orderRepository ): Response
+    {
+        $order = $orderRepository->findOneBy ([
+            'reference' => $reference
+        ]);
+       
+
+        if (!$order || $order->getUser() != $this->getUser()) {
+            throw $this->createNotFoundException('Commande innaccessible');
         }
-
-        $form = $this->createForm(ChangePasswordFormType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $oldPassword = $form->get('old_password')->getData();
-            $newPassword = $form->get('new_password')->getData();
-
-            if ($passwordHasher->isPasswordValid($user, $oldPassword)) {
-                if ($user instanceof User) {
-                    $hashedPassword = $passwordHasher->hashPassword($user, $newPassword);
-                    $user->setPassword($hashedPassword);
-                } else {
-                    throw new \LogicException('The user entity does not support password setting.');
-                }
-                $em->flush();
-                $this->addFlash('success', 'Mot de passe modifié :)');
-                return $this->redirectToRoute('account');
-            } else {
-                $this->addFlash('error', 'Mot de passe actuel erroné :(');
-            }
-        }
-
-        return $this->render('account/password.html.twig', [
-            'form' => $form->createView(),
+        
+        return $this->render('account/order.html.twig', [
+            'order' => $order,
+            'reference' => $order->getReference()
         ]);
     }
 }

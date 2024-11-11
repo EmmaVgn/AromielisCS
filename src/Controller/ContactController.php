@@ -13,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ContactController extends AbstractController
 {
-    #[Route('/contact', name: 'contact_index')]
+    #[Route('/contact', name: 'contact')]
     public function index(Request $request, EntityManagerInterface $em, SendMailService $mail): Response
     {
         $contact = new Contact;
