@@ -261,6 +261,18 @@ a:active {
   color: #cdfeaa;
 }
 
+.active>.page-link,.page-link.active{
+  background-color: #265301 !important; /* Couleur de fond */
+  color: #cdfeaa !important; /* Couleur du texte */
+  border-color: #265301 !important; /* Couleur de la bordure */
+}
+
+.page-link:hover {
+  background-color: #265301 !important; /* Couleur de fond */
+  color: #cdfeaa !important; /* Couleur du texte */
+  border-color: #265301 !important; /* Couleur de la bordure */
+}
+
 /*--------------------------------------------------------------
 # navbar
 --------------------------------------------------------------*/
