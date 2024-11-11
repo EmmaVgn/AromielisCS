@@ -3,14 +3,14 @@
 --------------------------------------------------------------*/
 @font-face {
   font-family: 'Open Sans';
-  src: url('/assets/fonts/Open_Sans-Regular.ttf') format('truetype');
+  src: url('/assets/Font/Open_Sans-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Playfair Display';
-  src: url('/assets/fonts/Playfair_Display.ttf') format('truetype');
+  src: url('/assets/Font/Playfair_Display-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
