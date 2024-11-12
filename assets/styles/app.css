@@ -865,3 +865,23 @@ thead {
   width: 3rem; /* Largeur des boutons de contrôle */
   height: 3rem; /* Hauteur des boutons de contrôle */
 }
+
+/*--------------------------------------------------------------
+# Couleur badge catégories
+--------------------------------------------------------------*/
+.badge.category-huiles-essentielles {
+  background-color: #007bff; 
+  color: #fff;
+}
+.badge.category-recharges-hydrolats{
+  background-color: #28a745; 
+  color: #fff;
+}
+.badge.category-spray-hydrolat {
+  background-color: #ffc107; 
+  color: #000;
+}
+.badge.category-coffret {
+  background-color: #17a2b8;
+  color: #fff;
+}
