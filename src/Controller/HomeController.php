@@ -62,4 +62,29 @@ class HomeController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    #[Route('/mentions-legales', name: 'home_legal')]
+    public function legal(): Response
+    {
+        return $this->render('legal/legal.html.twig');
+    }
+
+    #[Route('/cgv', name: 'home_cgv')]
+    public function cgv(): Response
+    {
+        return $this->render('legal/cgv.html.twig');
+    }
+
+    #[Route('/devenir-distributeur', name: 'home_distributeur')]
+    public function distributor(): Response
+    {
+        return $this->render('home/distributor.html.twig');
+    }
+    
+    #[Route('/liste-points-de-ventes', name: 'home_pdv')]
+    public function pdv(): Response
+    {
+        return $this->render('home/pdv.html.twig');
+    }
+
 }
