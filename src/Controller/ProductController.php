@@ -44,6 +44,7 @@ class ProductController extends AbstractController
     #[Route('/{category_slug}/{slug}', name: 'product_show', priority: -1)]
     public function show(
         ProductRepository $productRepository,
+        CommentRepository $commentRepository,
         Request $request,
         string $slug,
         string $category_slug,
@@ -55,14 +56,57 @@ class ProductController extends AbstractController
             throw $this->createNotFoundException("La page demandée n'existe pas");
         }
         
+        $comments = $commentRepository->findBy(['product' => $product], ['createdAt' => 'DESC']);
         $similarProducts = $productRepository->findSimilarProducts($product);
 
-    return $this->render('product/show.html.twig', [
-        'product' => $product,
-        'category_slug' => $category_slug,
-        'similarProducts' => $similarProducts,
-    ]);
-}
+    // Calcul de la moyenne des avis
+    $averageRating = count($comments) > 0
+    ? array_sum(array_map(fn(Comment $comment) => $comment->getRating(), $comments)) / count($comments)
+    : 0;
+        // Créer un nouveau commentaire
+        $comment = new Comment();
+        $comment->setProduct($product); // Associer le commentaire au produit
+        $form = $this->createForm(CommentFormType::class, $comment);
+        $form->handleRequest($request);
+        // Vérifier si le formulaire a été soumis et est valide
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                // Ajoutez une vérification pour rating ici
+                if (null === $comment->getRating()) {
+                    $comment->setRating(0); // Valeur par défaut si rating est null
+                }
+                $comment->setCreatedAt(new \DateTimeImmutable());
+                $comment->setIsValid(false); // Par défaut, les commentaires ne sont pas validés
+                $em->persist($comment);
+                $em->flush();
+                $this->addFlash('success', 'Votre commentaire a été soumis et sera visible après validation.');
+                return $this->redirectToRoute('product_show', [
+                    'category_slug' => $product->getCategory()->getSlug(), // Add this
+                    'slug' => $product->getSlug(),
+                ]);
+            } else {
+                $this->addFlash('error', 'Il y a eu un problème avec votre commentaire. Veuillez réessayer.');
+            }
+        }
+
+        // Récupérer uniquement les commentaires validés
+        $comments = $commentRepository->findBy(['product' => $product, 'isValid' => true], ['createdAt' => 'DESC']);
+        $similarProducts = $productRepository->findSimilarProducts($product);
+
+        // Calcul de la moyenne des avis
+        $averageRating = count($comments) > 0
+            ? array_sum(array_map(fn(Comment $comment) => $comment->getRating(), $comments)) / count($comments)
+            : 0;
+    
+        return $this->render('product/show.html.twig', [
+            'product' => $product,
+            'similarProducts' => $similarProducts,
+            'category_slug' => $category_slug,
+            'comments' => $comments,
+            'commentForm' => $form->createView(),
+            'averageRating' => $averageRating,
+        ]);
+    }
 
     #[Route('/produits', name: 'product_display')]
     public function display(ProductRepository $productRepository, Request $request, PaginatorInterface $paginator): Response
@@ -72,9 +116,6 @@ class ProductController extends AbstractController
 
         $form = $this->createForm(SearchFormType::class, $data);
         $form->handleRequest($request);
-
-  
- 
 
         [$minPrice, $maxPrice] = $productRepository->findMinMaxPrice($data);
         $products = $productRepository->findSearch($data);

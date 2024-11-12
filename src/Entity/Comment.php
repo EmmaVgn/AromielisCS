@@ -46,6 +46,7 @@ class Comment
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
+        $this->isValid = false;
     }
 
     public function getId(): ?int
@@ -69,7 +70,7 @@ class Comment
         return $this->rating;
     }
 
-    public function setRating(int $rating): static
+    public function setRating(int $rating): self
     {
         $this->rating = $rating;
         return $this;

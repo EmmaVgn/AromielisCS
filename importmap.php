@@ -24,6 +24,10 @@ return [
         'path' => './assets/js/FadeIn.js',
         'entrypoint' => true,
     ],
+    'stars' => [
+        'path' => './assets/js/stars.js',
+        'entrypoint' => true,
+    ],
     'filter' => [
         'path' => './assets/js/Filter.js',
         'entrypoint' => true,
