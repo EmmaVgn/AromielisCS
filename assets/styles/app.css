@@ -174,11 +174,11 @@ h4 {
   color: black !important;
   border: none;
   border-radius: 5px;
-  padding: 0 20px; /* Ajustez pour horizontalement */
+  padding: 15px 30px; /* Ajustez pour horizontalement */
   cursor: pointer;
   transition: background-color 0.3s, transform 0.3s;
   display: inline-block;
-  height: 2rem;
+  height: 4rem;
   line-height: 2rem; /* Correspond à la hauteur pour centrer verticalement */
   text-align: center; /* Centre horizontalement */
   overflow-y: hidden;
@@ -193,7 +193,7 @@ h4 {
   cursor: pointer;
   transition: background-color 0.3s, transform 0.3s;
   display: inline-block;
-  height: 2rem;
+  height: 4rem;
   line-height: 2rem; /* Correspond à la hauteur pour centrer verticalement */
   text-align: center; /* Centre horizontalement */
   overflow-y: hidden;

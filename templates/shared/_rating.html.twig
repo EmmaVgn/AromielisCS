@@ -7,3 +7,8 @@
 		{% endif %}
 	{% endfor %}
 </span>
+{% block importmap %}
+	{# do NOT call parent() #}
+
+	{{ importmap(['app',  'stars']) }}
+{% endblock %}

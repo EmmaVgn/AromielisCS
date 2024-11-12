@@ -54,3 +54,8 @@
 		<a href="{{ path('home_notice') }}" class="btn-custom-testimoniale">Donnez votre avis</a>
 	</div>
 </div>
+{% block importmap %}
+	{# do NOT call parent() #}
+
+	{{ importmap(['app',  'stars']) }}
+{% endblock %}
