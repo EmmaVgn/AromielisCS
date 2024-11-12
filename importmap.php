@@ -20,6 +20,10 @@ return [
         'path' => './assets/js/shop.js',
         'entrypoint' => true,
     ],
+    'FadeIn' => [
+        'path' => './assets/js/FadeIn.js',
+        'entrypoint' => true,
+    ],
     'filter' => [
         'path' => './assets/js/Filter.js',
         'entrypoint' => true,

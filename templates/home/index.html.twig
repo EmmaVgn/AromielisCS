@@ -7,7 +7,7 @@
 	<!-- Three columns of text below the carousel -->
 	<div class="row">
 		<div class="col-lg-4">
-			<img class="bd-placeholder-img rounded-circle mt-3" src="/images/products/essential-oil-4065187-640-6658b17a85073486584172.jpg" width="140" height="140" alt="Description de votre image">
+			<img class="bd-placeholder-img rounded-circle mt-3" src="{{ asset('images/essential-oil-6064331_640.jpg') }}" width="140" height="140" alt="Description de votre image">
 			<title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em"></text>
 			<h2>Huiles essentielles</h2>
 			<p>Découverez toute ma gamme d'huile essentielle bio.</p>
@@ -17,7 +17,7 @@
 		</div>
 		<!-- /.col-lg-4 -->
 		<div class="col-lg-4">
-			<img class="bd-placeholder-img rounded-circle mt-3" src="/images/products/tree-4211887-640-6658b0b7f3c7c112403014.jpg" width="140" height="140" alt="Description de votre image">
+			<img class="bd-placeholder-img rounded-circle mt-3" src="{{ asset('images/spray_hydrolat.jpg') }}" width="140" height="140" alt="Description de votre image">
 			<title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em"></text>
 			<h2>Sprays hydrolats</h2>
 			<p>Toute la gamme de spray hydrolat.
@@ -28,7 +28,7 @@
 		</div>
 		<!-- /.col-lg-4 -->
 		<div class="col-lg-4">
-			<img class="bd-placeholder-img rounded-circle mt-3" src="images/products/cosmetic-oil-3164684-640-6659dbbaa464c194224339.jpg" width="140" height="140" alt="Description de votre image">
+			<img class="bd-placeholder-img rounded-circle mt-3" src="{{ asset('images/recharges_hydrolat.jpg') }}" width="140" height="140" alt="Description de votre image">
 			<title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em"></text>
 
 			<h2>Recharges hydrolats</h2>
@@ -54,8 +54,13 @@
 	<hr class="featurette-divider">
 	{% include "home/about.html.twig" %}
 	<hr class="featurette-divider">
-	<div class="container">
+	<div class="container reveal">
 		{% include "shared/_testimonials.html.twig" %}
 	</div>
 
+{% endblock %}
+{% block importmap %}
+	{# do NOT call parent() #}
+
+	{{ importmap(['app', 'FadeIn']) }}
 {% endblock %}

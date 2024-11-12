@@ -5,7 +5,7 @@
 		{% if p.images|length > 0 and p.images.first %}
 			<img src="{{ vich_uploader_asset(p.images.first, 'imageFile') }}" alt="Product Image" class="img-fluid">
 		{% else %}
-			<img src="path/to/default-image.jpg" alt="Default Product Image" class="img-fluid">
+			<img src="{{ asset('images/not-found-2384304_1280.jpg') }}" alt="Default Product Image" class="img-fluid">
 		{% endif %}
 
 		<div class="card-body d-flex flex-column">
