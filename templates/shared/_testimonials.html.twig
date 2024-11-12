@@ -1,29 +1,26 @@
-<section class="testimonial sections" id="testimonial">
+<div class="testimonial sections" id="testimonial">
 	<h2 class="header-titles">Les avis</h2>
-
 	<p class="header-description text-center">
 		Marie SHope est une apiculture familiale qui a à cœur de vous proposer des produits de qualité.
 	</p>
-
-	<div>
-		<h4 class="alert-heading text-center">
-			<div class="row align-items-center">
-				<div class="col-md-6">
-					Note globale donnée par nos clients
-				</div>
-				<div class="col-md-6">
-					{% include "shared/_rating.html.twig" with {'rating': averageRating } %}
-					<br>
-					<small>(Calculée sur
-						{{ comments|length }}
-						avis)</small>
-				</div>
+	<div
+		style="overflow-y: hidden;">
+		<!-- Ajoutez l'overflow ici -->
+		<div class="row align-items-center">
+			<div class="col-md-4">
+				<h4 class="alert-heading text-center">Note globale donnée par nos clients</h4>
 			</div>
-		</h4>
+			<div class="col-md-6">
+				{% include "shared/_rating.html.twig" with {'rating': averageRating } %}
+				<br>
+				<small>(Calculée sur
+					{{ comments|length }}
+					avis)</small>
+			</div>
+		</div>
 	</div>
-
 	{% if comments|length > 0 %}
-		<div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+		<div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel" style="overflow-y: hidden;">
 			<div class="carousel-inner">
 				{% for comment in comments %}
 					<div class="carousel-item {% if loop.first %}active{% endif %}">
@@ -33,7 +30,7 @@
 						<blockquote class="fst-italic">{{ comment.content }}</blockquote>
 						<div class="row">
 							<div class="text-start">
-								<strong>{{ comment.fullname}}</strong>
+								<strong>{{ comment.fullname }}</strong>
 							</div>
 						</div>
 					</div>
@@ -54,7 +51,6 @@
 		</div>
 	{% endif %}
 	<div class="add-review">
-		<a href="{{ path('home_notice') }}" class="btn-fill text-center text-decoration-none fs-3 text-lg-start bg-dark">Donnez votre avis</a>
+		<a href="{{ path('home_notice') }}" class="btn-custom-testimoniale">Donnez votre avis</a>
 	</div>
-
-</section>
+</div>

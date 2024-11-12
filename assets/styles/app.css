@@ -146,6 +146,7 @@ h4 {
   padding: 10px 20px;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.3s;
+  overflow-y: hidden;
 }
 
 .btn-custom:hover {
@@ -167,6 +168,37 @@ h4 {
   background-color: #fefee2;
   color: black !important;
 }
+
+.btn-custom-testimoniale {
+  background-color: #dcdcbe;
+  color: black !important;
+  border: none;
+  border-radius: 5px;
+  padding: 0 20px; /* Ajustez pour horizontalement */
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  display: inline-block;
+  height: 2rem;
+  line-height: 2rem; /* Correspond à la hauteur pour centrer verticalement */
+  text-align: center; /* Centre horizontalement */
+  overflow-y: hidden;
+}
+
+.btn-custom-testimoniale:hover {
+  background-color: #ffffde;
+  color: black !important;
+  border: none;
+  border-radius: 5px;
+  padding: 15px 30px; /* Ajustez pour horizontalement */
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  display: inline-block;
+  height: 2rem;
+  line-height: 2rem; /* Correspond à la hauteur pour centrer verticalement */
+  text-align: center; /* Centre horizontalement */
+  overflow-y: hidden;
+}
+
 
 /*--------------------------------------------------------------
 # Customisation des boutons (boutons des card produits)
