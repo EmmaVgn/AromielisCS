@@ -148,6 +148,31 @@
 			</div>
 		</div>
 	</div>
+	<!-- Produits similaires -->
+	<div class="mt-4">
+		<h2>Produits similaires</h2>
+		<div class="row">
+
+			{% for similarProduct in similarProducts %}
+				<div class="col-md-3 ">
+					<div class="card">
+						<img src="{{ vich_uploader_asset(similarProduct.images[0], 'imageFile') }}" class="card-img-top" alt="{{ similarProduct.name }}">
+						<div class="card-body">
+							<h5 class="card-title">{{ similarProduct.name }}</h5>
+							<p class="card-text">
+								<strong>{{ similarProduct.price | amount }}</strong>
+							</p>
+							<a href="{{ path('product_show', { 'category_slug': product.category.slug, 'slug': product.slug }) }}">
+								{{ product.name }}
+							</a>
+						</div>
+					</div>
+				</div>
+			{% else %}
+				<p>Aucun produit similaire trouvé.</p>
+			{% endfor %}
+		</div>
+	</div>
 </div>{% endblock %}{% block importmap %}
 {# do NOT call parent() #}
 

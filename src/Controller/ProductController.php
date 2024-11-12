@@ -54,10 +54,13 @@ class ProductController extends AbstractController
         if (!$product) {
             throw $this->createNotFoundException("La page demandée n'existe pas");
         }
+        
+        $similarProducts = $productRepository->findSimilarProducts($product);
 
     return $this->render('product/show.html.twig', [
         'product' => $product,
-        'category_slug' => $category_slug
+        'category_slug' => $category_slug,
+        'similarProducts' => $similarProducts,
     ]);
 }
 
