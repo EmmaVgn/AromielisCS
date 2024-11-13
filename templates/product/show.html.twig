@@ -89,7 +89,7 @@
 					<div class="product-short-description p-3 mt-2">
 						<p class="text-muted fs-6">
 							Description courte:<br>
-							{{ product.introduction }}
+							{{ product.introduction| raw }}
 
 						</p>
 					</div>
@@ -109,7 +109,7 @@
 			<div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
 				<div class="accordion-body">
 					<strong>{{ product.name }}</strong>:
-					{{ product.description }}</div>
+					{{ product.description| raw }}</div>
 			</div>
 		</div>
 		<div class="accordion-item">
@@ -142,9 +142,9 @@
 			<div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
 				<div class="accordion-body">
 					<strong>Conseils d'utilisation:</strong>
-					{{ product.advise }}<br>
+					{{ product.advise| raw }}<br>
 					<strong>Précautions:</strong>
-					{{ product.precautions }}</div>
+					{{ product.precautions| raw }}</div>
 			</div>
 		</div>
 	</div>
