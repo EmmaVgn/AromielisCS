@@ -56,7 +56,16 @@ class OrderController extends AbstractController
         $order = new Order();
         $order->setUser($user);
         $order->calculateCarrierPrice($totalPrice / 100); // Assurez-vous que le prix total est en euros
-    
+
+       // Déterminer si la livraison est gratuite
+       $isFreeShipping = ($totalPrice / 100) > 49;
+            // Ajouter un message flash en fonction du total
+            if ($isFreeShipping) {
+                $this->addFlash('success', 'Félicitations! Vous bénéficiez de la livraison gratuite, veuillez choisir votre transporteur préféré ❤️ .');
+            } else {
+                $this->addFlash('warning', ' Malheureusement votre panier est inférieur à 49€, la livraison ne sera pas gratuite , veuillez choisir un transporteur.');
+            }
+
         return $this->render('order/index.html.twig', [
             'form' => $form->createView(),
             'cart' => $cartProducts,
@@ -93,6 +102,9 @@ class OrderController extends AbstractController
             // Déterminer si la livraison est gratuite
             $isFreeShipping = ($totalPrice / 100) > 49;
             $carrierPrice = $isFreeShipping ? 0 : $carrier->getPrice();
+
+
+
     
             $deliveryString = sprintf(
                 '%s %s<br>%s<br>%s%s<br>%s<br>%s<br>%s',
