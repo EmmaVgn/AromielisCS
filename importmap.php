@@ -55,23 +55,4 @@ return [
         'version' => '5.3.3',
         'type' => 'css',
     ],
-    'nouislider.js'=> [
-        'path' => './assets/vendor/noUiSlider-15.8.1/dist/nouislider.js',
-
-        'entrypoint' => true,
-    ],
-    'nouislider.css' => [
-        'path' => './assets/vendor/noUiSlider-15.8.1/dist/nouislider.css',
-        
-        'type' => 'css',
-    ],
-    'alertify' => [
-        'path' => './vendor/alertify/dist/js/alertify.js' ,
-        'entrypoint' => true,
-    ],
-    'alertify.css' => [
-        'path' => './vendor/alertify/dist/css/alertify.css' ,
-        'entrypoint' => true,
-        'type' => 'css',
-    ],
 ];
