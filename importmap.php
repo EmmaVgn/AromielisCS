@@ -56,11 +56,11 @@ return [
         'type' => 'css',
     ],
     'nouislider.js'=> [
-        'path' => './vendor/nouislider/nouislider.js',
+        'path' => './assets/vendor/nouislider/dist/nouislider.js',
         'entrypoint' => true,
     ],
     'nouislider.css' => [
-        'path' => './vendor/nouislider/nouislider.css',
+        'path' => './assets/vendor/nouislider/dist/nouislider.css',
         'type' => 'css',
     ],
     'alertify' => [
