@@ -1,12 +1,9 @@
-<span class="rating">
+<div class="star-rating">
 	{% for i in 1..5 %}
-		{% if i <= rating %}
-			<i class="fa-solid fa-star"></i>
-		{% else %}
-			<i class="fa-regular fa-star"></i>
-		{% endif %}
+		<i class="fas {% if i <= rating %}fas{% else %}far{% endif %}" data-rating="{{ i }}"></i>
 	{% endfor %}
-</span>
+</div>
+
 {% block importmap %}
 	{# do NOT call parent() #}
 
