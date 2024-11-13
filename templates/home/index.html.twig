@@ -42,13 +42,14 @@
 
 	<!-- START THE FEATURETTES -->
 	<h2>Nos produits phares</h2>
-	<div class="row">
+	<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
 		{% for p in products %}
-			<div class="col">
+			<div class="col mb-4">
 				{% include "_partials/_product_card.html.twig" %}
 			</div>
 		{% endfor %}
 	</div>
+
 	<hr class="featurette-divider">
 	{% include "home/history.html.twig" %}
 	<hr class="featurette-divider">

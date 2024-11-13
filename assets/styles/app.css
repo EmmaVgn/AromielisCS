@@ -134,6 +134,16 @@ h4 {
   overflow: hidden; /* Évite tout débordement de bouton */
 }
 
+.card-body .badge {
+  margin-bottom: 0.5rem;
+}
+
+.card-container .custom-btn-primary,
+.card-container .custom-btn-success {
+  margin-bottom: 0.5rem;
+  width: 100%;
+}
+
 
 /*--------------------------------------------------------------
 #Boutons
@@ -204,7 +214,7 @@ h4 {
 # Customisation des boutons (boutons des card produits)
 --------------------------------------------------------------*/
 .custom-btn-primary {  /* Couleur d'en savoir plus'*/
-  background-color: #caaf8d; 
+  background-color: #caaf8d !important; 
   color: black !important; 
   border-radius: 5px; 
   padding: 8px 16px; 
@@ -221,7 +231,7 @@ h4 {
 }
 
 .custom-btn-success { /* Couleur d'ajouter au panier */
-  background-color: #2C6B4F; 
+  background-color: #2C6B4F !important; 
   border-color: #2C6B4F; 
   color: white !important; 
   border-radius: 5px; 
