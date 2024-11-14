@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Plan du site
+{% endblock %}
+
+{% block body %}
+	<section class="legal-page container py-5">
+		<h1 class="text-center mb-4">Plan du site</h1>
+
+		<div class="card mb-4 p-4 shadow-sm">
+			<h2>Navigation Principale</h2>
+			<ul>
+				<li><ahref="{{path('homepage')}}">Accueil</a></li>
+				<li><ahref="{{path('product_display')}}">Mes produits</a></li>
+				<li><ahref="{{path('advise')}}">Blog</a></li>
+				<li><ahref="{{path('contact')}}">Contact</a></li>
+			</ul>
+		</div>
+
+		<div class="card mb-4 p-4 shadow-sm">
+			<h2>Pages Légales</h2>
+			<ul>
+				<li><ahref="{{path('mentions_legales')}}">Mentions Légales</a></li>
+				<li><ahref="{{path('politique_confidentialite')}}">Politique de Confidentialité</a></li>
+				<li><ahref="{{path('cgv')}}">Conditions Générales de Vente (CGV)</a></li>
+				<li><ahref="{{path('cgu')}}">Conditions Générales de Vente (CGU)</a></li>
+				<li><ahref="{{path('politique_remboursement')}}">Politique de Remboursement/Annulation</a></li>
+				<li><ahref="{{path('politique_cookies')}}">Politique de Cookies</a></li>
+			</ul>
+		</div>
+	</section>
+{% endblock %}
