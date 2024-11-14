@@ -31,9 +31,9 @@ class ContactController extends AbstractController
             $em->flush();
 
             $mail->sendEmail(
-                'no-reply@monsite.net',
+                'contact@cameleon-solutions.fr',
                 'Demande de contact',
-                'contact@sfr.fr',
+                'contact@cameleon-solutions.fr',
                 'Demande de contact',
                 'contact',
                 ['contact' => $contact]

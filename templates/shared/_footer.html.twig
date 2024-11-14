@@ -35,25 +35,25 @@
 
 			<!--Grid column-->
 			<div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-				<h5 class="text-uppercase mb-4">Liens utiles</h5>
+				<h5 class="text-uppercase mb-4">Liens utils</h5>
 				<ul class="list-unstyled">
 					<li class="mb-2">
-						<a href="#" class="text-dark">
+						<a href="{{ path('product_display') }}" class="text-dark">
 							<i class="fa-brands fa-forumbee pe-2"></i>Boutique en ligne
 						</a>
 					</li>
 					<li class="mb-2">
-						<a href="#" class="text-dark">
+						<a href="{{ path('advise') }}" class="text-dark">
 							<i class="fa-brands fa-forumbee pe-2"></i>Conseils d'utilisation
 						</a>
 					</li>
 					<li class="mb-2">
-						<a href="#" class="text-dark">
+						<a href="{{ path('home_cgv') }}" class="text-dark">
 							<i class="fa-brands fa-forumbee pe-2"></i>Conditions générales de ventes
 						</a>
 					</li>
 					<li class="mb-2">
-						<a href="#" class="text-dark">
+						<a href="{{ path('home_legal') }}" class="text-dark">
 							<i class="fa-brands fa-forumbee pe-2"></i>Mentions légales
 						</a>
 					</li>
@@ -85,17 +85,21 @@
 				<ul class="list-unstyled">
 					<li>
 						<p>
-							<i class="fas fa-map-marker-alt pe-2"></i>Faouret, 47330 Bias
+							<i class="fas fa-map-marker-alt pe-2"></i>
+							<a href="https://www.google.com/maps?q=Faouret,+47330+Bias" target="_blank">Faouret, 47330 Bias</a>
 						</p>
 					</li>
 					<li>
 						<p>
-							<i class="fas fa-phone pe-2"></i>+ xx xx xx xx xx
+							<i class="fas fa-phone pe-2"></i>
+							<a href="tel:+33651794297">06 51 79 42 97</a>
 						</p>
 					</li>
 					<li>
 						<p>
-							<i class="fas fa-envelope pe-2 mb-0"></i>contact@example.com
+							<i class="fas fa-envelope pe-2 mb-0"></i>
+							<a href="mailto:exemple@domaine.com?subject=Demande d'information">
+								contact@cameleon-solutions.fr</a>
 						</p>
 					</li>
 				</ul>
