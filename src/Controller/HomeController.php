@@ -63,18 +63,7 @@ class HomeController extends AbstractController
         ]);
     }
 
-    #[Route('/mentions-legales', name: 'home_legal')]
-    public function legal(): Response
-    {
-        return $this->render('legal/legal.html.twig');
-    }
-
-    #[Route('/cgv', name: 'home_cgv')]
-    public function cgv(): Response
-    {
-        return $this->render('legal/cgv.html.twig');
-    }
-
+    
     #[Route('/devenir-distributeur', name: 'home_distributeur')]
     public function distributor(Request $request, EntityManagerInterface $em, SendMailService $mail): Response
     {
