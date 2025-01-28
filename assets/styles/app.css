@@ -100,6 +100,30 @@ h4 {
   padding-right: 35px; /* Ajustez la marge droite */
 }
 
+/* Forcer toutes les colonnes à avoir la même hauteur */
+.row .col-lg-3 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Uniformiser la hauteur des images */
+.bd-placeholder-img {
+  width: 140px;
+  height: 140px;
+  object-fit: cover; /* Assure que les images remplissent bien l’espace */
+}
+
+/* Fixer une hauteur minimale pour les titres et paragraphes */
+h2 {
+  min-height: 50px; /* Ajuste selon la taille des textes */
+}
+
+p {
+  flex-grow: 1; /* Permet d’équilibrer la hauteur */
+}
+
+
 
 /*--------------------------------------------------------------
 #Cards
