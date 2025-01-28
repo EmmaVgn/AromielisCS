@@ -1038,6 +1038,33 @@ thead {
 }
 
 /*--------------------------------------------------------------
+# Contact rapide
+--------------------------------------------------------------*/
+/* Centrer tout le contenu */
+.service-contact-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centre horizontalement */
+  justify-content: center; /* Centre verticalement */
+  text-align: center;
+  padding: 50px 0; /* Ajoute un espace pour l'équilibre visuel */
+}
+
+/* Centrer le conteneur interne */
+.service-contact-section .container {
+  max-width: 600px; /* Évite que le texte s'étale trop */
+  text-align: center; /* Centre le texte */
+}
+
+/* Ajustement du bouton */
+.service-contact-section .btn-custom {
+  margin-top: 15px;
+  padding: 10px 30px; /* Ajustement de la taille */
+  display: inline-block;
+}
+
+
+/*--------------------------------------------------------------
 # Couleur badge catégories
 --------------------------------------------------------------*/
 .badge.category-huiles-essentielles {
@@ -1075,38 +1102,6 @@ thead {
   color: #f8d32b;
 }
 
-/*--------------------------------------------------------------
-/* CSS pour la bannière Cookie Consent */
---------------------------------------------------------------*/
-
-.cc-window {
-  position: fixed;
-  bottom: 100px !important;  /* Place la bannière en bas de la page */
-  left: 0;
-  width: 100%;
-  z-index: 9999;  /* Assurez-vous que la bannière se place au-dessus de tout autre contenu */
-  background-color: #000;
-  color: #fff;
-  text-align: center;
-  padding: 15px 0;
-  font-size: 16px;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);  /* Ombre pour un peu de profondeur */
-}
-.cc-window .cc-compliance {
-  display: inline-block;
-  margin-left: 10px;
-}
-.cc-window .cc-btn {
-  background-color: #f1d600;
-  border: none;
-  color: #000;
-  padding: 10px 20px;
-  font-size: 14px;
-  cursor: pointer;
-}
-.cc-window .cc-btn:hover {
-  background-color: #d1b100;
-}
 
 /*--------------------------------------------------------------
 # MENTIONS LÉGALES
