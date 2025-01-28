@@ -22,17 +22,17 @@
 						<td>{{ item.product.name }}</td>
 						<td>{{ item.product.price|amount }}</td>
 						<td>
-							<a href="{{ path('cart_decrement', {'id': item.product.id}) }}" class="btn btn-primary btn-sm">
+							<a href="{{ path('cart_decrement', {'id': item.product.id}) }}" class="btn btn-sm" style="color: #388E3C; border: 1px solid #8BC34A;">
 								<i class="fas fa-minus"></i>
 							</a>
 							{{ item.quantity }}
-							<a href="{{ path('cart_add', {'id': item.product.id}) }}?returnToCart=true" class="btn btn-primary btn-sm">
+							<a href="{{ path('cart_add', {'id': item.product.id}) }}?returnToCart=true" class="btn btn-sm" style="color: #388E3C; border: 1px solid #8BC34A;">
 								<i class="fas fa-plus"></i>
 							</a>
 						</td>
 						<td>{{ item.total|amount }}</td>
 						<td>
-							<a href="{{ path('cart_delete', {'id': item.product.id }) }}">
+							<a href="{{ path('cart_delete', {'id': item.product.id }) }}" class="text-secondary">
 								<i class="fas fa-trash"></i>
 							</a>
 						</td>
@@ -50,7 +50,6 @@
 				</tr>
 				<tr>
 					<td colspan="3">Total :</td>
-
 				</tr>
 			</tfoot>
 		</table>
@@ -59,7 +58,7 @@
 	{% endif %}
 	<hr>
 	<a class="mb-3 d-block" href="{{ path('product_display') }}">Continuez mes achats</a>
-	<a href="{{ path('order') }}" title="Valider puis passer au paiement" class="btn btn-outline-success btn-block">
+	<a href="{{ path('order') }}" title="Valider puis passer au paiement" class="btn btn-success btn-block" style="background-color: #388E3C; border: none;">
 		Valider mon panier
 	</a>
 {% endblock %}

@@ -34,7 +34,7 @@ class ContactFormType extends AbstractType
             'label' => false,
             'required' => true,
             'attr' => [
-                'placeholder' => 'contact@aromielis.fr',
+                'placeholder' => 'marie.farjaud@gmail.com',
             ],
         ])
         ->add('phone', TelType::class, [
