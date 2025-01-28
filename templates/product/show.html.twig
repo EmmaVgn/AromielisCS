@@ -234,7 +234,7 @@
 							<p class="card-text">
 								<strong>{{ similarProduct.price | amount }}</strong>
 							</p>
-							<a href="{{ path('product_show', { 'category_slug': product.category.slug, 'slug': product.slug }) }}" class="btn btn-custom mb-3">
+							<a href="{{ path('product_show', { 'category_slug': similarProduct.category.slug, 'slug': similarProduct.slug }) }}" class="btn btn-custom mb-3">
 								Voir le produit
 							</a>
 						</div>
@@ -244,6 +244,7 @@
 				<p>Aucun produit similaire trouvé.</p>
 			{% endfor %}
 		</div>
+
 
 	</div>
 </div>{% endblock %}{% block importmap %}
