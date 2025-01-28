@@ -62,6 +62,19 @@ body {
   object-fit: cover; /* Couvre l'espace sans se déformer */
 }
 
+/* Assurer que les colonnes prennent la même hauteur */
+.row.featurette {
+  display: flex;
+  align-items: stretch; /* Étire les colonnes pour qu'elles aient la même hauteur */
+}
+
+/* Ajuster la hauteur des images pour qu'elles soient bien alignées */
+.row.featurette img {
+  height: 100%; /* Assure que l’image occupe toute la hauteur disponible */
+  max-height: 600px; /* Garde une taille raisonnable */
+  object-fit: cover; /* Évite la déformation */
+}
+
 /* RESPONSIVE CSS */
 @media (min-width: 40em) {
   .carousel-caption p {

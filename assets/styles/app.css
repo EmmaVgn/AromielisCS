@@ -107,12 +107,29 @@ h4 {
   justify-content: space-between;
 }
 
-/* Uniformiser la hauteur des images */
-.bd-placeholder-img {
-  width: 140px;
-  height: 140px;
-  object-fit: cover; /* Assure que les images remplissent bien l’espace */
+/* Assurer que chaque section ait la même hauteur */
+.featurette {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch; /* Étire les colonnes pour les aligner */
 }
+
+/* S’assurer que les colonnes prennent toute la hauteur */
+.featurette .col-lg-7,
+.featurette .col-lg-5 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Garantir que l'image prend la hauteur de la colonne */
+.featurette img {
+  width: 100%;
+  height: 100%; /* Remplir toute la hauteur */
+  max-height: 500px; /* Ajuster si nécessaire */
+  object-fit: cover; /* Ajuste l'image sans déformation */
+}
+
 
 /* Fixer une hauteur minimale pour les titres et paragraphes */
 h2 {
