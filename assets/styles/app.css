@@ -1063,6 +1063,53 @@ thead {
   display: inline-block;
 }
 
+/*--------------------------------------------------------------
+# Pagination
+--------------------------------------------------------------*/
+/* Style global de la pagination */
+.pagination {
+  display: flex;
+  justify-content: center; /* Centre la pagination */
+  gap: 5px; /* Espacement entre les boutons */
+}
+
+/* Style des liens de pagination */
+.pagination .page-link {
+  background-color: #dcdcbe; /* Couleur de fond */
+  color: black; /* Couleur du texte */
+  border: 2px solid black; /* Bordure */
+  border-radius: 8px; /* Coins arrondis */
+  padding: 8px 15px; /* Ajustement du padding */
+  transition: all 0.3s ease-in-out;
+}
+
+/* Effet au survol */
+.pagination .page-link:hover {
+  background-color: #b8b894;
+  color: white;
+  border-color: white;
+}
+
+/* Style du bouton actif */
+.pagination .active .page-link {
+  background-color: black;
+  color: white;
+  border: 2px solid black;
+}
+
+/* Désactiver les liens "Previous" et "Next" */
+.pagination .disabled .page-link {
+  background-color: #e0e0e0;
+  color: #aaa;
+  border-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Retirer la couleur bleue par défaut */
+.pagination .page-link:focus {
+  box-shadow: none;
+}
+
 
 /*--------------------------------------------------------------
 # Couleur badge catégories
