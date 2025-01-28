@@ -339,6 +339,42 @@ p {
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
 }
 
+/* Style du bouton lien */
+.btn-link {
+  background: linear-gradient(135deg, #dcdcbe, #b8b894); /* Dégradé doux */
+  color: black !important; /* Supprime le bleu */
+  border: 2px solid black;
+  border-radius: 20px;
+  padding: 8px 20px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  font-weight: bold;
+  text-decoration: none; /* Supprime le soulignement */
+  display: inline-block;
+}
+
+/* Supprime le bleu du texte */
+.btn-link a {
+  color: inherit !important; /* Hérite du noir */
+  text-decoration: none !important; /* Supprime le soulignement */
+}
+
+/* Effet au survol */
+.btn-link:hover {
+  background-color: #b8b894;
+  color: white !important;
+  transform: scale(1.05);
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Effet au clic */
+.btn-link:active {
+  transform: scale(0.95);
+  box-shadow: none;
+}
+
+
 /* Vérifier si le conteneur parent ne coupe pas */
 .container, .col-lg-3, .row {
     overflow: visible !important; /* Assure que l'ombre et le bouton ne soient pas tronqués */
@@ -848,17 +884,39 @@ a:active {
 }
 
 /* Style spécifique pour le bouton "Filtrer" */
+/* Style spécifique pour le bouton "Filtrer" */
 .btn-filter {
-  background-color: rgba(201, 224, 26, 0.407); 
-  color: #000; 
-  border: 1px solid rgba(201, 224, 26, 0.407);
+  background-color: transparent; /* Supprime le fond */
+  color: black; /* Couleur du texte */
+  border: 2px solid rgba(201, 224, 26, 0.8); /* Bordure visible */
+  border-radius: 8px !important; /* Coins légèrement arrondis */
+  padding: 8px 15px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  text-decoration: none;
+  display: inline-block;
+  border-color: #000;
+  border: 2px solid black !important;
 }
 
+/* Effet au survol */
 .btn-filter:hover {
-  background-color: rgba(201, 224, 26, 0.407);
-  border-color: rgba(201, 224, 26, 0.407);
+  background-color: #b8b894; /* Léger effet de fond au survol */
+  color: black;
+  border-color: rgba(201, 224, 26, 1);
 }
 
+/* Effet au clic */
+.btn-filter:active {
+  transform: scale(0.95);
+  box-shadow: none;
+}
+
+.form-check-input:checked {
+  background-color: #b8b894 !important;
+  border-color: #b8b894!important;
+}
 
 /*--------------------------------------------------------------
 # Page product_show
