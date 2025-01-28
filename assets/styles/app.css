@@ -225,127 +225,125 @@ p {
 /*--------------------------------------------------------------
 #Boutons
 --------------------------------------------------------------*/
+/* Style du bouton principal - Plus compact */
 .btn-custom {
-  background-color: #dcdcbe;
+  background: linear-gradient(135deg, #dcdcbe, #b8b894); /* Dégradé élégant */
   color: black;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
+  border: 2px solid rgba(0, 0, 0, 0.8);
+  border-radius: 20px; /* Coins légèrement arrondis */
+  padding: 8px 18px; /* Réduction du padding */
+  font-size: 0.85rem; /* Réduction de la taille du texte */
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s;
-  overflow-y: hidden;
-  text-decoration: none; /* Empêche le soulignement du texte dans le bouton */
-  display: inline-block; /* S'assurer que le bouton se comporte comme un élément de bloc inline */
-}
-
-.btn-custom a {
-  text-decoration: none; /* Supprime le soulignement des liens à l'intérieur du bouton */
-  color: inherit; /* Garde la même couleur que le bouton */
-}
-
-
-.btn-custom:hover {
-  background-color: #fefee2;
-  color: black;
-  
-}
-
-.btn-link {
-  color: black !important;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s;
-}
-
-.btn-link:hover {
-  background-color: #fefee2;
-  color: black !important;
-}
-
-.btn-custom-testimoniale {
-  background-color: #dcdcbe;
-  color: black !important;
-  border: none;
-  border-radius: 5px;
-  padding: 15px 30px; /* Ajustez pour horizontalement */
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s;
-  display: inline-block;
-  height: 4rem;
-  line-height: 2rem; /* Correspond à la hauteur pour centrer verticalement */
-  text-align: center; /* Centre horizontalement */
-  overflow-y: hidden;
-}
-
-.btn-custom-testimoniale:hover {
-  background-color: #ffffde;
-  color: black !important;
-  border: none;
-  border-radius: 5px;
-  padding: 15px 30px; /* Ajustez pour horizontalement */
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s;
-  display: inline-block;
-  height: 4rem;
-  line-height: 2rem; /* Correspond à la hauteur pour centrer verticalement */
-  text-align: center; /* Centre horizontalement */
-  overflow-y: hidden;
-}
-
-/* Style du bouton dans le carrousel */
-.btn-carousel {
-  background: linear-gradient(135deg, #dcdcbe, #b8b894); /* Dégradé subtil */
-  color: black; /* Couleur du texte */
-  border: 2px solid rgba(0, 0, 0, 0.8); /* Bordure semi-transparente */
-  padding: 12px 25px;
+  transition: all 0.3s ease-in-out;
   text-decoration: none;
-  font-weight: bold;
-  border-radius: 30px; /* Bouton plus arrondi */
-  transition: all 0.4s ease-in-out;
   display: inline-block;
   text-align: center;
-  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.2); /* Ombre pour donner du relief */
+  font-weight: bold;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Effet au survol */
+.btn-custom:hover {
+  background: linear-gradient(135deg, #b8b894, #969676);
+  color: white;
+  border-color: white;
+  transform: scale(1.05);
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Effet au clic */
+.btn-custom:active {
+  transform: scale(0.94);
+  box-shadow: none;
+}
+
+/* Style du bouton témoignage - Version plus compacte */
+.btn-custom-testimoniale {
+  background: linear-gradient(135deg, #dcdcbe, #b8b894);
+  color: black !important;
+  border: 2px solid rgba(0, 0, 0, 0.8);
+  border-radius: 20px;
+  padding: 10px 25px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  display: inline-block;
+  text-align: center;
+  font-weight: bold;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Effet au survol */
+.btn-custom-testimoniale:hover {
+  background: linear-gradient(135deg, #b8b894, #969676);
+  color: white !important;
+  border-color: white;
+  transform: scale(1.05);
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Effet au clic */
+.btn-custom-testimoniale:active {
+  transform: scale(0.94);
+  box-shadow: none;
+}
+
+/* Style du bouton dans le carrousel - Réduit et plus équilibré */
+.btn-carousel {
+  background: linear-gradient(135deg, #dcdcbe, #b8b894);
+  color: black;
+  border: 2px solid rgba(0, 0, 0, 0.8);
+  padding: 8px 20px; /* Moins large */
+  font-size: 0.85rem;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 20px;
+  transition: all 0.3s ease-in-out;
+  display: inline-block;
+  text-align: center;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
   position: relative;
   overflow: hidden;
 }
 
-/* Effet de survol */
+/* Effet au survol */
 .btn-carousel:hover {
-  background: linear-gradient(135deg, #b8b894, #969676); /* Inversion du dégradé */
+  background: linear-gradient(135deg, #b8b894, #969676);
   color: white;
   border-color: white;
-  transform: scale(1.08); /* Effet de zoom */
-  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.3);
-}
-
-/* Animation de brillance */
-.btn-carousel::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 300%;
-  height: 300%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 80%);
-  transition: all 0.6s ease-in-out;
-  transform: translate(-50%, -50%) scale(0.1);
-  border-radius: 50%;
-  z-index: 1;
-}
-
-/* Effet brillant au survol */
-.btn-carousel:hover::before {
-  transform: translate(-50%, -50%) scale(1);
-  opacity: 0;
+  transform: scale(1.05);
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.3);
 }
 
 /* Effet au clic */
 .btn-carousel:active {
-  transform: scale(0.96);
+  transform: scale(0.94);
   box-shadow: none;
 }
+
+/* Corrige l'effet de coupe */
+.btn-custom,
+.btn-custom-testimoniale,
+.btn-carousel,
+.btn-link {
+    display: inline-block;
+    padding: 8px 20px; /* Ajustement de la taille */
+    font-size: 0.85rem;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden; /* Empêche le bouton d'être coupé */
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Vérifier si le conteneur parent ne coupe pas */
+.container, .col-lg-3, .row {
+    overflow: visible !important; /* Assure que l'ombre et le bouton ne soient pas tronqués */
+}
+
 
 
 /*--------------------------------------------------------------
