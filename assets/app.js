@@ -15,6 +15,27 @@ import './styles/cookieconsent.min.css';
  */
 import './styles/app.css';
 
+//différenciation des carousel
+document.addEventListener("DOMContentLoaded", function () {
+    var homepageCarousel = new bootstrap.Carousel(document.querySelector("#carouselHomepage"), {
+        interval: 5000, // Auto-slide toutes les 5 secondes
+        ride: "carousel"
+    });
+
+    var productCarousel = new bootstrap.Carousel(document.querySelector("#carouselProductDetail"), {
+        interval: false // Désactive l'auto-slide pour éviter les changements involontaires
+    });
+});
+
+//Carousel homepage
+document.addEventListener("DOMContentLoaded", function () {
+    var homepageCarousel = new bootstrap.Carousel(document.querySelector("#carouselHomepage"), {
+        interval: 3000, // Auto-slide toutes les 3 secondes
+        ride: "carousel"
+    });
+});
+
+
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
 function setCookie(name, value, days) {
     var expires = "";

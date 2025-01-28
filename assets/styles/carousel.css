@@ -5,40 +5,32 @@ body {
 }
 
 /* CUSTOMIZE THE CAROUSEL */
-#myCarousel {
+#carouselHomepage {
   width: 100vw; /* Prend toute la largeur de l'écran */
   max-width: 100vw;
-  height: 32rem; /* Garde la hauteur souhaitée */
+  height: 32rem; /* Hauteur constante */
   margin: 0; /* Supprime toute marge éventuelle */
   overflow: hidden; /* Évite tout débordement */
 }
 
-#myCarousel,
+#carouselHomepage,
 .carousel,
 .carousel-inner,
 .carousel-item {
-  width: 100vw !important; /* Assure que ça prend toute la largeur de l'écran */
+  width: 100vw !important;
   max-width: 100vw !important;
   margin: 0;
   padding: 0;
-  overflow: hidden; /* Évite les débordements */
+  overflow: hidden;
 }
 
 .carousel-item {
-  width: 100vw; /* Pleine largeur */
-  height: 32rem; /* Hauteur constante */
-}
-
-.carousel-item > img {
-  width: 100vw !important;
-  height: 32rem; /* Garde la hauteur */
-  object-fit: cover; /* Ajuste l'image pour remplir le conteneur */
-  position: relative; /* Évite les décalages */
-  left: 0;
+  width: 100vw;
+  height: 32rem;
 }
 
 .carousel-inner {
-  width: 100vw; /* Pleine largeur */
+  width: 100vw;
   max-width: 100vw;
 }
 
@@ -52,14 +44,17 @@ body {
   z-index: 10;
 }
 
-/* Déclaration de la hauteur et de la largeur des images */
-.carousel-item > img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw; /* Prend toute la largeur */
-  height: 32rem;
-  object-fit: cover; /* Couvre l'espace sans se déformer */
+/* Assurer que les colonnes prennent la même hauteur */
+.row.featurette {
+  display: flex;
+  align-items: stretch;
+}
+
+/* Ajuster la hauteur des images */
+.row.featurette img {
+  height: 100%;
+  max-height: 600px;
+  object-fit: cover;
 }
 
 /* Assurer que les colonnes prennent la même hauteur */

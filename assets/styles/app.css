@@ -1055,45 +1055,90 @@ thead {
   /*--------------------------------------------------------------
 # Product_show page (avis)
 --------------------------------------------------------------*/
-/* Styles pour le carousel des avis */
-.carousel-inner {
-  padding: 0 15px; /* Ajoute un peu d'espace de chaque côté */
-}
-.carousel-item {
-  display: flex;
-  justify-content: center;
-}
-.card {
-  width: 100%; /* Assure que la carte occupe toute la largeur du carousel */
-  max-width: 500px; /* Limite la largeur de la carte */
-  border: 1px solid #ddd; /* Bordure légère autour de la carte */
-  border-radius: 0.5rem; /* Coins arrondis */
-}
-.card-body {
-  padding: 1.5rem; /* Espacement interne de la carte */
-}
-.rating {
-  color: #f39c12; /* Couleur des étoiles */
-}
-.star {
-  font-size: 1.2rem; /* Taille des étoiles */
-}
+/* Styles des boutons prev/next */
 .carousel-control-prev,
 .carousel-control-next {
-  width: 5%; /* Ajuste la largeur des contrôles */
+  width: 5%; /* Ajuste la largeur des boutons */
+  opacity: 1; /* S'assurer qu'ils sont visibles */
+  z-index: 100; /* Évite qu'ils soient cachés derrière d'autres éléments */
 }
+
+/* Icônes visibles */
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
-  background-color: rgba(
-    0,
-    0,
-    0,
-    0.5
-  ); /* Fond semi-transparent pour les icônes */
-  border-radius: 50%; /* Coins arrondis pour les boutons de contrôle */
-  width: 3rem; /* Largeur des boutons de contrôle */
-  height: 3rem; /* Hauteur des boutons de contrôle */
+  background-color: rgba(0, 0, 0, 0.5); /* Ajoute un fond semi-transparent */
+  border-radius: 50%; /* Arrondit les boutons */
+  width: 3rem; /* Ajuste la taille */
+  height: 3rem;
 }
+
+/* Survol pour améliorer la visibilité */
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+  opacity: 1;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  width: 8%; /* Ajuste la largeur des boutons */
+  z-index: 10; /* Assure qu'ils apparaissent au-dessus des autres éléments */
+}
+
+.carousel-control-prev {
+  left: 5%; /* Ramène le bouton précédent un peu vers la gauche */
+}
+
+.carousel-control-next {
+  right: 65% !important; /* Ramène le bouton suivant vers la gauche */
+}
+/* S'assurer que l'icône est visible */
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+}
+
+
+
+
+/* Style des cartes produits */
+.product-card-details {
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.1);
+}
+
+.product-price {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Bouton d'ajout au panier */
+.btn-success {
+  background: linear-gradient(135deg, #b8b894, #969676);
+  border: 2px solid rgba(0, 0, 0, 0.8);
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-weight: bold;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-success:hover {
+  background: linear-gradient(135deg, #969676, #767654);
+  color: white;
+  border-color: white;
+  transform: scale(1.08);
+}
+
+
+/* Icônes étoiles */
+.rating {
+  color: #f39c12;
+  font-size: 1.2rem;
+}
+
 
 /*--------------------------------------------------------------
 # Contact rapide
