@@ -234,7 +234,15 @@ p {
   cursor: pointer;
   transition: background-color 0.3s, transform 0.3s;
   overflow-y: hidden;
+  text-decoration: none; /* Empêche le soulignement du texte dans le bouton */
+  display: inline-block; /* S'assurer que le bouton se comporte comme un élément de bloc inline */
 }
+
+.btn-custom a {
+  text-decoration: none; /* Supprime le soulignement des liens à l'intérieur du bouton */
+  color: inherit; /* Garde la même couleur que le bouton */
+}
+
 
 .btn-custom:hover {
   background-color: #fefee2;
@@ -284,6 +292,59 @@ p {
   line-height: 2rem; /* Correspond à la hauteur pour centrer verticalement */
   text-align: center; /* Centre horizontalement */
   overflow-y: hidden;
+}
+
+/* Style du bouton dans le carrousel */
+.btn-carousel {
+  background: linear-gradient(135deg, #dcdcbe, #b8b894); /* Dégradé subtil */
+  color: black; /* Couleur du texte */
+  border: 2px solid rgba(0, 0, 0, 0.8); /* Bordure semi-transparente */
+  padding: 12px 25px;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 30px; /* Bouton plus arrondi */
+  transition: all 0.4s ease-in-out;
+  display: inline-block;
+  text-align: center;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.2); /* Ombre pour donner du relief */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Effet de survol */
+.btn-carousel:hover {
+  background: linear-gradient(135deg, #b8b894, #969676); /* Inversion du dégradé */
+  color: white;
+  border-color: white;
+  transform: scale(1.08); /* Effet de zoom */
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Animation de brillance */
+.btn-carousel::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300%;
+  height: 300%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 80%);
+  transition: all 0.6s ease-in-out;
+  transform: translate(-50%, -50%) scale(0.1);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+/* Effet brillant au survol */
+.btn-carousel:hover::before {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 0;
+}
+
+/* Effet au clic */
+.btn-carousel:active {
+  transform: scale(0.96);
+  box-shadow: none;
 }
 
 
