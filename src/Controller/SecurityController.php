@@ -65,19 +65,19 @@ class SecurityController extends AbstractController
                 ];
                 // Envoi du mail
                 $mail->sendEmail(
-                    'no-reply@monsite.net',
-                    'Infos de l\'application SymBNB',
+                    'contact@mariefarjaud.fr',
+                    'Infos Aromielis',
                     $user->getEmail(),
                     'Réinitialisation de mot de passe',
                     'password_reset',
                     $context
                 );
                 $this->addFlash('success', 'Email envoyé avec succès');
-                return $this->redirectToRoute('security_login');
+                return $this->redirectToRoute('app_login');
             }
             // $user est null
             $this->addFlash('danger', 'Un problème est survenu');
-            return $this->redirectToRoute('security_login');
+            return $this->redirectToRoute('app_login');
         }
         return $this->render('security/reset_password_request.html.twig', [
             'formView' => $form->createView(),

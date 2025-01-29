@@ -20,7 +20,7 @@ class ResetPasswordRequestFormType extends AbstractType
                 ],
                 'required' => true,
                 'attr' => [
-                    'placeholder' => 'contact@lesmaisonsdemarie.net',
+                    'placeholder' => 'contact@mariefarjaud.fr',
                     'class' => 'form-control-login'
                 ],
                 'constraints' => new Email()

@@ -15,9 +15,13 @@
 	{% endfor %}
 	<div class="list-group mb-6">
 
-		<a href="{{ path('account_orders', {'reference': order.reference}) }}" class="list-group-item list-group-item-action">
-			Mes commandes
-		</a>
+		{% for order in orders %}
+			<a href="{{ path('account_order', {'reference': order.reference}) }}" class="list-group-item list-group-item-action">
+				Commande #{{ order.reference }}
+			</a>
+		{% else %}
+			<p>Aucune commande enregistrée.</p>
+		{% endfor %}
 
 
 		<a href="{{ path('account_address') }}" class="list-group-item list-group-item-action">
