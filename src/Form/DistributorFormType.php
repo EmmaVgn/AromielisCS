@@ -55,7 +55,7 @@ class DistributorFormType extends AbstractType
                 'label' => false,
                 'required' => true,
                 'attr' => [
-                    'placeholder' => 'contact@aromielis.fr',
+                    'placeholder' => 'contact@mariefarjaud.fr',
                 ],
             ])
             ->add('phone', TelType::class, [
