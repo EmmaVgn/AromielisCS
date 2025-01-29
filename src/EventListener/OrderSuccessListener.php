@@ -34,7 +34,7 @@ class OrderSuccessListener implements EventSubscriberInterface
         ];
 
         $this->mailService->sendEmail(
-            'marie.farjaud@gmail.com',
+            'contact@mariefarjaud.fr',
             'Aromielis',
             $user->getEmail(),
             'Votre commande a été validée',

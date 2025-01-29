@@ -1,14 +1,12 @@
 # see https://symfony.com/doc/current/reference/configuration/framework.html
 framework:
   secret: "%env(APP_SECRET)%"
-  #csrf_protection: true
-
-  # Note that the session will be started ONLY if you read or write from it.
-  session: true
-
-  #esi: true
-  #fragments: true
-
+  session:
+    handler_id: null
+    cookie_lifetime: 3600 # Durée de vie du cookie de session (en secondes)
+    save_path: "%kernel.cache_dir%/sessions" # Où stocker les sessions sur le serveur
+    cookie_secure: auto # Activé en production pour sécuriser le cookie
+    cookie_samesite: "lax" # Valeur correcte : 'lax', 'strict', ou 'none'
 when@test:
   framework:
     test: true

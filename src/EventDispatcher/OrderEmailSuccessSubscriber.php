@@ -38,7 +38,7 @@ class OrderEmailSuccessSubscriber implements EventSubscriberInterface
 
         // 3. Envoyer le mail (service: SendMailService)
         $this->sendMail->sendEmail(
-            "marie.farjaud@gmail.com",
+            "contact@mariefarjaud.fr",
             "Votre commande",
             $currentUser->getEmail(),
             "Bravo votre commande n°{$order->getId()} a bien été confirmée",

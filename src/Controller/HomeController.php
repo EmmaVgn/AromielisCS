@@ -7,11 +7,13 @@ use App\Entity\Contact;
 use App\Form\CommentFormType;
 use App\Service\SendMailService;
 use App\Form\DistributorFormType;
+use Symfony\Component\Mime\Email;
 use App\Repository\CommentRepository;
 use App\Repository\HeadersRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -99,5 +101,8 @@ class HomeController extends AbstractController
     {
         return $this->render('home/pdv.html.twig');
     }
+
+
+
 
 }

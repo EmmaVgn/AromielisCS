@@ -2,17 +2,20 @@
 
 namespace App\Service;
 
+use Symfony\Component\Mime\Email;
+use Symfony\Component\Mime\Address;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Address;
 
 class SendMailService
 {
-    protected $mailer;
+    private $mailer;
+    private $templating;
 
-    public function __construct(MailerInterface $mailer)
+    public function __construct(MailerInterface $mailer, \Twig\Environment $templating)
     {
         $this->mailer = $mailer;
+        $this->templating = $templating;
     }
 
     public function sendEmail(
@@ -29,7 +32,25 @@ class SendMailService
             ->htmlTemplate("emails/$template.html.twig")
             ->context($context)
             ->subject($subject);
+            dump('Email prêt à être envoyé:', $email);
+        $this->mailer->send($email);
+    }
 
+    public function sendOrderStatusChangeEmail($to, $order)
+    {
+        dump('Envoi d\'email à:', $to);
+        dump('Contexte de l\'email:', $order);
+        // Création de l'email
+        $email = (new Email())
+            ->from('no-reply@aromielis.com')
+            ->to($to)
+            ->subject('Changement d\'état de votre commande')
+            ->html($this->templating->render('emails/order_status_change.html.twig', [
+                'order' => $order,
+                'user' => $order->getUser()
+            ])); 
+
+        // Envoi de l'email
         $this->mailer->send($email);
     }
 }
