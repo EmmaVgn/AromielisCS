@@ -26,7 +26,10 @@ class ChangePasswordFormType extends AbstractType
                 'label' => 'Confirm New Password',
                 'mapped' => false, // Same as above
             ])
-            ->add('save', SubmitType::class, ['label' => 'Change Password']);
+            ->add('save', SubmitType::class, [
+                'label' => 'Changer le mot de passe',
+                'attr' => ['class' => 'btn btn-custom'] // Classe CSS personnalisée
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

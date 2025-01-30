@@ -435,13 +435,12 @@ p {
 /*--------------------------------------------------------------
 #Liens
 --------------------------------------------------------------*/
-
 a {
-  color: #28a745;
-  outline: none;
-  text-decoration: none;
-  padding: 2px 1px 0;
-  transition: color 0.3s ease; /* Transition pour l'effet de survol */
+  color: #28a745; 
+  outline: none;  
+  text-decoration: none;  
+  padding: 2px 1px 0; 
+  transition: color 0.3s ease, background 0.3s ease; 
 }
 
 a:link {
@@ -449,34 +448,34 @@ a:link {
 }
 
 a:visited {
-  color: #437a16;
+  color: #437a16; 
 }
 
 a:focus {
-  border-bottom: 1px solid;
-  background: #bae498;
+  border-bottom: 1px solid #437a16; 
+  background: #bae498; 
 }
 
 a:hover {
-  border-bottom: 1px solid;
-  background: #cdfeaa;
+  border-bottom: 1px solid #437a16; 
+  background: #cdfeaa; 
 }
 
 a:active {
-  background: #265301;
-  color: #cdfeaa;
+  background: #265301; 
+  color: #cdfeaa; 
 }
 
-.active>.page-link,.page-link.active{
-  background-color: #265301 !important; /* Couleur de fond */
-  color: #cdfeaa !important; /* Couleur du texte */
-  border-color: #265301 !important; /* Couleur de la bordure */
+.active>.page-link, .page-link.active {
+  background-color: #265301 !important; 
+  color: #cdfeaa !important; 
+  border-color: #265301 !important;
 }
 
 .page-link:hover {
-  background-color: #265301 !important; /* Couleur de fond */
-  color: #cdfeaa !important; /* Couleur du texte */
-  border-color: #265301 !important; /* Couleur de la bordure */
+  background-color: #265301 !important;
+  color: #cdfeaa !important; 
+  border-color: #265301 !important; 
 }
 
 /*--------------------------------------------------------------
@@ -763,7 +762,8 @@ a:active {
 
 /*--------------------------------------------------------------
 # Filtre de recherche
---------------------------------------------------------------*/.box {
+--------------------------------------------------------------*/
+.box {
   padding: 10px;
 }
 
@@ -823,7 +823,7 @@ a:active {
 .js-filter-sorting {
   display: flex;
   align-items: center;
-  justify-content: flex-start; /* Aligne le contenu à gauche */
+  justify-content: flex-start;
 }
 
 /*--------------------------------------------------------------
@@ -882,13 +882,13 @@ a:active {
   color: #000; 
 }
 
-/* Style spécifique pour le bouton "Filtrer" */
+
 /* Style spécifique pour le bouton "Filtrer" */
 .btn-filter {
-  background-color: transparent; /* Supprime le fond */
-  color: black; /* Couleur du texte */
-  border: 2px solid rgba(201, 224, 26, 0.8); /* Bordure visible */
-  border-radius: 8px !important; /* Coins légèrement arrondis */
+  background-color: transparent;
+  color: black; 
+  border: 2px solid rgba(201, 224, 26, 0.8);
+  border-radius: 8px !important; 
   padding: 8px 15px;
   font-size: 0.85rem;
   cursor: pointer;
@@ -901,7 +901,7 @@ a:active {
 
 /* Effet au survol */
 .btn-filter:hover {
-  background-color: #b8b894; /* Léger effet de fond au survol */
+  background-color: #b8b894;
   color: black;
   border-color: rgba(201, 224, 26, 1);
 }
@@ -934,7 +934,7 @@ a:active {
 }
 
 .product-card-details .product-price {
-  color: #4caf50; /* Vert pour le prix */
+  color: #4caf50; 
 }
 
 .product-short-description {
@@ -1057,47 +1057,49 @@ thead {
 /* Styles des boutons prev/next */
 .carousel-control-prev,
 .carousel-control-next {
-  width: 5%; /* Ajuste la largeur des boutons */
-  opacity: 1; /* S'assurer qu'ils sont visibles */
-  z-index: 100; /* Évite qu'ils soient cachés derrière d'autres éléments */
+  width: 10%; /* Augmenter la taille des boutons */
+  opacity: 1;
+  z-index: 2000; /* Augmenter le z-index pour s'assurer que les boutons sont au-dessus */
+  position: absolute; /* S'assurer que les boutons sont positionnés au-dessus du carousel */
+  top: 50%; /* Centrer verticalement */
+  transform: translateY(-50%); /* Centrer verticalement */
 }
 
 /* Icônes visibles */
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
-  background-color: rgba(0, 0, 0, 0.5); /* Ajoute un fond semi-transparent */
-  border-radius: 50%; /* Arrondit les boutons */
-  width: 3rem; /* Ajuste la taille */
-  height: 3rem;
+  background-color: rgba(0, 0, 0, 0.8); /* Augmenter l'opacité du fond */
+  border-radius: 50%;
+  width: 3.5rem; /* Augmenter la taille des icônes */
+  height: 3.5rem; /* Augmenter la taille des icônes */
 }
 
 /* Survol pour améliorer la visibilité */
 .carousel-control-prev:hover,
 .carousel-control-next:hover {
   opacity: 1;
-}
-
-.carousel-control-prev,
-.carousel-control-next {
-  width: 8%; /* Ajuste la largeur des boutons */
-  z-index: 10; /* Assure qu'ils apparaissent au-dessus des autres éléments */
+  background-color: rgba(0, 0, 0, 1); /* Changer le fond au survol */
 }
 
 .carousel-control-prev {
-  left: 5%; /* Ramène le bouton précédent un peu vers la gauche */
+  left: 5%; /* Positionner à gauche */
+  top: 5%;
 }
 
 .carousel-control-next {
-  right: 65% !important; /* Ramène le bouton suivant vers la gauche */
+  right: 750px; 
+  top: 200px;
 }
+
 /* S'assurer que l'icône est visible */
 .carousel-control-next-icon,
 .carousel-control-prev-icon {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.8);
   border-radius: 50%;
-  width: 3rem;
-  height: 3rem;
+  width: 3.5rem;
+  height: 3.5rem;
 }
+
 
 
 
@@ -1428,6 +1430,7 @@ thead {
 .error-404 .btn:hover {
   background: #3e4f6f;
 }
+
 @media (min-width: 992px) {
   .error-404 img {
       max-width: 50%;

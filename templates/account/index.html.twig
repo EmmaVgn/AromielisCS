@@ -13,22 +13,64 @@
 			{{ message }}
 		</div>
 	{% endfor %}
-	<div class="list-group mb-6">
 
-		{% for order in orders %}
-			<a href="{{ path('account_order', {'reference': order.reference}) }}" class="list-group-item list-group-item-action">
-				Commande #{{ order.reference }}
-			</a>
-		{% else %}
-			<p>Aucune commande enregistrée.</p>
-		{% endfor %}
+	<!-- Accordéon pour les commandes -->
+	<div class="accordion mb-6" id="accordionOrders">
+		<div class="accordion-item">
+			<h2 class="accordion-header" id="headingOrders">
+				<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOrders" aria-expanded="true" aria-controls="collapseOrders">
+					Mes commandes
+				</button>
+			</h2>
+			<div id="collapseOrders" class="accordion-collapse collapse show" aria-labelledby="headingOrders" data-bs-parent="#accordionOrders">
+				<div class="accordion-body">
+					<div class="list-group">
+						{% for order in orders %}
+							<a href="{{ path('account_order', {'reference': order.reference}) }}" class="list-group-item list-group-item-action">
+								Commande #{{ order.reference }}
+							</a>
+						{% else %}
+							<p>Aucune commande enregistrée.</p>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
+	<!-- Accordéon pour les adresses -->
+	<div class="accordion mb-6" id="accordionAddresses">
+		<div class="accordion-item">
+			<h2 class="accordion-header" id="headingAddresses">
+				<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAddresses" aria-expanded="true" aria-controls="collapseAddresses">
+					Gérer mes adresses
+				</button>
+			</h2>
+			<div id="collapseAddresses" class="accordion-collapse collapse" aria-labelledby="headingAddresses" data-bs-parent="#accordionAddresses">
+				<div class="accordion-body">
+					<a href="{{ path('account_address') }}" class="list-group-item list-group-item-action">
+						Modifier mes adresses
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
 
-		<a href="{{ path('account_address') }}" class="list-group-item list-group-item-action">
-			Gérer mes adresses
-		</a>
-		<a href="{{ path('account_password') }}" class="list-group-item list-group-item-action">
-			Modifier mot de passe
-		</a>
+	<!-- Accordéon pour le mot de passe -->
+	<div class="accordion mb-6" id="accordionPassword">
+		<div class="accordion-item">
+			<h2 class="accordion-header" id="headingPassword">
+				<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePassword" aria-expanded="true" aria-controls="collapsePassword">
+					Modifier mon mot de passe
+				</button>
+			</h2>
+			<div id="collapsePassword" class="accordion-collapse collapse" aria-labelledby="headingPassword" data-bs-parent="#accordionPassword">
+				<div class="accordion-body">
+					<a href="{{ path('account_password') }}" class="list-group-item list-group-item-action">
+						Modifier mon mot de passe
+					</a>
+				</div>
+			</div>
+		</div>
 	</div>
 {% endblock %}
