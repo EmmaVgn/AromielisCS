@@ -3,7 +3,8 @@
 		<div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
 			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 			<div class="alert-message">
-				{{ message | raw }}
+				{{ message|purifier|raw }}
+				<!-- Purification et affichage sécurisé -->
 			</div>
 		</div>
 	{% endfor %}

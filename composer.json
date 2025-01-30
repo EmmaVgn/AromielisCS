@@ -14,6 +14,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^3.3",
         "easycorp/easyadmin-bundle": "^4.13",
+        "ezyang/htmlpurifier": "^4.18",
         "fakerphp/faker": "^1.23",
         "knplabs/knp-paginator-bundle": "^6.6",
         "liip/imagine-bundle": "^2.13",

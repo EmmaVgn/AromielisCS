@@ -9,6 +9,8 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 
 class ResetPasswordFormType extends AbstractType
 {
@@ -51,13 +53,17 @@ class ResetPasswordFormType extends AbstractType
                         'placeholder' => 'Merci de confirmer votre mot de passe',
                     ],
                 ],
+            ])
+            ->add('_token', HiddenType::class, [
+                'mapped' => false,
+                'data' => $options['csrf_token'], // Utilisation de la valeur du token
             ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            // Configure your form options here
+            'csrf_token' => null, // Ajout de l'option csrf_token
         ]);
     }
 }

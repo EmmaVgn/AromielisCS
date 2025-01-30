@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\CsrfTokenType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
 class RegistrationFormType extends AbstractType
@@ -121,8 +122,7 @@ class RegistrationFormType extends AbstractType
                     ]),
                     new NotBlank(['message' => 'Merci d\'indiquer votre numéro de téléphone.'])
                 ]
-            ])
-        ;
+                ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -10,16 +10,16 @@
 		<link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}">
 
 		{% block stylesheets %}
-			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
+			<link rel="stylesheet" href="https://cdnjs.com/...">
 		{% endblock %}
 
 		{% block javascripts %}
 			{% block importmap %}
 				{{ importmap('app') }}
 			{% endblock %}
-
+			<script defer src="..."></script>
 		{% endblock %}
+
 	</head>
 	<body>
 		<header>
@@ -32,7 +32,7 @@
 		{% if carousel is defined %}
 			{% include "shared/_carousel.html.twig" %}
 		{% else %}
-			{% set margin = 'mt-5' %}
+			{% set margin = carousel is defined ? '' : 'mt-5' %}
 		{% endif %}
 		<div class="container marketing {{ margin }}"> {% block body %}{% endblock %}
 			</div>

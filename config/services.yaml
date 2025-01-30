@@ -9,6 +9,8 @@ parameters:
   stripe.webhook_secret: "%env(STRIPE_WEBHOOK_SECRET)%"
 
 services:
+  App\Twig\TwigExtension:
+    tags: ["twig.extension"]
   # default configuration for services in *this* file
   _defaults:
     autowire: true # Automatically injects dependencies in your services.

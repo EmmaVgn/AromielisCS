@@ -53,26 +53,30 @@
 				<!-- Terms and conditions agreement -->
 				<div class="text-center mt-4">
 					<span class="text-muted d-flex align-items-center">
-						{{ form_row(registrationForm.agreeTerms, {
-							label: 'En m\'inscrivant à ce site, j\'accepte les <a href="' ~ path('homepage') ~ '">conditions générales d\'utilisation</a>',
-							label_html: true,
-							'attr': {'class': 'd-inline-flex align-items-center'}
-						}) }}
+						<div class="form-check">
+							{{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input'}}) }}
+							<label class="form-check-label">
+								En m'inscrivant à ce site, j'accepte les
+								<a href="{{ path('homepage') }}">conditions générales d'utilisation</a>
+							</label>
+						</div>
+
 					</span>
 				</div>
 
 
-                    <!-- Submit button -->
-                    <div class="text-center mt-4">
-                        <button type="submit" class="btn btn-md btn-dark">
-                            <span>S'enregistrer</span>
-                        </button>
-                    </div>
+				{{ form_row(passForm._token) }}
+				<!-- Submit button -->
+				<div class="text-center mt-4">
+					<button type="submit" class="btn btn-md btn-dark">
+						<span>S'enregistrer</span>
+					</button>
+					<input type="hidden" name="_csrf_token" value="{{ csrf_token('registration') }}">
 
-                    {{ form_end(registrationForm) }}
-					</div>
 				</div>
+
+				{{ form_end(registrationForm) }}
 			</div>
 		</div>
 	</div>
-{% endblock %}
+</div></div>{% endblock %}
