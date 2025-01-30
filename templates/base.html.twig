@@ -1,31 +1,61 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
+
 	<head>
 		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+		<meta name="description" content=" Marie Farjaud, apicultrice spécialisée dans la vente d'huiles essentielles, de produits de la ruche, de miels, nougats et hydrolats. Nous cultivons des plantes médicinales et proposons des produits naturels de qualité issus du Lot-et-Garonne.">
+		<meta name="keywords" content="Marie Farjaud, huiles essentielles, produits de la ruche, miels, nougats, hydrolats, apicultrice, plantes médicinales, Lot-et-Garonne, produits naturels, soins à base de plantes">
+		<meta name="author" content="Marie Farjaud">
+		<meta
+		name="robots" content="index, follow">
+		<!-- Permet aux moteurs de recherche d'indexer et suivre les liens -->
+
 		<title>
 			{% block title %}
-				Aromielis
+				Marie Farjaud | Huiles essentielles et produits de la ruche
 			{% endblock %}
 		</title>
-		<link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}">
+		<link
+		rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}">
+
+		<!-- Open Graph (OG) pour améliorer le partage sur les réseaux sociaux -->
+		<meta property="og:title" content="Marie Farjaud| Huiles essentielles et produits de la ruche">
+		<meta property="og:description" content="Découvrez les produits naturels d'Aromielis : huiles essentielles, miels, nougats, et hydrolats, cultivés par Marie Farjaud, apicultrice dans le Lot-et-Garonne.">
+		<meta
+		property="og:image" content="{{ asset('images/og-image.jpg') }}">
+		<!-- Image partagée sur les réseaux sociaux -->
+		<meta property="og:url" content="{{ app.request.uri }}">
+		<meta property="og:type" content="website">
+		<meta
+		property="og:locale" content="fr_FR">
+
+		<!-- Twitter Card -->
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:title" content="Aromielis | Huiles essentielles et produits de la ruche">
+		<meta name="twitter:description" content="Explorez les produits naturels de Marie Farjaud : huiles essentielles, miels, nougats et hydrolats. Fabrication artisanale dans le Lot-et-Garonne.">
+		<meta name="twitter:image" content="{{ asset('images/og-image.jpg') }}">
 
 		{% block stylesheets %}
-			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+			<link
+			rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+		<!-- Lien vers la feuille de style de votre projet -->
 		{% endblock %}
 
 		{% block javascripts %}
 			{% block importmap %}
 				{{ importmap('app') }}
 			{% endblock %}
-
 		{% endblock %}
 
 	</head>
+
 	<body>
 		<header>
 			{% include "shared/_navbar.html.twig" %}
 		</header>
-
 
 		{% include "shared/_flash.html.twig" %}
 		{% set margin = '' %}
@@ -34,10 +64,11 @@
 		{% else %}
 			{% set margin = carousel is defined ? '' : 'mt-5' %}
 		{% endif %}
+
 		<div class="container marketing {{ margin }}"> {% block body %}{% endblock %}
 			</div>
 
-
 			{% include "shared/_footer.html.twig" %}
 		</body>
+
 	</html>
