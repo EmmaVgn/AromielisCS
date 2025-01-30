@@ -61,3 +61,17 @@ window.addEventListener('load', function () {
         console.error('CookieConsent library not loaded.');
     }
 });
+
+// Fonction pour faire défiler les avis automatiquement
+let currentIndex = 0;
+const reviews = document.querySelectorAll('.review-card');
+const totalReviews = reviews.length;
+
+function rotateReviews() {
+  reviews[currentIndex].style.transform = 'translateX(-100%)'; // Cache l'avis actuel
+  currentIndex = (currentIndex + 1) % totalReviews; // Passe à l'avis suivant
+  reviews[currentIndex].style.transform = 'translateX(0)'; // Affiche l'avis suivant
+}
+
+// Lancer la rotation toutes les 3 secondes
+setInterval(rotateReviews, 3000);

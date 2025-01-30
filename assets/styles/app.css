@@ -1100,6 +1100,56 @@ thead {
   height: 3.5rem;
 }
 
+/* Conteneur des avis */
+.reviews-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  overflow: hidden;
+  position: relative;
+  justify-content: center;
+}
+
+/* Style pour chaque carte d'avis */
+.review-card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  flex: 1 1 250px;
+  transition: transform 0.5s ease-in-out;
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+  transform: rotateY(0deg);
+}
+
+/* Animation de l'apparition des cartes */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: rotateY(90deg);
+  }
+  100% {
+    opacity: 1;
+    transform: rotateY(0deg);
+  }
+}
+
+/* Effet de survol pour une rotation supplémentaire */
+.review-card:hover {
+  transform: rotateY(10deg); /* Léger effet de rotation au survol */
+}
+
+/* Style des étoiles */
+.star.filled {
+  color: #f39c12;
+}
+
+.rating {
+  font-size: 1.5rem;
+  color: #f39c12;
+}
+
 
 
 

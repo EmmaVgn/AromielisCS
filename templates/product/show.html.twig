@@ -164,36 +164,30 @@
 			</div>
 		{% endif %}
 		<!-- Slider des avis -->
-		<div id="reviewsCarousel" class="carousel slide">
-			<div class="carousel-inner">
+		<!-- Avis produits -->
+		<div
+			class="mt-4">
+
+
+			<!-- Conteneur des avis -->
+			<div class="reviews-container">
 				{% for comment in comments %}
-					<div class="carousel-item {% if loop.first %}active{% endif %}">
-						<div class="card mb-3">
-							<div class="card-body">
-								<h5 class="card-title">{{ comment.fullname }}</h5>
-								<div class="rating mb-2">
-									{% for i in 1..5 %}
-										<span class="star {% if i <= comment.rating %}filled{% endif %}">&#9733;</span>
-									{% endfor %}
-								</div>
-								<p class="card-text">{{ comment.content }}</p>
-								<p class="card-text text-muted">{{ comment.createdAt | date('d/m/Y') }}</p>
-							</div>
+					<div class="review-card">
+						<h5 class="card-title">{{ comment.fullname }}</h5>
+						<div class="rating mb-2">
+							{% for i in 1..5 %}
+								<span class="star {% if i <= comment.rating %}filled{% endif %}">&#9733;</span>
+							{% endfor %}
 						</div>
+						<p class="card-text">{{ comment.content }}</p>
+						<p class="card-text text-muted">{{ comment.createdAt | date('d/m/Y') }}</p>
 					</div>
 				{% else %}
 					<p>Aucun avis pour ce produit.</p>
 				{% endfor %}
 			</div>
-			<button class="carousel-control-prev" type="button" data-bs-target="#reviewsCarousel" data-bs-slide="prev">
-				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-				<span class="visually-hidden">Précédent</span>
-			</button>
-			<button class="carousel-control-next" type="button" data-bs-target="#reviewsCarousel" data-bs-slide="next">
-				<span class="carousel-control-next-icon" aria-hidden="true"></span>
-				<span class="visually-hidden">Suivant</span>
-			</button>
 		</div>
+
 	</div>
 	<!-- Formulaire pour laisser un avis -->
 	<div class="mt-4">
@@ -214,7 +208,7 @@
 			</div>
 			<input type="hidden" name="comment[rating]" id="ratingInput" value="0">
 			<div class="col-md-12 text-end">
-				<button type="submit" class="btn btn-primary">Envoyer</button>
+				<button type="submit" class="btn btn-custom">Envoyer</button>
 			</div>
 			{{ form_end(commentForm) }}
 		{% else %}
@@ -247,7 +241,4 @@
 
 
 	</div>
-</div>{% endblock %}{% block importmap %}
-{# do NOT call parent() #}
-
-{{ importmap(['app', 'shop', 'stars']) }}{% endblock %}
+</div>{% endblock %}{% block importmap %}{# do NOT call parent() #}{{ importmap(['app', 'shop', 'stars']) }}{% endblock %}
