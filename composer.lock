@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1b2ebcbc20f8a54f07ebe566654144ae",
+    "content-hash": "0a6d1a649c5926dc0c114005a29281f8",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -2965,16 +2965,16 @@
         },
         {
             "name": "stripe/stripe-php",
-            "version": "v16.2.0",
+            "version": "v16.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stripe/stripe-php.git",
-                "reference": "813ae4961755af28a13bda451689f7a6ed6498cb"
+                "reference": "3fb22256317344e049fce02ff289af3b776b0464"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/813ae4961755af28a13bda451689f7a6ed6498cb",
-                "reference": "813ae4961755af28a13bda451689f7a6ed6498cb",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/3fb22256317344e049fce02ff289af3b776b0464",
+                "reference": "3fb22256317344e049fce02ff289af3b776b0464",
                 "shasum": ""
             },
             "require": {
@@ -3018,9 +3018,9 @@
             ],
             "support": {
                 "issues": "https://github.com/stripe/stripe-php/issues",
-                "source": "https://github.com/stripe/stripe-php/tree/v16.2.0"
+                "source": "https://github.com/stripe/stripe-php/tree/v16.5.0"
             },
-            "time": "2024-10-29T21:15:53+00:00"
+            "time": "2025-01-27T20:20:33+00:00"
         },
         {
             "name": "symfony/asset",
@@ -11143,7 +11143,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
@@ -11151,6 +11151,6 @@
         "ext-ctype": "*",
         "ext-iconv": "*"
     },
-    "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "platform-dev": {},
+    "plugin-api-version": "2.6.0"
 }

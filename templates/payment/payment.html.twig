@@ -1,0 +1,19 @@
+{% extends "base.html.twig" %}
+{% block title %}
+	Payment
+{% endblock %}
+
+{% block body %}
+	<form id="payment-form" data-order-reference="{{ order.reference }}">
+		<div id="card-element"><!-- Stripe insérera le champ ici --></div>
+		<button id="submit" type="submit">Payer</button>
+		<p id="card-errors" role="alert"></p>
+	</form>
+
+{% endblock %}
+{% block javascripts %}
+	<script src="https://js.stripe.com/v3/"></script>
+	{% block importmap %}
+		{{ importmap(['stripe']) }}
+	{% endblock %}
+{% endblock %}

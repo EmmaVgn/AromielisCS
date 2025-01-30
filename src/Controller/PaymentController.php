@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Stripe\Stripe;
+use Stripe\Webhook;
 use App\Service\Mail;
 use App\Cart\CartService;
 use Stripe\Checkout\Session;
@@ -10,20 +11,27 @@ use App\Event\OrderSuccessEvent;
 use App\Repository\UserRepository;
 use App\Repository\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+
 
 class PaymentController extends AbstractController
 {
-    protected $em;
-    protected $cartService;
+    private $em;
+    private $cartService;
+    private $stripeSecretKey;
+    private $stripeWebhookSecret;
 
-    public function __construct(EntityManagerInterface $em, CartService $cartService)
+    public function __construct(EntityManagerInterface $em, CartService $cartService, ParameterBagInterface $params)
     {
         $this->em = $em;
         $this->cartService = $cartService;
+        $this->stripeSecretKey = $params->get('stripe.secret_key');
+        $this->stripeWebhookSecret = $params->get('stripe.webhook_secret');
     }
 
     /**
@@ -32,6 +40,7 @@ class PaymentController extends AbstractController
     #[Route('/commande/checkout/{reference}', name: 'checkout')]
     public function payment(OrderRepository $repository, $reference, EntityManagerInterface $em): Response
     {
+
         // Récupération des produits de la dernière commande et formattage dans un tableau pour Stripe
         $order = $repository->findOneByReference($reference);
         if (!$order) {
@@ -51,7 +60,8 @@ class PaymentController extends AbstractController
             $productsForStripe[] = [
                 'price_data' => [
                     'currency' => 'eur',
-                    'unit_amount' => $item->getPrice(),
+                    
+'unit_amount' => $item->getPrice() , // Convertir en centimes si nécessaire
                     'product_data' => [
                         'name' => $item->getProduct()
                     ]
@@ -103,7 +113,12 @@ class PaymentController extends AbstractController
      * Méthode appelée lorsque le paiement est validé
      */
     #[Route('/commande/valide/{stripeSession}', name: 'payment_success')]
-    public function paymentSuccess(OrderRepository $repository, $stripeSession, EntityManagerInterface $em, CartService $cart, UserRepository $user, EventDispatcherInterface $dispatcher): Response 
+    public function paymentSuccess(OrderRepository $repository, 
+    $stripeSession, 
+    EntityManagerInterface $em, 
+    CartService $cart, 
+    UserRepository $user, 
+    EventDispatcherInterface $dispatcher): Response 
     {
         $order = $repository->findOneByStripeSession($stripeSession);
 
@@ -144,4 +159,32 @@ class PaymentController extends AbstractController
             'order' => $order
         ]);
     }
+
+    #[Route('/stripe/webhook', name: 'stripe_webhook')]
+    public function stripeWebhook(Request $request, EntityManagerInterface $em, OrderRepository $orderRepository): Response
+    {
+        $payload = @file_get_contents('php://input');
+        $sigHeader = $request->headers->get('stripe-signature');
+        $endpointSecret = $this->stripeWebhookSecret;
+    
+        try {
+            $event = \Stripe\Webhook::constructEvent($payload, $sigHeader, $endpointSecret);
+        } catch (\Exception $e) {
+            return new Response('Webhook error: ' . $e->getMessage(), 400);
+        }
+    
+        if ($event->type === 'checkout.session.completed') {
+            $session = $event->data->object;
+            $order = $orderRepository->findOneByStripeSession($session->id);
+    
+            if ($order && $order->getState() !== 1) {
+                $order->setState(1);
+                $em->flush();
+            }
+        }
+    
+        return new Response('Success', 200);
+    }
+    
+
 }

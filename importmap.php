@@ -28,6 +28,10 @@ return [
         'path' => './assets/js/stars.js',
         'entrypoint' => true,
     ],
+    'stripe' => [
+        'path' => './assets/js/stripe.js',
+        'entrypoint' => true,
+    ],
     'filter' => [
         'path' => './assets/js/Filter.js',
         'entrypoint' => true,
