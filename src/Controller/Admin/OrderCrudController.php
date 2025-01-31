@@ -101,7 +101,7 @@ class OrderCrudController extends AbstractCrudController
     
         // Envoi de l'email
         $this->mailService->sendEmail(
-            'no-reply@aromielis.com',  // L'email de l'expéditeur
+            'no-reply@Marie Farjaud.com',  // L'email de l'expéditeur
             'Modification de votre commande',  // Sujet de l'email
             $userEmail,  // Destinataire
             'Changement d\'état de votre commande',  // Titre de l'email

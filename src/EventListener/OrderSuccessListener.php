@@ -35,7 +35,7 @@ class OrderSuccessListener implements EventSubscriberInterface
 
         $this->mailService->sendEmail(
             'contact@mariefarjaud.fr',
-            'Aromielis',
+            'Marie Farjaud',
             $user->getEmail(),
             'Votre commande a été validée',
             'order_success', // Nom du template Twig
