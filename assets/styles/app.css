@@ -1,9 +1,6 @@
 /*--------------------------------------------------------------
 # Général
 --------------------------------------------------------------*/
-
-
-
 * {
   margin: 0;
   padding: 0;
@@ -1078,17 +1075,17 @@ thead {
 .carousel-control-prev:hover,
 .carousel-control-next:hover {
   opacity: 1;
-  background-color: rgba(0, 0, 0, 1); /* Changer le fond au survol */
+  background-color: rgba(0, 0, 0, 0.104); /* Changer le fond au survol */
 }
 
 .carousel-control-prev {
-  left: 5%; /* Positionner à gauche */
-  top: 5%;
+  left: 0px !important; 
+  top: 200px !important;
 }
 
 .carousel-control-next {
-  right: 750px; 
-  top: 200px;
+  right: 65% !important; 
+  top: 200px !important;
 }
 
 /* S'assurer que l'icône est visible */

@@ -22,13 +22,10 @@ export default class Filter {
         this.sorting = element.querySelector('.js-filter-sorting') || null;
         this.form = element.querySelector('.js-filter-form') || null;
         this.reset = element.querySelector('#resetBtn') || null;
-
-        if (this.form) {
-            this.bindEvents();
-        } else {
-            console.warn('Formulaire non trouvé');
-        }
+        this.bindEvents()
     }
+
+
 
     bindEvents() {
         const clickHandler = e => {
@@ -63,62 +60,59 @@ export default class Filter {
         }
     }
 
-    resetForm() {
-        console.log('Reset form function called');
-        
-        if (!this.form) return;
-    
-        // Réinitialiser le formulaire
-        this.form.reset();
-    
-        // Réinitialiser les cases à cocher des catégories
-        const categoryCheckboxes = this.form.querySelectorAll('.category-checkbox');
-        categoryCheckboxes.forEach(checkbox => {
-            checkbox.checked = false;  // Décocher toutes les catégories
-        });
-    
-        // Réinitialiser tous les autres champs (input, select, etc.)
-        const allInputs = this.form.querySelectorAll('input, select');
-        allInputs.forEach(input => {
-            if (input.type === 'checkbox') {
-                input.checked = false;
-            } else if (input.type === 'radio') {
-                input.checked = false;
-            } else {
-                input.value = '';
-            }
-        });
-    
-        // Réinitialiser le slider de prix
-        const priceSlider = document.getElementById('price-slider');
-        if (priceSlider) {
-            const min = parseInt(priceSlider.dataset.min, 10);
-            const max = parseInt(priceSlider.dataset.max, 10);
-            
-            // Réinitialiser les valeurs des inputs de prix en divisant par 100
-            const minPriceInput = this.form.querySelector('input[name="minPrice"]');
-            const maxPriceInput = this.form.querySelector('input[name="maxPrice"]');
-            
-            if (minPriceInput) minPriceInput.value = (min / 100).toFixed(2);
-            if (maxPriceInput) maxPriceInput.value = (max / 100).toFixed(2);
-    
-            // Réinitialiser les valeurs du slider avec les valeurs min et max
-            if (window.jQuery) {
-                $(priceSlider).slider('values', [min, max]);
-            }
+    rresetForm() {
+    console.log('Reset form function called');
+
+    if (!this.form) return;
+
+    // Réinitialiser le formulaire
+    this.form.reset();
+    console.log('Formulaire réinitialisé');
+
+    // Réinitialiser les cases à cocher des catégories
+    const categoryCheckboxes = this.form.querySelectorAll('.category-checkbox');
+    categoryCheckboxes.forEach(checkbox => {
+        checkbox.checked = false;  // Décocher toutes les catégories
+    });
+
+    // Réinitialiser tous les autres champs (input, select, etc.)
+    const allInputs = this.form.querySelectorAll('input, select');
+    allInputs.forEach(input => {
+        if (input.type === 'checkbox') {
+            input.checked = false;
+        } else if (input.type === 'radio') {
+            input.checked = false;
+        } else {
+            input.value = '';
         }
-    
-        // Recharger le formulaire après réinitialisation
-        this.loadAllProducts();  // Recharger tous les produits sans les filtres
-        this.loadForm();  // Recharger l'affichage de formulaire s'il y a d'autres parties dynamiques à gérer
+    });
+
+    // NE PAS réinitialiser le slider de prix
+    // Laisser les prix actuels du slider sans modification
+    const priceSlider = document.getElementById('price-slider');
+    if (priceSlider) {
+        // On ne modifie pas le slider ici pour qu'il garde ses valeurs actuelles
+        console.log('Slider des prix non modifié');
     }
 
+    console.log('Formulaire réinitialisé');
+
+    // Recharger les produits après réinitialisation sans changer les prix
+    this.loadForm();  // Recharger l'affichage de formulaire s'il y a d'autres parties dynamiques à gérer
+}
+
+    
+    
     async loadAllProducts() {
+        console.log('Chargement de tous les produits sans filtre');
         if (!this.content) return;
     
         this.showLoader();
     
         try {
+            // Ajoutez un log pour vérifier l'URL utilisée pour la requête
+            console.log('Requête URL pour AJAX:', `${window.location.href}?ajax=1`);
+    
             const response = await fetch(`${window.location.href}?ajax=1`, {
                 headers: { 'X-Requested-With': 'XMLHttpRequest' }
             });
@@ -126,10 +120,11 @@ export default class Filter {
             if (!response.ok) throw new Error('Erreur lors du chargement');
     
             const data = await response.json();
+            console.log('Réponse reçue', data);
     
             // Vérification si la réponse contient des produits
             if (data.content) {
-                this.content.innerHTML = data.content; // Remplacer le contenu avec les produits
+                this.content.innerHTML = data.content; // Met à jour le contenu avec les produits
             }
     
             // Mettre à jour le tri et la pagination si disponible
@@ -153,7 +148,6 @@ export default class Filter {
         }
     }
     
-
 
 
     async loadForm() {

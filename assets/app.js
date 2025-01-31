@@ -1,22 +1,21 @@
-
-import './styles/carousel.css';
-
-
 import "./bootstrap.js";
 import "./styles/app.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap";
+import './styles/carousel.css';
 import './js/cookieconsent.min.js';
 import './styles/cookieconsent.min.css';
 
 
+import Filter from './js/Filter.js';
+new Filter(document.querySelector('.js-filter'))
 /*
  * Welcome to your app's main JavaScript file!
  *
  * This file will be included onto the page via the importmap() Twig function,
  * which should already be in your base.html.twig.
  */
-import './styles/app.css';
+
 
 
 
@@ -62,16 +61,3 @@ window.addEventListener('load', function () {
     }
 });
 
-// Fonction pour faire défiler les avis automatiquement
-let currentIndex = 0;
-const reviews = document.querySelectorAll('.review-card');
-const totalReviews = reviews.length;
-
-function rotateReviews() {
-  reviews[currentIndex].style.transform = 'translateX(-100%)'; // Cache l'avis actuel
-  currentIndex = (currentIndex + 1) % totalReviews; // Passe à l'avis suivant
-  reviews[currentIndex].style.transform = 'translateX(0)'; // Affiche l'avis suivant
-}
-
-// Lancer la rotation toutes les 3 secondes
-setInterval(rotateReviews, 3000);
