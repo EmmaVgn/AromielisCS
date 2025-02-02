@@ -827,22 +827,32 @@ a:active {
 # Couleur badge catégories
 --------------------------------------------------------------*/
 .badge.category-huiles-essentielles {
-  background-color: #007bff; 
+  background-color: #459311; 
+  color: #fff;
+}
+
+.badge.category-hydrolats{
+  background-color: #1896b6; 
+  color: #fff;
+}
+
+.badge.category-spray-hydrolats{
+  background-color: #1896b6; 
   color: #fff;
 }
 
 .badge.category-recharges-hydrolats{
-  background-color: #28a745; 
+  background-color: #1896b6; 
   color: #fff;
 }
 
-.badge.category-spray-hydrolat {
+.badge.category-produits-de-la-ruche {
   background-color: #ffc107; 
   color: #000;
 }
 
 .badge.category-coffret {
-  background-color: #17a2b8;
+  background-color: #b81745bd;
   color: #fff;
 }
 
