@@ -11,6 +11,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
@@ -42,14 +44,17 @@ class AdviseCrudController extends AbstractCrudController
     {
         return [
             TextField::new('name', 'Titre'),
-            TextareaField::new('subtitle', 'Sous-titre'),
-            TextareaField::new('content', 'Contenu'),
+            TextEditorField::new('subtitle', 'Sous-titre'),
+            TextEditorField::new('content', 'Contenu'),
             ImageField::new('imageName')
             ->setBasePath('images/blog/')
-            ->setUploadDir('public/images/blog')
-
-
-
+            ->setUploadDir('public/images/blog'),
+            AssociationField::new('tags', 'Tags')
+            ->setFormTypeOptions([
+                'by_reference' => false, // Important pour les relations ManyToMany
+            ]),   
+            SlugField::new('slug')
+                ->setTargetFieldName('name'), // Spécifie le champ utilisé pour générer le slug
         ];
     }
     

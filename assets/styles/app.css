@@ -1525,3 +1525,16 @@ thead {
 /*--------------------------------------------------------------
 # Portfolio
 --------------------------------------------------------------*/
+.link-article a {
+  color: #adaa77da; /* Couleur du lien */
+  font-weight: bold; /* Gras pour le lien */
+  text-decoration: none;
+}
+
+.card-articles-popular {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  height: 5% !important;
+}

@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Blog - Marie Farjaud
+{% endblock %}
+
+{% block meta_description %}
+	<meta name="description" content="Découvrez les derniers conseils de Marie Farjaud. Restez informé sur les tendances numériques, conseils et actualités du secteur.">
+{% endblock %}
+
+{% block meta_keywords %}
+	<meta name="keywords" content="blog, advises, conseils, Marie Farjaud, tendances numériques, conseils numériques, actualités, tags, recherche">
+{% endblock %}
+
+{% block body %}
+	<div class="container py-5">
+		<h1 class="text-center mb-5 display-4">Conseils de Marie Farjaud</h1>
+
+		<div
+			class="row mb-4">
+			<!-- Colonne pour les advises -->
+			<div class="col-md-8">
+				<div class="row justify-content-center">
+					{% if advises|length == 0 %}
+						<p class="text-center text-muted">Aucun Conseils ne correspond à votre recherche.</p>
+					{% else %}
+						{% for advise in advises %}
+							{% if advise.slug %}
+								<div class="col-lg-4 col-md-6 mb-4">
+									<div class="card h-100 shadow-sm border-0 rounded-lg">
+										<div class="card-img-top position-relative">
+											<a href="{{ path('advise_show', {'slug': advise.slug}) }}">
+												<img src="{{ asset('images/blog/' ~ advise.imageName) }}" alt="{{ advise.name|e }}" class="img-fluid rounded-top" style="width: 100%; height: 300px; object-fit: cover;">
+											</a>
+										</div>
+										<div class="card-body d-flex flex-column">
+											<h2 class="text-center h4 font-weight-bold">
+												<a href="{{ path('advise_show', {'slug': advise.slug}) }}" style="text-decoration: none;">{{ advise.name|e }}</a>
+											</h2>
+											<!-- Tronquer le subtitle pour qu'il tienne dans la carte -->
+											<div class="mt-auto text-center">
+												<a href="{{ path('advise_show', {'slug': advise.slug}) }}" class="btn btn-custom">Lire la suite</a>
+											</div>
+										</div>
+										<div class="card-footer bg-light text-center border-0">
+											<small class="text-muted">Publié le
+												{{ advise.createdAt|date('d M Y') }}</small>
+											<div class="mt-2">
+												{% for tag in tags %}
+													<span class="badge" style="background-color: {{ tag.color }};">{{ tag.name }}</span>
+												{% endfor %}
+											</div>
+										</div>
+									</div>
+								</div>
+							{% else %}
+								<p class="text-danger">Le slug de l'advise "{{ advise.name|e }}" est manquant.</p>
+							{% endif %}
+						{% endfor %}
+					{% endif %}
+				</div>
+
+				<!-- Pagination -->
+				<!-- Pagination -->
+				<div class="d-flex justify-content-center mt-4">
+					{{ knp_pagination_render(advises) }}
+					<!-- Assurez-vous que 'advises' est l'objet paginé -->
+				</div>
+
+			</div>
+
+			<!-- Colonne pour la recherche et les filtres -->
+			<div class="col-12 col-md-3 blog-content-display">
+				<!-- Réduction de la colonne de 4 à 3 -->
+				<!-- Barre de recherche -->
+
+
+				<!-- Filtres par Tags -->
+					<div class="text-center mb-4"> <p class="mb-2">Filtrer par catégories :</p>
+					<div class="d-flex flex-wrap justify-content-center">
+						<div>
+							{% for tag in tags %}
+								<a href="{{ path('advise_by_tag', {'slug': tag.slug}) }}" class="badge" style="background-color: {{ tag.color }};">{{ tag.name }}</a>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+
+				<!-- advises Populaires -->
+
+				<div>
+					<h3 class="text-center mb-3">Articles les plus populaires</h3>
+					<div class="row">
+						{% for popularAdvise in popularAdvises %}
+							<div class="col-12 mb-3">
+								<div class="card-articles-popular">
+									<div class="card-articles-popular">
+										<h5 class="link-article">
+											<a href="{{ path('advise_show', {'slug': popularAdvise.slug}) }}">{{ popularAdvise.name|e }}</a>
+										</h5>
+									</div>
+								</div>
+							</div>
+						{% else %}
+							<span class="text-muted">Aucun article populaire.</span>
+						{% endfor %}
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+{% endblock %}

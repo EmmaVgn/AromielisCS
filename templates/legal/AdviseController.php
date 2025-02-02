@@ -15,95 +15,91 @@ class AdviseController extends AbstractController
     #[Route('/conseils', name: 'advise')]
     public function index(AdviseRepository $adviseRepository, PaginatorInterface $paginator, Request $request, TagRepository $tagRepository): Response
     {
-        $queryBuilder = $adviseRepository->findBy([], ['createdAt' => 'DESC']); // Obtenir les articles dans l'ordre décroissant de date
-     
+        $advise = $adviseRepository->findBy([], [], 3);
+        $queryBuilder = $adviseRepository->findBy([], ['createdAt' => 'DESC']); // Obtenir les advises dans l'ordre décroissant de date
 
         $advises = $paginator->paginate(
             $queryBuilder,
             $request->query->getInt('page', 1), // Page actuelle
-            4 // Nombre d'articles par page
+            4 // Nombre d'advises par page
         );
 
-        // Utilisez findAllWithColors pour récupérer les tags avec couleurs
+                // Utilisez findAllWithColors pour récupérer les tags avec couleurs
         $tags = $tagRepository->findAllWithColors();
 
 
         // Récupère tous les tags
         $tags = $tagRepository->findAll();
 
-        // Récupérer les articles les plus populaires
-        $popularAdvises = $adviseRepository->findMostPopularAdvises(5); // Limiter à 5 articles
+        // Récupérer les advises les plus populaires
+        $popularAdvises = $adviseRepository->findMostPopularAdvises(5); // Limiter à 5 advises
 
         return $this->render('advise/display.html.twig', [
             'advises' => $advises,
             'tags' => $tags,
-            'popularAdvises' => $popularAdvises, // Passez les articles populaires à la vue
+            'popularadvises' => $popularAdvises, // Passez les advises populaires à la vue
+        ]);
+
+        // Récupère tous les tags
+        $tags = $tagRepository->findAll();
+        return $this->render('advise/display.html.twig', [
+            'advises' => $advises,
+            'tags' => $tags, // Passe les tags à la vue
+        ]);
+
+        return $this->render('advise/index.html.twig', [
+            'controller_name' => 'AdviseController',
+            'advise' => $advise,
+            
         ]);
     }
+
     #[Route('/conseils/{slug}', name: 'advise_show')]
-    public function show($slug, AdviseRepository $adviseRepository, TagRepository $tagRepository): Response
+    public function show($slug, AdviseRepository $adviseRepository): Response
     {
-        // Vérifiez si le slug est 'search' ou contient un terme de recherche
-        if ($slug === 'search') {
-            throw $this->createNotFoundException('Termes de recherche non valides.');
-        }
-    
-        // Récupérer les tags
-        $tags = $tagRepository->findAll();
-        $tags = $tagRepository->findAllWithColors();
-    
-        // Récupérer les articles les plus populaires
-        $popularAdvises = $adviseRepository->findMostPopularAdvises(5); // Limiter à 5 articles
-    
-        // Trouver l'article par son slug
+        dump($slug);  // Ajoutez cette ligne pour vérifier le slug
         $advise = $adviseRepository->findOneBy(['slug' => $slug]);
+    
         if (!$advise) {
-            throw $this->createNotFoundException('Article non trouvé pour le slug: ' . $slug);
+            throw $this->createNotFoundException('The advise does not exist');
         }
     
         return $this->render('advise/show.html.twig', [
             'advise' => $advise,
-            'tags' => $tags,
-            'popularAdvises' => $popularAdvises, // Assurez-vous que c'est passé correctement
         ]);
     }
     
+    
+
+
     #[Route('/conseils/search', name: 'advise_search')]
     public function search(Request $request, AdviseRepository $adviseRepository, TagRepository $tagRepository, PaginatorInterface $paginator): Response
     {
         $searchQuery = $request->query->get('q');
-        
-        if (empty($searchQuery)) {
-            // Si le champ de recherche est vide, rediriger ou afficher un message
-            return $this->render('advise/search.html.twig', [
-                'message' => 'Veuillez entrer un terme de recherche.',
-            ]);
-        }
     
-        // Effectuer la recherche des articles
+        // Utiliser le QueryBuilder pour récupérer les advises correspondant à la recherche
         $advisesQuery = $adviseRepository->searchQueryBuilder($searchQuery);
-        
+    
         // Utiliser le paginator pour paginer les résultats
         $advises = $paginator->paginate(
-            $advisesQuery, // la requête pour les articles
+            $advisesQuery, // le QueryBuilder retourné
             $request->query->getInt('page', 1), // numéro de la page
-            10 // nombre d'articles par page
+            10 // nombre d'advises par page
         );
-        
+    
         // Récupérer tous les tags pour les passer à la vue
         $tags = $tagRepository->findAll();
-     
-        // Récupérer les articles les plus populaires
-        $popularAdvises = $adviseRepository->findMostPopularAdvises(5); // Limiter à 5 articles
-     
-        return $this->render('advise/search.html.twig', [
-            'advises' => $advises,
+    
+        // Récupérer les advises populaires
+        $popularAdvises = $adviseRepository->findMostPopularAdvises(5); // Limiter à 5 advises
+    
+        return $this->render('blog/search.html.twig', [
+            'advises' => $advises, // advises paginés
             'tags' => $tags,
-            'popularAdvises' => $popularAdvises,
+            'popularAdvisees' => $popularAdvises,
             'query' => $searchQuery,
         ]);
     }
-    
     
     #[Route('/conseils/tag/{slug}', name: 'advise_by_tag')]
     public function filterByTag(string $slug, TagRepository $tagRepository, AdviseRepository $adviseRepository, PaginatorInterface $paginator, Request $request): Response
@@ -111,29 +107,24 @@ class AdviseController extends AbstractController
         // Récupère le tag à partir du slug
         $tag = $tagRepository->findOneBy(['slug' => $slug]);
         if (!$tag) {
-            throw $this->createNotFoundException(sprintf('Tag non trouvé pour le slug "%s"', $slug));
+            throw $this->createNotFoundException('Tag non trouvé');
         }
-      
-        $popularAdvises = $adviseRepository->findMostPopularAdvises(5); // Limiter à 5 articles
+    
         $queryBuilder = $adviseRepository->findByTag($tag);
-
+    
         $advises = $paginator->paginate(
             $queryBuilder,
             $request->query->getInt('page', 1),
-            9 // Nombre d'articles par page
+            9 // Nombre d'advises par page
         );
-
-        // Utilisez findAllWithColors pour récupérer les tags avec couleurs
-        $tags = $tagRepository->findAllWithColors();
-
+    
         // Récupère tous les tags pour le filtre
         $tags = $tagRepository->findAll();
-
+    
         return $this->render('advise/display.html.twig', [
             'advises' => $advises,
             'tags' => $tags, // Passez également les tags ici
             'tag' => $tag,
-            'popularAdvises' => $popularAdvises,
         ]);
     }
 

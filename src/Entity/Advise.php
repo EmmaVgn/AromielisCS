@@ -9,6 +9,8 @@ use App\Entity\Trait\CreatedAtTrait;
 use App\Repository\AdviseRepository;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 
 #[ORM\Entity(repositoryClass: AdviseRepository::class)]
@@ -24,7 +26,7 @@ class Advise
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 3050)]
     private ?string $subtitle = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -45,17 +47,31 @@ class Advise
     #[ORM\Column(nullable: true)]
     private ?\DateTimeInterface $updatedAt = null;
 
+    /**
+     * @var Collection<int, Tag>
+     */
+    #[ORM\ManyToMany(targetEntity: Tag::class, mappedBy: 'advises')]
+    private Collection $tags;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $views = null;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
+        $this->tags = new ArrayCollection();
+
     
     }
 
     public function __toString(): string
     {
-        $this->updatedAt = new \DateTimeImmutable(); // Mettez à jour ici si nécessaire
-        return $this->name ?? 'Unnamed Article'; // Retourne le nom ou une valeur par défaut
+        // Si vous avez besoin d'inclure la date dans le nom de l'advise ou dans la chaîne retournée :
+        $dateString = $this->createdAt ? $this->createdAt->format('Y-m-d H:i:s') : 'Date inconnue';
+    
+        return $this->name ? $this->name . ' - ' . $dateString : 'Unnamed advise';
     }
+    
 
     public function getId(): ?int
     {
@@ -137,8 +153,8 @@ class Advise
     
     public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
     {
-        $this->createdAt = $updatedAt;
-
+        $this->updatedAt = $updatedAt;
+    
         return $this;
     }
 
@@ -163,6 +179,41 @@ class Advise
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+     /**
+     * @return Collection<int, Tag>
+     */
+    public function getTags(): Collection
+    {
+        return $this->tags;
+    }
+    public function addTag(Tag $tag): static
+    {
+        if (!$this->tags->contains($tag)) {
+            $this->tags->add($tag);
+            $tag->addAdvise($this);
+        }
+        return $this;
+    }
+    public function removeTag(Tag $tag): static
+    {
+        if ($this->tags->removeElement($tag)) {
+            $tag->removeAdvise($this);
+        }
+        return $this;
+    }
+
+    public function getViews(): ?int
+    {
+        return $this->views;
+    }
+
+    public function setViews(?int $views): static
+    {
+        $this->views = $views;
 
         return $this;
     }

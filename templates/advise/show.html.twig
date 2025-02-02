@@ -2,8 +2,91 @@
 
 {% block title %}Les conseils de Marie
 {% endblock %}
-{% block body %}
-	{{ advise.name }}
-	{{advise.content}}
 
+{% block body %}
+	<div
+		class="container mt-5">
+		<!-- Breadcrumb -->
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item">
+					<a href="{{ path('homepage') }}">Accueil</a>
+				</li>
+				<li class="breadcrumb-item">
+					<a href="{{ path('advise') }}">Conseils</a>
+				</li>
+				<li class="breadcrumb-item active" aria-current="page">{{ advise.name }}</li>
+			</ol>
+		</nav>
+
+		<h1 class="text-center mb-4">{{ advise.name }}</h1>
+
+		<div class="container my-5">
+			<div class="row">
+				<div class="col-md-8">
+					<advise class="post">
+						<div class="advise-v2">
+							<figure class="advise-thumb">
+								<img src="{{ asset('images/blog/' ~ advise.imageName) }}" alt="{{ advise.name|e }}" class="img-fluid rounded" style="width: 100%; height: auto; max-height: 300px; object-fit: cover;">
+							</figure>
+							<div class="advise-content-main">
+								<div class="advise-header">
+									<h1 class="entry-title display-4">{{ advise.name }}</h1>
+									<div class="entry-meta mb-3">
+										<span class="entry-date text-muted">{{ advise.createdAt|date('F j, Y') }}</span>
+										<span class="mx-2">|</span>
+									</div>
+								</div>
+								<div class="advise-content mb-4">
+									<p>{{ advise.content|raw }}</p>
+								</div>
+							</div>
+						</div>
+					</advise>
+
+					<div class="text-center mt-5">
+						<a href="{{ path('advise') }}" class="btn-custom btn-sm">Retour aux conseils</a>
+					</div>
+				</div>
+
+				<div class="col-md-4">
+					<h2 class="text-center mb-4">Conseils Similaires</h2>
+					<div class="row">
+						{% for popularAdvise in popularAdvises|slice(0, 2) %}
+							{# Limiter à 2 advises #}
+							<div class="col-12 mb-3">
+								<div class="card">
+									<a href="{{ path('advise_show', {'slug': popularAdvise.slug}) }}">
+										<img src="{{ asset('images/blog/' ~ popularAdvise.imageName) }}" class="card-img-top" alt="{{ popularAdvise.name|e }}" style="max-height: 150px; object-fit: cover;">
+									</a>
+									<div class="card-body">
+										<h3 class="card-title">
+											<a href="{{ path('advise_show', {'slug': popularAdvise.slug}) }}" class="text-decoration-none">{{ popularAdvise.name|e }}</a>
+										</h3>
+										<p class="card-text">{{ popularAdvise.subtitle|raw }}</p>
+									</div>
+								</div>
+							</div>
+						{% else %}
+							<div class="col-12">
+								<div class="alert alert-muted text-center">Aucun advise similaire.</div>
+							</div>
+						{% endfor %}
+					</div>
+
+
+				</div>
+
+				<div class="mt-4">
+					<h4 class="font-weight-bold">Tags Associés</h4>
+					<div>
+						{% for tag in tags %}
+							<a href="{{ path('blog_by_tag', {'slug': tag.slug}) }}" class="badge" style="background-color: {{ tag.color }};">{{ tag.name }}</a>
+						{% endfor %}
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
 {% endblock %}

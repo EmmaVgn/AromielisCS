@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recherche - Marie Farjaud
+{% endblock %}
+
+{% block meta_description %}
+	<meta name="description" content="Résultats de recherche pour '{{ app.request.get('q') }}' sur le blog de Caméléon Solutions. Découvrez des advises pertinents.">
+{% endblock %}
+
+{% block meta_keywords %}
+	<meta name="keywords" content="recherche, blog, advises, Caméléon Solutions, {{ app.request.get('q') }}">
+{% endblock %}
+
+{% block body %}
+	<div class="container py-5">
+		<h1 class="text-center mb-5 display-4">Résultats de recherche pour "{{ app.request.get('q') }}"</h1>
+
+		<div
+			class="row mb-4">
+			<!-- Colonne pour les advises -->
+			<div class="col-md-8">
+				<div class="row justify-content-center">
+					{% if advises|length == 0 %}
+						<p class="text-center text-muted">Aucun advise ne correspond à votre recherche.</p>
+					{% else %}
+						{% for advise in advises %}
+							{% if advise.slug %}
+								<div class="col-lg-4 col-md-6 mb-4">
+									<div class="card h-100 shadow-sm border-0 rounded-lg">
+										<div class="card-img-top position-relative">
+											<a href="{{ path('advise_show', {'slug': advise.slug}) }}">
+												<img src="{{ asset('img/blog/' ~ advise.imageName) }}" alt="{{ advise.name|e }}" class="img-fluid rounded-top" style="width: 100%; height: 300px; object-fit: cover;">
+											</a>
+											<div class="overlay d-flex align-items-center justify-content-center" style="position: absolute; top: 0; bottom: 0; left: 0; right: 0; background: rgba(0, 0, 0, 0.6);">
+												<h2 class="text-#f5f5e9  text-center h4 font-weight-bold">
+													<a href="{{ path('advise_show', {'slug': advise.slug}) }}" class="text-#f5f5e9 ">{{ advise.name|e }}</a>
+												</h2>
+											</div>
+										</div>
+										<div class="card-body d-flex flex-column">
+											<p class="card-text text-muted">{{ advise.subtitle|slice(0, 120) ~ '...' }}</p>
+											<div class="mt-auto text-center">
+												<a href="{{ path('advise_show', {'slug': advise.slug}) }}" class="btn-custom-blog">Lire la suite</a>
+											</div>
+										</div>
+										<div class="card-footer bg-#f5f5e9  text-center border-0">
+											<small class="text-muted">Publié le
+												{{ advise.createdAt|date('d M Y') }}</small>
+											<div class="mt-2">
+												{% if advise.tags is not empty %}
+													{% for tag in advise.tags %}
+														<a href="{{ path('advise_by_tag', {'slug': tag.slug}) }}" class="badge bg-secondary mx-1">{{ tag.name|e }}</a>
+													{% endfor %}
+												{% else %}
+													<span class="text-muted">Aucun tag associé.</span>
+												{% endif %}
+											</div>
+										</div>
+									</div>
+								</div>
+							{% else %}
+								<p class="text-danger">Le slug de l'advise "{{ advise.name|e }}" est manquant.</p>
+							{% endif %}
+						{% endfor %}
+					{% endif %}
+				</div>
+
+				<!-- Pagination -->
+				<div class="d-flex justify-content-center mt-4">
+					{{ knp_pagination_render(advises) }}
+					<!-- advises est un objet de pagination ici -->
+				</div>
+
+			</div>
+
+			<!-- Colonne pour la recherche et les filtres -->
+			<div class="col-md-3 blog-content-display">
+				<form method="GET" action="{{ path('advise_search') }}" class="d-flex mb-4">
+					<input type="text" name="q" class="form-control me-2" placeholder="Rechercher un advise..." value="{{ app.request.get('q') }}">
+					<button type="submit" class="btn-custom-blog">Rechercher</button>
+				</form>
+
+				<!-- Filtres par Tags -->
+				<div class="text-center mb-4">
+					<p class="mb-2">Filtrer par catégories :</p>
+					<div class="d-flex flex-wrap justify-content-center">
+						{% for tag in tags %}
+							<a href="{{ path('advise_by_tag', {'slug': tag.slug}) }}" class="badge" style="background-color: {{ tag.color }};">{{ tag.name }}</a>
+						{% endfor %}
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+{% endblock %}
