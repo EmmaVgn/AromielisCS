@@ -244,4 +244,18 @@ class Order
 
         return $this;
     }
+
+    public function getStateAsString(): string
+    {
+        switch ($this->state) {
+            case 0:
+                return 'En attente';
+            case 1:
+                return 'Validée';
+            case 2:
+                return 'Expédiée';
+            default:
+                return 'Non défini';
+        }
+    }
 }

@@ -134,7 +134,9 @@ class PaymentController extends AbstractController
 
         // Suppression du panier une fois la commande validée
         $cart->empty();
-
+        // Lancer un événement qui permet d'envoyer un mail à la prise d'une commande
+        $orderEvent = new OrderSuccessEvent($order);
+        $dispatcher->dispatch($orderEvent, 'order.success');
         // Vérifiez si l'utilisateur est toujours connecté après la suppression du panier
         if ($this->getUser()) {
             // Si l'utilisateur est connecté, redirigez-le avec succès

@@ -1,9 +1,11 @@
 <?php
-
 namespace App\Controller\Admin;
 
 use App\Entity\Order;
+use App\Event\OrderChangeEvent;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
@@ -12,22 +14,24 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
-use App\Service\SendMailService;  // Service pour envoyer des emails
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class OrderCrudController extends AbstractCrudController
 {
+    private $eventDispatcher;
+
+    public function __construct(EventDispatcherInterface $eventDispatcher)
+    {
+        $this->eventDispatcher = $eventDispatcher;
+    }
+
     public static function getEntityFqcn(): string
     {
         return Order::class;
     }
-
-    public function __construct(
-        private SendMailService $mailService, // Injecte ton service d'email
-        private EntityManagerInterface $em // Injecte EntityManager pour gérer l'entité
-    ) {}
 
     public function configureActions(Actions $actions): Actions
     {
@@ -62,52 +66,18 @@ class OrderCrudController extends AbstractCrudController
         ];
     }
 
-    public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    public function updateOrderState(Request $request, Order $order, EntityManagerInterface $orderRepository): Response
     {
-        parent::updateEntity($entityManager, $entityInstance);
-    
-        // Vérifie si l'entité est bien une instance de Order
-        if ($entityInstance instanceof Order) {
-            // Récupère l'état avant et après modification
-            $previousState = $entityInstance->getState();
-            $newState = $entityInstance->getState();
-    
-            // Si l'état a changé, envoie l'email
-            if ($previousState !== $newState) {
-                dump('Changement d\'état détecté, envoi de l\'email...');
-                dump('Ancien état :', $previousState);
-                dump('Nouvel état :', $newState);
-    
-                // Appel de la méthode d'envoi d'email
-                $this->sendOrderStatusChangeEmail($entityInstance);
-            }
-        }
-    }
-    
-    
+        $newState = $request->get('newState'); // Ou récupérez depuis le formulaire
+        $order->setState($newState);
+        $orderRepository->flush(); // Sauvegardez l'état mis à jour
 
-    // Fonction pour envoyer un email lors de la modification de l'état de la commande
-    private function sendOrderStatusChangeEmail(Order $order)
-    {
-        $userEmail = $order->getUser()->getEmail();  // L'email de l'utilisateur
-        $context = [
-            'order' => $order,
-            'state' => $order->getState(),
-        ];
-    
-        // Dump pour vérifier les données avant l'envoi
-        dump('Email à envoyer à:', $userEmail);
-        dump('Contexte de l\'email:', $context);
-    
-        // Envoi de l'email
-        $this->mailService->sendEmail(
-            'no-reply@Marie Farjaud.com',  // L'email de l'expéditeur
-            'Modification de votre commande',  // Sujet de l'email
-            $userEmail,  // Destinataire
-            'Changement d\'état de votre commande',  // Titre de l'email
-            'order_status_change',  // Template de l'email
-            $context  // Contexte à envoyer dans l'email
-        );
+        // Déclencher l'événement après la mise à jour de l'état
+        $orderEvent = new OrderChangeEvent($order);
+        $this->eventDispatcher->dispatch($orderEvent, 'order.status_changed');
+        $this->addFlash('success', 'L\'état de la commande a été mis à jour.');
+        return $this->redirectToRoute('admin_order_list');
     }
-    
+
+
 }
