@@ -40,6 +40,15 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
+            // Ajout de la case à cocher "J'accepte de recevoir des mails commerciaux"
+            ->add('receivePromotions', CheckboxType::class, [
+                'mapped' => false,  // Ne pas lier ce champ à l'entité User directement
+                'label' => 'J\'accepte de recevoir des mails commerciaux.',
+                'required' => false,  // Rendre optionnel ou obligatoire selon votre besoin
+                'attr' => [
+                    'class' => 'form-check-input'
+                ]
+            ])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'required' => true,
