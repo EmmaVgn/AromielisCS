@@ -21,6 +21,22 @@ new Filter(document.querySelector('.js-filter'))
 
 
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
+
+//Scroll to top
+document.addEventListener("DOMContentLoaded", function () {
+    const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+  
+    scrollToTopBtn.addEventListener("click", function () {
+      console.log("Bouton cliqué !");
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth", // Défilement fluide
+      });
+    });
+  });
+  
+
+//Cookie
 function setCookie(name, value, days) {
     var expires = "";
     if (days) {

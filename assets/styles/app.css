@@ -5,7 +5,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  overflow-x: hidden;
+
 
 }
 
@@ -17,7 +17,7 @@ body {
   text-decoration: none;
   list-style: none;
   background-color: #fff;
-  overflow-x: hidden;
+
   max-width: 100%;
 }
 
@@ -1482,4 +1482,32 @@ thead {
   .error-404 img {
       max-width: 50%;
   }
+}
+
+/*--------------------------------------------------------------
+# Scroll to top
+--------------------------------------------------------------*/
+#scrollToTopBtn {
+  display: block !important; /* Forcer l'affichage pour tester */
+  position: fixed;
+  bottom: 20px;
+  right: 40px;
+  z-index: 1000;
+  width: 50px;
+  height: 50px;
+  border: none;
+  background-color: #dcdcbe;
+  color: #ffffff;
+  font-size: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+#scrollToTopBtn:hover {
+  background-color: #d1c58de4;
+  transform: translateY(-3px);
+}
+
+#scrollToTopBtn:active {
+  transform: translateY(0);
 }

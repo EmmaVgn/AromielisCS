@@ -56,19 +56,22 @@
 		<header>
 			{% include "shared/_navbar.html.twig" %}
 		</header>
+		<main>
+			{% include "shared/_flash.html.twig" %}
+			{% set margin = '' %}
+			{% if carousel is defined %}
+				{% include "shared/_carousel.html.twig" %}
+			{% else %}
+				{% set margin = carousel is defined ? '' : 'mt-5' %}
+			{% endif %}
 
-		{% include "shared/_flash.html.twig" %}
-		{% set margin = '' %}
-		{% if carousel is defined %}
-			{% include "shared/_carousel.html.twig" %}
-		{% else %}
-			{% set margin = carousel is defined ? '' : 'mt-5' %}
-		{% endif %}
+			<div class="container marketing {{ margin }}"> {% block body %}{% endblock %}
+				</div>
 
-		<div class="container marketing {{ margin }}"> {% block body %}{% endblock %}
-			</div>
-
-			{% include "shared/_footer.html.twig" %}
+				{% include "shared/_footer.html.twig" %}
+				<!-- Bouton Retour en haut -->
+				<button id="scrollToTopBtn" title="Retour en haut">↑</button>
+			</main>
 		</body>
 
 	</html>
