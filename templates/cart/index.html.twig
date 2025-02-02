@@ -5,6 +5,15 @@
 
 {% block body %}
 	<h1>Votre panier</h1>
+
+	{% if app.user is null %}
+		<div class="alert alert-warning">
+			Vous devez
+			<a href="{{ path('app_login') }}">créer un compte ou vous connecter</a>
+			pour commander.
+		</div>
+	{% endif %}
+
 	{% if items | length > 0 %}
 		<table class="table table-striped">
 			<thead>
@@ -58,7 +67,7 @@
 	{% endif %}
 	<hr>
 	<a class="mb-3 d-block" href="{{ path('product_display') }}">Continuez mes achats</a>
-	<a href="{{ path('order') }}" title="Valider puis passer au paiement" class="btn btn-success btn-block" style="background-color: #388E3C; border: none;">
+	<a href="{{ path('order') }}" title="Valider puis passer au paiement" class="btn btn-success btn-block" style="background-color: #388E3C; border: none;" {% if app.user is null %} disabled {% endif %}>
 		Valider mon panier
 	</a>
 {% endblock %}

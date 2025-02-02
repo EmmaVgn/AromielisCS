@@ -65,6 +65,25 @@ class CartController extends AbstractController
         ]);
     }
 
+    #[Route('/cart/validate', name: 'cart_validate')]
+public function validateCart(Request $request): Response
+{
+    // Vérifier si l'utilisateur est connecté
+    if (!$this->getUser()) {
+        // Si l'utilisateur n'est pas connecté, afficher un message flash et rediriger vers la page de connexion
+        $this->addFlash('warning', 'Vous devez créer un compte ou être connecté pour commander.');
+        return $this->redirectToRoute('app_login'); // La route vers la page de connexion
+    }
+
+    // Si l'utilisateur est connecté, continuer le processus de commande...
+    // ...
+
+    return $this->render('cart/checkout.html.twig', [
+        // Passer des variables au template si nécessaire
+    ]);
+}
+
+
     #[Route('/cart/delete/{id}', name: "cart_delete", requirements: ["id" => '\d+'])]
     public function delete($id): Response
     {

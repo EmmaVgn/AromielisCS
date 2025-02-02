@@ -133,16 +133,20 @@ class PaymentController extends AbstractController
         }
 
         // Suppression du panier une fois la commande validée
-        $this->cartService->empty();
+        $cart->empty();
 
-        // Lancer un événement qui permet d'envoyer un mail à la prise d'une commande
-        $orderEvent = new OrderSuccessEvent($order);
-        $dispatcher->dispatch($orderEvent, 'order.success');
-
-        // 4. Je redirige avec un flash vers la liste des commandes
-        $this->addFlash('success', 'La commande a été payée et confirmée');
-        return $this->redirectToRoute('account_orders', ['reference' => $order->getReference()]);
+        // Vérifiez si l'utilisateur est toujours connecté après la suppression du panier
+        if ($this->getUser()) {
+            // Si l'utilisateur est connecté, redirigez-le avec succès
+            $this->addFlash('success', 'La commande a été payée et confirmée');
+            return $this->redirectToRoute('account_orders', ['reference' => $order->getReference()]);
+        } else {
+            // Si l'utilisateur est déconnecté, redirigez-le vers la page de connexion
+            $this->addFlash('error', 'Vous avez été déconnecté. Veuillez vous reconnecter.');
+            return $this->redirectToRoute('app_login');
+        }
     }
+
 
     /**
      * Commande annulée (clic sur retour dans la fenêtre)
