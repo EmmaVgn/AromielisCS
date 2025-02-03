@@ -6,35 +6,23 @@ import './styles/carousel.css';
 import './js/cookieconsent.min.js';
 import './styles/cookieconsent.min.css';
 
-
 import Filter from './js/Filter.js';
 new Filter(document.querySelector('.js-filter'))
-
-
-
-/*
- * Welcome to your app's main JavaScript file!
- *
- * This file will be included onto the page via the importmap() Twig function,
- * which should already be in your base.html.twig.
- */
-
 
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
 
 //Scroll to top
 document.addEventListener("DOMContentLoaded", function () {
     const scrollToTopBtn = document.getElementById("scrollToTopBtn");
-  
+
     scrollToTopBtn.addEventListener("click", function () {
-      console.log("Bouton cliqué !");
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth", // Défilement fluide
-      });
+        console.log("Bouton cliqué !");
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth", // Défilement fluide
+        });
     });
-  });
-  
+});
 
 //Cookie
 function setCookie(name, value, days) {
@@ -80,88 +68,75 @@ window.addEventListener('load', function () {
 //graphique stats
 document.addEventListener("DOMContentLoaded", function () {
     const ctx = document.getElementById('visitsChart');
+    let chart;
 
     if (!ctx) {
         console.warn("⚠️ Aucun élément #visitsChart trouvé !");
         return;
     }
 
-    console.log("📊 Données utilisées pour le graphique :", visitsData);
+    function createChart(data) {
+        // Si un graphique existe déjà, on le détruit
+        if (chart) {
+            chart.destroy();
+        }
 
-    let chart = new Chart(ctx, {
-        type: 'pie',
-        data: visitsData,
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    position: 'top'
+        // Créer un nouveau graphique avec les données
+        chart = new Chart(ctx, {
+            type: 'pie', // Utilisation du graphique en camembert (pie)
+            data: data,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    }
                 }
             }
-        }
-    });
-
-    function attachFilterEvents() {
-        document.querySelectorAll(".filters a").forEach(button => {
-            button.addEventListener("click", function (event) {
-                event.preventDefault();  
-
-                console.log("🔍 Bouton cliqué :", this.href);
-
-                fetch(this.href)
-                    .then(response => response.text())
-                    .then(html => {
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(html, 'text/html');
-
-                        let scriptElement = Array.from(doc.scripts).find(s => s.textContent.includes("var visitsData"));
-
-                        if (!scriptElement) {
-                            console.error("❌ Aucune donnée trouvée dans le script !");
-                            return;
-                        }
-
-                        let matches = scriptElement.textContent.match(/var visitsData = (\{.*\});/);
-
-                        if (!matches || matches.length < 2) {
-                            console.error("❌ Impossible d'extraire les données !");
-                            return;
-                        }
-
-                        let newStats = JSON.parse(matches[1]);
-                        console.log("🔄 Nouvelles données reçues :", newStats);
-
-                        if (!newStats.labels || newStats.labels.length === 0) {
-                            console.warn("⚠️ Les nouvelles données sont vides !");
-                            return;
-                        }
-
-                        // 🔥 Supprimer l'ancien graphique avant de recréer un nouveau
-                        chart.destroy();
-
-                        chart = new Chart(ctx, {
-                            type: 'pie',
-                            data: newStats,
-                            options: {
-                                responsive: true,
-                                maintainAspectRatio: false,
-                                plugins: {
-                                    legend: {
-                                        position: 'top'
-                                    }
-                                }
-                            }
-                        });
-
-                        console.log("✅ Nouveau graphique mis à jour !");
-                    })
-                    .catch(error => console.error("❌ Erreur lors du fetch :", error));
-            });
         });
     }
 
-    attachFilterEvents();
-    console.log("✅ Graphique initialisé !");
-});
+    // Appeler createChart avec les données initiales
+    createChart(visitsData);
 
+    // Écouter les changements de filtre et mettre à jour le graphique
+    document.querySelectorAll(".filters a").forEach(button => {
+        button.addEventListener("click", function (event) {
+            event.preventDefault();
+
+            // Récupérer les nouvelles données via une requête fetch
+            fetch(this.href)
+                .then(response => response.text())
+                .then(html => {
+                    // Analyser le contenu HTML de la page renvoyée
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+
+                    // Trouver le script contenant les données du graphique
+                    let scriptElement = Array.from(doc.scripts).find(s => s.textContent.includes("var visitsData"));
+
+                    if (!scriptElement) {
+                        console.error("❌ Aucune donnée trouvée dans le script !");
+                        return;
+                    }
+
+                    // Extraire les données du script trouvé
+                    let matches = scriptElement.textContent.match(/var visitsData = (\{.*\});/);
+
+                    if (!matches || matches.length < 2) {
+                        console.error("❌ Impossible d'extraire les données !");
+                        return;
+                    }
+
+                    // Parser les données JSON
+                    let newStats = JSON.parse(matches[1]);
+                    console.log("🔄 Nouvelles données reçues :", newStats);
+
+                    // Mettre à jour le graphique avec les nouvelles données
+                    createChart(newStats);
+                })
+                .catch(error => console.error("❌ Erreur lors du fetch :", error));
+        });
+    });
+});

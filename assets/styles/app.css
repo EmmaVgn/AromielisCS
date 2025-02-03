@@ -1542,9 +1542,14 @@ thead {
 /*--------------------------------------------------------------
 # Stats
 --------------------------------------------------------------*/
+#visitsChart, #ordersChart {
+  max-width: 500px;
+  height: auto;
+  margin: 0 auto;  /* Centre les graphiques */
+}
 
-#visitsChart {
-  max-width: 400px;
-  max-height: 400px;
-  margin: 0 auto; /* Pour centrer le graphique */
+canvas {
+  background-color: #f9f9f9;  /* Ajoute un fond clair pour le graphique */
+  border-radius: 10px;  /* Bords arrondis pour un aspect plus moderne */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);  /* Ombre légère pour donner du relief */
 }

@@ -1,17 +1,15 @@
 {% extends '@EasyAdmin/page/content.html.twig' %}
 
 {% block content %}
-
 	<div class="container">
-		<h2 class="mb-4">Statistiques des visites</h2>
-		<div class="filters mb-4">
-			<a href="{{ path('admin_stats', {filter: 'week'}) }}" class="btn btn-sm {{ currentFilter == 'week' ? 'btn-primary' : 'btn-outline-primary' }}">Semaine</a>
-			<a href="{{ path('admin_stats', {filter: 'month'}) }}" class="btn btn-sm {{ currentFilter == 'month' ? 'btn-primary' : 'btn-outline-primary' }}">Mois</a>
-			<a href="{{ path('admin_stats', {filter: 'year'}) }}" class="btn btn-sm {{ currentFilter == 'year' ? 'btn-primary' : 'btn-outline-primary' }}">Année</a>
-		</div>
+		<h2 class="mb-4">📊 Statistiques</h2>
+
+		<!-- Filtres -->
 
 
-		<table class=" table table-striped">
+		<!-- 📊 VISITES -->
+		<h3>📊 Visites par source</h3>
+		<table class="table table-striped">
 			<thead>
 				<tr>
 					<th>Source</th>
@@ -19,12 +17,9 @@
 				</tr>
 			</thead>
 			<tbody>
-
-				{% for stat in stats %}
-
-
+				{% for stat in visitStats %}
 					<tr>
-						<td>{{ stat.source ?: 'Direct' }}</td>
+						<td>{{ stat.source }}</td>
 						<td>{{ stat.visitCount }}</td>
 					</tr>
 				{% else %}
@@ -34,40 +29,79 @@
 				{% endfor %}
 			</tbody>
 		</table>
+
+		<!-- 📦 COMMANDES -->
+		<h3>📦 Commandes par mois</h3>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Mois</th>
+					<th>Nombre de commandes</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for stat in orderStats %}
+					<tr>
+						<td>{{ stat.month }}</td>
+						<td>{{ stat.orderCount }}</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="2" class="text-center">Aucune donnée disponible</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+		<h3>💰 Chiffre d'affaires par mois</h3>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Mois</th>
+					<th>Revenu total (€)</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for stat in revenueStats %}
+					<tr>
+						<td>{{ stat.month }}</td>
+						<td>{{ stat.totalRevenue|number_format(2, ',', ' ') }}
+							€</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="2" class="text-center">Aucune donnée disponible</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+		<!-- ⚡ PERFORMANCES -->
+		<h3>⚡ Performances Web</h3>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Indicateur</th>
+					<th>Valeur</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Temps de chargement moyen</td>
+					<td>{{ performanceStats.avgLoadTime }}
+						s</td>
+				</tr>
+				<tr>
+					<td>Temps de réponse API</td>
+					<td>{{ performanceStats.apiResponseTime }}</td>
+				</tr>
+				<tr>
+					<td>Taux d'erreur</td>
+					<td>{{ performanceStats.errorRate }}</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
-	<canvas id="visitsChart" width="400" height="400"></canvas>
-
-	<script>
-		var visitsData = {
-labels: {{ stats|map(s => s.source)|json_encode()|raw }},
-datasets: [
-{
-label: 'Nombre de visites par source',
-data: {{ stats|map(s => s.visitCount)|json_encode()|raw }},
-backgroundColor: [
-'rgba(255, 99, 132, 0.5)',
-'rgba(54, 162, 235, 0.5)',
-'rgba(255, 206, 86, 0.5)',
-'rgba(75, 192, 192, 0.5)',
-'rgba(153, 102, 255, 0.5)'
-],
-borderColor: [
-'rgba(255, 99, 132, 1)',
-'rgba(54, 162, 235, 1)',
-'rgba(255, 206, 86, 1)',
-'rgba(75, 192, 192, 1)',
-'rgba(153, 102, 255, 1)'
-],
-borderWidth: 1
-}
-]
-};
-
-console.log("📊 Données envoyées à Chart.js :", visitsData);
-	</script>
-
-
 {% endblock %}
 {% block importmap %}{# do NOT call parent() #}{{ importmap(['app', 'graphique','chart.umd.js']) }}
-
 {% endblock %}

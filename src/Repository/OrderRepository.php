@@ -47,5 +47,32 @@ class OrderRepository extends ServiceEntityRepository
     }       
 
 
+    //stats des orders
+    public function countOrdersByMonth(): array
+    {
+        return $this->createQueryBuilder('o')
+            ->select("SUBSTRING(o.createdAt, 1, 7) AS month, COUNT(o.id) AS orderCount")
+            ->where('o.state > 0') // Seules les commandes validées
+            ->groupBy('month')
+            ->orderBy('month', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+    
+    public function countRevenueByMonth(): array
+    {
+        return $this->createQueryBuilder('o')
+            ->select("SUBSTRING(o.createdAt, 1, 7) AS month, SUM(o.total) AS totalRevenue")
+            ->where('o.state > 0') // Seules les commandes validées
+            ->groupBy('month')
+            ->orderBy('month', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+    
+
+
+
+
 }
     
