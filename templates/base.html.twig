@@ -39,24 +39,71 @@
 		<meta name="twitter:image" content="{{ asset('images/og-image.jpg') }}">
 
 		{% block stylesheets %}
-			<link
-			rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-		<!-- Lien vers la feuille de style de votre projet -->
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+			<script src="{{ asset('/tarteaucitron/tarteaucitron.css') }}"></script>
+
 		{% endblock %}
 
 		{% block javascripts %}
 			{% block importmap %}
 				{{ importmap('app') }}
+				<script src="{{ asset('/tarteaucitron/tarteaucitron.js') }}"></script>
+				<script src="{{ asset('/tarteaucitron/tarteaucitron.fr.js') }}"></script>
+				<script>
+					document.addEventListener("DOMContentLoaded", function () {
+if (typeof tarteaucitron !== "undefined") {
+console.log("Tarteaucitron chargé !");
+// Initialisation de tarteaucitron
+tarteaucitron.init({
+privacyUrl: "/politique-de-confidentialite", /* Lien vers la politique de confidentialité */
+bodyPosition: "bottom", /* Position du bandeau de consentement */
+hashtag: "#tarteaucitron", /* Hashtag pour ouvrir le panneau */
+cookieName: "tarteaucitron", /* Nom du cookie de consentement */
+orientation: "middle", /* Position du bandeau */
+groupServices: false, /* Grouper les services par catégorie */
+showDetailsOnClick: true, /* Développer les détails au clic */
+serviceDefaultState: "wait", /* État par défaut des services */
+showAlertSmall: false, /* Alerte de consentement minimal */
+cookieslist: false, /* Afficher la liste des cookies */
+showIcon: true, /* Afficher une icône persistante pour gérer les cookies */
+iconPosition: "BottomRight", /* Position de l'icône */
+highPrivacy: true, /* Consentement non automatique */
+AcceptAllCta: true, /* Bouton "Tout accepter" */
+DenyAllCta: true, /* Bouton "Tout refuser" */
+mandatory: true, /* Afficher les cookies obligatoires */
+googleConsentMode: true, /* Activer Google Consent Mode */
+readmoreLink: "/cookies", /* Page dédiée aux informations des cookies */
+});
+// Ajout des services (Google Tag Manager, Google Analytics)
+tarteaucitron.user.googletagmanagerId = 'GTM-TFZ2VG76';
+tarteaucitron.user.gtagUa = 'G-RMTGZX695N'; // UA ou ID GA4
+(tarteaucitron.job = tarteaucitron.job || []).push('googletagmanager');
+(tarteaucitron.job = tarteaucitron.job || []).push('gtag');
+} else {
+console.error("Tarteaucitron n'est pas défini !");
+}
+});
+				</script>
 			{% endblock %}
 		{% endblock %}
 
 	</head>
-
 	<body>
 		<header>
 			{% include "shared/_navbar.html.twig" %}
 		</header>
 		<main>
+			{% if app.environment == 'prod' %}
+				<!-- Google Tag Manager (noscript) -->
+				<noscript>
+					<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TFZ2VG76" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+				</noscript>
+				<!-- End Google Tag Manager (noscript) -->
+				<script type="text/javascript">
+					tarteaucitron.user.gtagUa = 'G-RMTGZX695N';
+(tarteaucitron.job = tarteaucitron.job || []).push('gtag');
+				</script>
+			{% endif %}
 			{% include "shared/_flash.html.twig" %}
 			{% set margin = '' %}
 			{% if carousel is defined %}
@@ -67,7 +114,6 @@
 
 			<div class="container marketing {{ margin }}"> {% block body %}{% endblock %}
 				</div>
-
 				{% include "shared/_footer.html.twig" %}
 				<!-- Bouton Retour en haut -->
 				<button id="scrollToTopBtn" title="Retour en haut">↑</button>

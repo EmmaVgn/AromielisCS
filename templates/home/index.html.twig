@@ -4,61 +4,64 @@
 {% endblock %}
 
 {% block body %}
-	<!-- Three columns of text below the carousel -->
 	<div
-		class="row justify-content-center text-center">
+		class="container-fluid p-0 m-0">
+		<!-- Three columns of text below the carousel -->
+		<div
+			class="row justify-content-center text-center">
 
-		<!-- Huiles essentielles -->
-		<div class="col-lg-3 d-flex flex-column align-items-center mb-4">
-			<img class="bd-placeholder-img rounded-circle mt-3" src="{{ asset('images/essential-oil-6064331_640.jpg') }}" width="140" height="140" alt="Huiles essentielles">
-			<h2>Huiles essentielles</h2>
-			<p>Découvez toute ma gamme d'huiles essentielles bio.</p>
-			<p>
-				<a class="btn-custom" href="/huiles-essentielles" role="button">Voir produits &raquo;</a>
-			</p>
-		</div>
-
-		<!-- Miels -->
-		<div class="col-lg-3 d-flex flex-column align-items-center mb-4">
-			<img class="bd-placeholder-img rounded-circle mt-3" src="{{ asset('images/honey-5043708_1280.jpg') }}" width="140" height="140" alt="Miels">
-			<h2>Produits de la ruche</h2>
-			<p>Découvrez toute ma gamme des produits de la ruche.</p>
-			<p>
-				<a class="btn-custom" href="/produits-de-la-ruche" role="button">Voir produits &raquo;</a>
-			</p>
-		</div>
-
-		<!-- Sprays hydrolats -->
-		<div class="col-lg-3 d-flex flex-column align-items-center mb-4">
-			<img class="bd-placeholder-img rounded-circle mt-3" src="{{ asset('images/spray_hydrolat.jpg') }}" width="140" height="140" alt="Sprays hydrolats">
-			<h2>Les hydrolats</h2>
-			<p>Toute la gamme des hydrolats.</p>
-			<p>
-				<a class="btn-custom" href="/hydrolats" role="button">Voir produits &raquo;</a>
-			</p>
-		</div>
-	</div>
-
-	<!-- /.row -->
-
-	<!-- START THE FEATURETTES -->
-	<h2>Nos produits phares</h2>
-	<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4">
-		{% for p in products %}
-			<div class="col">
-				{% include "_partials/_product_card.html.twig" %}
+			<!-- Huiles essentielles -->
+			<div class="col-lg-3 d-flex flex-column align-items-center mb-4">
+				<img class="bd-placeholder-img rounded-circle mt-3" src="{{ asset('images/essential-oil-6064331_640.jpg') }}" width="140" height="140" alt="Huiles essentielles">
+				<h2>Huiles essentielles</h2>
+				<p>Découvez toute ma gamme d'huiles essentielles bio.</p>
+				<p>
+					<a class="btn-custom" href="/huiles-essentielles" role="button">Voir produits &raquo;</a>
+				</p>
 			</div>
-		{% endfor %}
-	</div>
+
+			<!-- Miels -->
+			<div class="col-lg-3 d-flex flex-column align-items-center mb-4">
+				<img class="bd-placeholder-img rounded-circle mt-3" src="{{ asset('images/honey-5043708_1280.jpg') }}" width="140" height="140" alt="Miels">
+				<h2>Produits de la ruche</h2>
+				<p>Découvrez toute ma gamme des produits de la ruche.</p>
+				<p>
+					<a class="btn-custom" href="/produits-de-la-ruche" role="button">Voir produits &raquo;</a>
+				</p>
+			</div>
+
+			<!-- Sprays hydrolats -->
+			<div class="col-lg-3 d-flex flex-column align-items-center mb-4">
+				<img class="bd-placeholder-img rounded-circle mt-3" src="{{ asset('images/spray_hydrolat.jpg') }}" width="140" height="140" alt="Sprays hydrolats">
+				<h2>Les hydrolats</h2>
+				<p>Toute la gamme des hydrolats.</p>
+				<p>
+					<a class="btn-custom" href="/hydrolats" role="button">Voir produits &raquo;</a>
+				</p>
+			</div>
+		</div>
+
+		<!-- /.row -->
+
+		<!-- START THE FEATURETTES -->
+		<h2>Nos produits phares</h2>
+		<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4">
+			{% for p in products %}
+				<div class="col">
+					{% include "_partials/_product_card.html.twig" %}
+				</div>
+			{% endfor %}
+		</div>
 
 
-	<hr class="featurette-divider">
-	{% include "home/history.html.twig" %}
-	<hr class="featurette-divider">
-	{% include "home/about.html.twig" %}
-	<hr class="featurette-divider">
-	<div class="container reveal">
-		{% include "contact/contact_rapide.html.twig" %}
+		<hr class="featurette-divider">
+		{% include "home/history.html.twig" %}
+		<hr class="featurette-divider">
+		{% include "home/about.html.twig" %}
+		<hr class="featurette-divider">
+		<div class="container reveal">
+			{% include "contact/contact_rapide.html.twig" %}
+		</div>
 	</div>
 
 {% endblock %}
