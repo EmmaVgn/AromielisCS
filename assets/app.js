@@ -77,15 +77,7 @@ window.addEventListener('load', function () {
     }
 });
 
-
-
-import * as Chart from './js/chart.umd.js';
-const ctx = document.getElementById('visitsChart');
-console.log("📊 Canvas détecté :", ctx);
-
-console.log("✅ Chart.js est bien chargé :", Chart);
-
-//Graphique
+//graphique stats
 document.addEventListener("DOMContentLoaded", function () {
     const ctx = document.getElementById('visitsChart');
 
@@ -94,20 +86,11 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
     }
 
-    console.log("✅ Canvas trouvé, création du graphique...");
+    console.log("📊 Données utilisées pour le graphique :", visitsData);
 
-    new Chart.Chart(ctx, {  // Ajout de `.Chart`
+    new Chart(ctx, {
         type: 'bar',
-        data: {
-            labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai'],
-            datasets: [{
-                label: 'Exemple de données',
-                data: [10, 20, 15, 30, 25],
-                backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
-            }]
-        },
+        data: visitsData,
         options: {
             responsive: true,
             scales: {
@@ -116,5 +99,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    console.log("✅ Graphique créé !");
+    console.log("✅ Graphique mis à jour avec les vraies données !");
 });
+

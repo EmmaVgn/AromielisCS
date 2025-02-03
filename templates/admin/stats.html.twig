@@ -1,6 +1,7 @@
 {% extends '@EasyAdmin/page/content.html.twig' %}
 
 {% block content %}
+	<canvas id="visitsChart"></canvas>
 	<div class="container">
 		<h2 class="mb-4">Statistiques des visites</h2>
 		<table class="table table-striped">
@@ -24,6 +25,24 @@
 			</tbody>
 		</table>
 	</div>
+	<script>
+		var visitsData = {
+labels: {{ stats|map(s => s.referrer ?: 'Direct')|json_encode()|raw }},
+datasets: [
+{
+label: 'Nombre de visites',
+data: {{ stats|map(s => s.visitCount)|json_encode()|raw }},
+backgroundColor: 'rgba(54, 162, 235, 0.5)',
+borderColor: 'rgba(54, 162, 235, 1)',
+borderWidth: 1
+}
+]
+};
+
+console.log("📊 Données des visites :", visitsData);
+	</script>
+
 {% endblock %}
 {% block importmap %}{# do NOT call parent() #}{{ importmap(['app', 'graphique','chart.umd.js']) }}
+
 {% endblock %}
