@@ -16,11 +16,14 @@ class VisitRepository extends ServiceEntityRepository
         parent::__construct($registry, Visit::class);
     }
 
-    public function countBySource(): array
+    public function countBySource(\DateTime $startDate, \DateTime $endDate): array
     {
         return $this->createQueryBuilder('v')
-            ->select('COALESCE(v.referrer, \'Direct\') AS source, COUNT(v.id) as visitCount')
-            ->groupBy('source')
+        ->select('COALESCE(v.referrer, \'Direct\') AS referrer, COUNT(v.id) as visitCount')
+        ->where('v.visitedAt BETWEEN :startDate AND :endDate')
+        ->setParameter('startDate', $startDate)
+        ->setParameter('endDate', $endDate)
+        ->groupBy('v.referrer')
             ->orderBy('visitCount', 'DESC')
             ->getQuery()
             ->getResult();

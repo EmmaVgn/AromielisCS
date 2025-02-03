@@ -70,7 +70,18 @@ class OrderRepository extends ServiceEntityRepository
             ->getResult();
     }
     
-
+    public function getRevenueBySource(\DateTime $startDate, \DateTime $endDate): array
+    {
+        return $this->createQueryBuilder('o')
+            ->select('o.referrer, COUNT(o.id) as orderCount, SUM(o.totalAmount) as totalRevenue')
+            ->where('o.createdAt BETWEEN :startDate AND :endDate')
+            ->setParameter('startDate', $startDate)
+            ->setParameter('endDate', $endDate)
+            ->groupBy('o.referrer')
+            ->getQuery()
+            ->getResult();
+    }
+    
 
 
 

@@ -81,7 +81,7 @@
 					<h4 class="font-weight-bold">Tags Associés</h4>
 					<div>
 						{% for tag in tags %}
-							<a href="{{ path('blog_by_tag', {'slug': tag.slug}) }}" class="badge" style="background-color: {{ tag.color }};">{{ tag.name }}</a>
+							<a href="{{ path('advise_by_tag', {'slug': tag.slug}) }}" class="badge" style="background-color: {{ tag.color }};">{{ tag.name }}</a>
 						{% endfor %}
 					</div>
 				</div>
