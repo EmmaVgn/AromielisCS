@@ -1,0 +1,29 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block content %}
+	<div class="container">
+		<h2 class="mb-4">Statistiques des visites</h2>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Source</th>
+					<th>Nombre de visites</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for stat in stats %}
+					<tr>
+						<td>{{ stat.referrer ?: 'Direct' }}</td>
+						<td>{{ stat.visitCount }}</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="2" class="text-center">Aucune donnée disponible</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+{% endblock %}
+{% block importmap %}{# do NOT call parent() #}{{ importmap(['app', 'graphique','chart.umd.js']) }}
+{% endblock %}

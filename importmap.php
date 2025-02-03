@@ -59,4 +59,13 @@ return [
         'version' => '5.3.3',
         'type' => 'css',
     ],
+    'chart.umd.js' => [
+        'path' => './assets/js/chart.umd.js',
+        'entrypoint' => true,
+
+    ],
+    'graphique' => [
+        'path' => './assets/js/graphique.js',
+        'entrypoint' => true,
+    ],
 ];

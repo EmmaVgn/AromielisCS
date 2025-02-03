@@ -13,6 +13,7 @@ use App\Entity\Contact;
 use App\Entity\Headers;
 use App\Entity\Product;
 use App\Entity\Category;
+use App\Repository\VisitRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -42,6 +43,16 @@ class DashboardController extends AbstractDashboardController
         //
         // return $this->render('some/path/my-dashboard.html.twig');
     
+        #[Route('/admin/stats', name: 'admin_stats')]
+        public function stats(VisitRepository $visitRepository): Response
+        {
+            $stats = $visitRepository->countBySource();
+    
+            return $this->render('admin/stats.html.twig', [
+                'stats' => $stats,
+            ]);
+        }
+        
 
     public function configureDashboard(): Dashboard
     {
@@ -63,6 +74,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Tags', 'fas fa-tags', Tag::class);
         yield MenuItem::linkToCrud('Images', 'fas fa-image', Images::class);
         yield MenuItem::linkToCrud('Utilisateurs', 'fas fa-users', User::class);
+        yield MenuItem::linkToRoute('Statistiques', 'fas fa-chart-bar', 'admin_stats');
         yield MenuItem::linkToRoute('Retour au site', 'fas fa-home', 'homepage');
     }
 }
