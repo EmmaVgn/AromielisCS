@@ -86,7 +86,7 @@ class PaymentController extends AbstractController
         Stripe::setApiKey($_ENV['STRIPE_SECRET_KEY']);
 
 
-        $YOUR_DOMAIN = 'http://localhost:8000';
+        $YOUR_DOMAIN = 'https://mariefarjaud.fr/';
 
         try {
             // Création de la session Stripe avec les données du panier
