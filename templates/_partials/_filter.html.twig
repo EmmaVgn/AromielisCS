@@ -5,7 +5,7 @@
 <div class="box border-top border-bottom ps-1">
 	<div class="box-label text-uppercase d-flex align-items-center justify-content-between">
 		Filtres
-		<button type="submit" class=" btn-link" id="resetBtn">Tout effacer</button>
+		<button type="submit" class="btn-link" id="resetBtn">Tout effacer</button>
 	</div>
 </div>
 <div class="box border-bottom ps-1">
@@ -29,7 +29,7 @@
 		Prix
 	</div>
 	<div class="row mb-3">
-		<div class="col-md-6">
+		<div class="col-12 col-md-6">
 			<div class="form-error">
 				{{ form_errors(form.minPrice) }}
 			</div>
@@ -38,7 +38,7 @@
 				<span>€</span>
 			</div>
 		</div>
-		<div class="col-md-6">
+		<div class="col-12 col-md-6">
 			<div class="d-flex align-items-center">
 				{{ form_widget(form.maxPrice) }}
 				<span>€</span>

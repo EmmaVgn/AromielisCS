@@ -150,7 +150,6 @@ p {
 /*--------------------------------------------------------------
 #Cards
 --------------------------------------------------------------*/
-
 /* Styling des cartes */
 .card {
   border-radius: 12px;
@@ -158,8 +157,10 @@ p {
   overflow: hidden;
   border: none;
   display: flex;
-  min-height: 450px; /* Hauteur minimale des cartes */
-  height: 100%; /* La carte prend la hauteur de son conteneur sans débordement */
+  flex-direction: column; /* Assure que les éléments sont en colonne */
+  min-height: 450px; 
+  height: 100%; 
+  margin-bottom: 20px; /* Ajoute un peu de marge en bas */
 }
 
 /* Styling du corps de la carte */
@@ -177,8 +178,8 @@ p {
   font-size: 1.25rem; /* Taille du titre plus petite */
   font-weight: bold;
   display: -webkit-box;
-  -webkit-line-clamp: 4; /* Limite le titre à 4 lignes */
-  line-clamp: 4; /* Limite le titre à 4 lignes */
+  -webkit-line-clamp: 2; /* Limite le titre à 2 lignes pour ne pas trop encombrer */
+  line-clamp: 2; /* Limite le titre à 2 lignes */
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -191,13 +192,14 @@ p {
   object-fit: cover; /* L'image couvre l'espace sans déformation */
   height: 250px; /* Limite la hauteur de l'image */
   width: 100%; /* L'image prend toute la largeur */
+  margin-bottom: 1rem; /* Ajoute un petit espace entre l'image et le texte */
 }
 
 /* Limiter la description à 5 lignes */
 .card-text {
   display: -webkit-box;
-  -webkit-line-clamp: 7; /* Limite la description à 5 lignes */
-  line-clamp: 7; /* Limite la description à 5 lignes */
+  -webkit-line-clamp: 5; /* Limite la description à 5 lignes */
+  line-clamp: 5; /* Limite la description à 5 lignes */
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -213,19 +215,50 @@ p {
   justify-content: space-between;
   gap: 10px;
   margin-top: auto; /* Les boutons sont poussés vers le bas */
-  overflow: hidden; /* Évite tout débordement de bouton */
 }
 
 .card-body .badge {
   margin-bottom: 0.5rem;
 }
 
+/* Ajuster la taille des boutons pour qu'ils occupent tout l'espace disponible */
 .card-container .custom-btn-primary,
 .card-container .custom-btn-success {
   margin-bottom: 0.5rem;
-  width: 100%;
+  width: 100%; /* Les boutons occupent toute la largeur disponible */
+  font-size: 0.9rem; /* Une taille plus petite pour les boutons */
+  padding: 10px 0; /* Un padding uniforme */
 }
 
+/* Responsive adjustments for mobile devices */
+@media (max-width: 768px) {
+  .card {
+    min-height: 400px; /* Ajuste la hauteur minimale des cartes sur mobile */
+  }
+
+  .card-body {
+    padding: 1rem;
+  }
+
+  .card-title {
+    font-size: 1.1rem; /* Réduit la taille du titre sur mobile */
+  }
+
+  .card-text {
+    font-size: 0.9rem; /* Réduit la taille de la description sur mobile */
+  }
+}
+
+/* Ajout d'un espacement entre les cartes dans le conteneur */
+.row-cols-1,
+.row-cols-sm-2,
+.row-cols-md-3,
+.row-cols-lg-4 {
+  display: grid; /* Utiliser grid pour la disposition des cartes */
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Colonnes dynamiques */
+  gap: 50px !important; /* Ajouter un écart entre les cartes */
+  justify-items: center; 
+}
 
 /*--------------------------------------------------------------
 #Boutons
@@ -831,6 +864,46 @@ a:active {
   align-items: center;
   justify-content: flex-start;
 }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .col-md-3 {
+        margin-bottom: 15px;
+    }
+    .col-md-9 {
+        padding-top: 30px;
+    }
+
+    .btn-filter {
+        font-size: 0.9rem;
+    }
+}
+
+/* Products display */
+.row-cols-1 {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 10px;
+}
+
+.row-cols-sm-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.row-cols-md-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.row-cols-lg-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
 
 /*--------------------------------------------------------------
 # Couleur badge catégories

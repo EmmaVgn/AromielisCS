@@ -19,16 +19,19 @@
 							</div>
 						{% endfor %}
 					</div>
-					<button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+					<!-- Bouton précédent, visible uniquement sur les écrans de taille >= sm -->
+					<button class="carousel-control-prev d-none d-sm-block" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
 						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 						<span class="visually-hidden">Previous</span>
 					</button>
-					<button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+					<!-- Bouton suivant, visible uniquement sur les écrans de taille >= sm -->
+					<button class="carousel-control-next d-none d-sm-block" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
 						<span class="carousel-control-next-icon" aria-hidden="true"></span>
 						<span class="visually-hidden">Next</span>
 					</button>
 				</div>
 			</div>
+
 
 			<!-- Détails du produit et ajout au panier -->
 			<div class="col-lg-4">

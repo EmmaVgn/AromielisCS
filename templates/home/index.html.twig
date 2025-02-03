@@ -44,15 +44,16 @@
 		<!-- /.row -->
 
 		<!-- START THE FEATURETTES -->
-		<h2>Nos produits phares</h2>
-		<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4">
-			{% for p in products %}
-				<div class="col">
-					{% include "_partials/_product_card.html.twig" %}
-				</div>
-			{% endfor %}
+		<div class="container">
+			<h2 class="mb-4 text-center">Nos produits phares</h2>
+			<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
+				{% for p in products %}
+					<div class="col mb-4">
+						{% include "_partials/_product_card.html.twig" %}
+					</div>
+				{% endfor %}
+			</div>
 		</div>
-
 
 		<hr class="featurette-divider">
 		{% include "home/history.html.twig" %}
