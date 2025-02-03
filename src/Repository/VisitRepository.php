@@ -26,6 +26,28 @@ class VisitRepository extends ServiceEntityRepository
             ->getResult();
     }
     
+    public function countBySourceWithFilter(string $filter): array
+    {
+        $qb = $this->createQueryBuilder('v')
+            ->select('COALESCE(v.referrer, \'Direct\') AS source, COUNT(v.id) as visitCount');
+    
+        if ($filter === 'week') {
+            $qb->where('v.visitedAt >= :date')
+               ->setParameter('date', (new \DateTime())->modify('-7 days'));
+        } elseif ($filter === 'month') {
+            $qb->where('v.visitedAt >= :date')
+               ->setParameter('date', (new \DateTime('first day of this month')));
+        } elseif ($filter === 'year') {
+            $qb->where('v.visitedAt >= :date')
+               ->setParameter('date', (new \DateTime('first day of January this year')));
+        }
+    
+        return $qb->groupBy('source')
+                  ->orderBy('visitCount', 'DESC')
+                  ->getQuery()
+                  ->getResult();
+    }
+    
     
 
 

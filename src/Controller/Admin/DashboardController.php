@@ -43,16 +43,21 @@ class DashboardController extends AbstractDashboardController
         //
         // return $this->render('some/path/my-dashboard.html.twig');
     
-        #[Route('/admin/stats', name: 'admin_stats')]
-        public function stats(VisitRepository $visitRepository): Response
+        #[Route('/admin/stats/{filter?month}', name: 'admin_stats')]
+        public function stats(VisitRepository $visitRepository, ?string $filter = 'month'): Response
         {
-            $stats = $visitRepository->countBySource();
+            $stats = $visitRepository->countBySourceWithFilter($filter ?? 'month');
         
-            dump($stats); // Ajoute ceci pour voir les données en console
+            dump($stats); // 🚀 Vérifie si Symfony récupère bien les stats pour chaque filtre
             return $this->render('admin/stats.html.twig', [
                 'stats' => $stats,
+                'currentFilter' => $filter ?? 'month',
             ]);
         }
+        
+        
+        
+
         
         
 
@@ -76,7 +81,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Tags', 'fas fa-tags', Tag::class);
         yield MenuItem::linkToCrud('Images', 'fas fa-image', Images::class);
         yield MenuItem::linkToCrud('Utilisateurs', 'fas fa-users', User::class);
-        yield MenuItem::linkToRoute('Statistiques', 'fas fa-chart-bar', 'admin_stats');
+        yield MenuItem::linkToRoute('Statistiques', 'fas fa-chart-bar', 'admin_stats', ['filter' => 'month']);
         yield MenuItem::linkToRoute('Retour au site', 'fas fa-home', 'homepage');
     }
 }

@@ -4,7 +4,14 @@
 
 	<div class="container">
 		<h2 class="mb-4">Statistiques des visites</h2>
-		<table class="table table-striped">
+		<div class="filters mb-4">
+			<a href="{{ path('admin_stats', {filter: 'week'}) }}" class="btn btn-sm {{ currentFilter == 'week' ? 'btn-primary' : 'btn-outline-primary' }}">Semaine</a>
+			<a href="{{ path('admin_stats', {filter: 'month'}) }}" class="btn btn-sm {{ currentFilter == 'month' ? 'btn-primary' : 'btn-outline-primary' }}">Mois</a>
+			<a href="{{ path('admin_stats', {filter: 'year'}) }}" class="btn btn-sm {{ currentFilter == 'year' ? 'btn-primary' : 'btn-outline-primary' }}">Année</a>
+		</div>
+
+
+		<table class=" table table-striped">
 			<thead>
 				<tr>
 					<th>Source</th>
@@ -29,19 +36,20 @@
 		</table>
 	</div>
 	<canvas id="visitsChart" width="400" height="400"></canvas>
+
 	<script>
 		var visitsData = {
-labels: {{ stats|map(s => s.source)|json_encode()|raw }}, // Source des visites (Google, Direct, etc.)
+labels: {{ stats|map(s => s.source)|json_encode()|raw }},
 datasets: [
 {
 label: 'Nombre de visites par source',
-data: {{ stats|map(s => s.visitCount)|json_encode()|raw }}, // Nombre de visites par source
+data: {{ stats|map(s => s.visitCount)|json_encode()|raw }},
 backgroundColor: [
-'rgba(255, 99, 132, 0.5)', // Rouge
-'rgba(54, 162, 235, 0.5)', // Bleu
-'rgba(255, 206, 86, 0.5)', // Jaune
-'rgba(75, 192, 192, 0.5)', // Vert
-'rgba(153, 102, 255, 0.5)' // Violet
+'rgba(255, 99, 132, 0.5)',
+'rgba(54, 162, 235, 0.5)',
+'rgba(255, 206, 86, 0.5)',
+'rgba(75, 192, 192, 0.5)',
+'rgba(153, 102, 255, 0.5)'
 ],
 borderColor: [
 'rgba(255, 99, 132, 1)',
@@ -55,8 +63,9 @@ borderWidth: 1
 ]
 };
 
-console.log("📊 Données des visites :", visitsData);
+console.log("📊 Données envoyées à Chart.js :", visitsData);
 	</script>
+
 
 {% endblock %}
 {% block importmap %}{# do NOT call parent() #}{{ importmap(['app', 'graphique','chart.umd.js']) }}

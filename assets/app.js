@@ -88,12 +88,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     console.log("📊 Données utilisées pour le graphique :", visitsData);
 
-    new Chart(ctx, {
+    let chart = new Chart(ctx, {
         type: 'pie',
         data: visitsData,
         options: {
             responsive: true,
-            maintainAspectRatio: false, // Permet un redimensionnement libre
+            maintainAspectRatio: false,
             plugins: {
                 legend: {
                     position: 'top'
@@ -102,6 +102,66 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    console.log("✅ Graphique mis à jour avec les vraies données !");
+    function attachFilterEvents() {
+        document.querySelectorAll(".filters a").forEach(button => {
+            button.addEventListener("click", function (event) {
+                event.preventDefault();  
+
+                console.log("🔍 Bouton cliqué :", this.href);
+
+                fetch(this.href)
+                    .then(response => response.text())
+                    .then(html => {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+
+                        let scriptElement = Array.from(doc.scripts).find(s => s.textContent.includes("var visitsData"));
+
+                        if (!scriptElement) {
+                            console.error("❌ Aucune donnée trouvée dans le script !");
+                            return;
+                        }
+
+                        let matches = scriptElement.textContent.match(/var visitsData = (\{.*\});/);
+
+                        if (!matches || matches.length < 2) {
+                            console.error("❌ Impossible d'extraire les données !");
+                            return;
+                        }
+
+                        let newStats = JSON.parse(matches[1]);
+                        console.log("🔄 Nouvelles données reçues :", newStats);
+
+                        if (!newStats.labels || newStats.labels.length === 0) {
+                            console.warn("⚠️ Les nouvelles données sont vides !");
+                            return;
+                        }
+
+                        // 🔥 Supprimer l'ancien graphique avant de recréer un nouveau
+                        chart.destroy();
+
+                        chart = new Chart(ctx, {
+                            type: 'pie',
+                            data: newStats,
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                plugins: {
+                                    legend: {
+                                        position: 'top'
+                                    }
+                                }
+                            }
+                        });
+
+                        console.log("✅ Nouveau graphique mis à jour !");
+                    })
+                    .catch(error => console.error("❌ Erreur lors du fetch :", error));
+            });
+        });
+    }
+
+    attachFilterEvents();
+    console.log("✅ Graphique initialisé !");
 });
 
