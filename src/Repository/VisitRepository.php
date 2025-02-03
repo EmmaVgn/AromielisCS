@@ -19,12 +19,13 @@ class VisitRepository extends ServiceEntityRepository
     public function countBySource(): array
     {
         return $this->createQueryBuilder('v')
-            ->select('COALESCE(v.referrer, \'Direct\') AS referrer, COUNT(v.id) as visitCount')
-            ->groupBy('v.referrer')
+            ->select('COALESCE(v.referrer, \'Direct\') AS source, COUNT(v.id) as visitCount')
+            ->groupBy('source')
             ->orderBy('visitCount', 'DESC')
             ->getQuery()
             ->getResult();
     }
+    
     
 
 

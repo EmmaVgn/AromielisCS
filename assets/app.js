@@ -89,12 +89,15 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("📊 Données utilisées pour le graphique :", visitsData);
 
     new Chart(ctx, {
-        type: 'bar',
+        type: 'pie',
         data: visitsData,
         options: {
             responsive: true,
-            scales: {
-                y: { beginAtZero: true }
+            maintainAspectRatio: false, // Permet un redimensionnement libre
+            plugins: {
+                legend: {
+                    position: 'top'
+                }
             }
         }
     });

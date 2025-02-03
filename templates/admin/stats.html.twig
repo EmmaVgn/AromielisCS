@@ -1,7 +1,7 @@
 {% extends '@EasyAdmin/page/content.html.twig' %}
 
 {% block content %}
-	<canvas id="visitsChart"></canvas>
+
 	<div class="container">
 		<h2 class="mb-4">Statistiques des visites</h2>
 		<table class="table table-striped">
@@ -12,9 +12,12 @@
 				</tr>
 			</thead>
 			<tbody>
+
 				{% for stat in stats %}
+
+
 					<tr>
-						<td>{{ stat.referrer ?: 'Direct' }}</td>
+						<td>{{ stat.source ?: 'Direct' }}</td>
 						<td>{{ stat.visitCount }}</td>
 					</tr>
 				{% else %}
@@ -25,15 +28,28 @@
 			</tbody>
 		</table>
 	</div>
+	<canvas id="visitsChart" width="400" height="400"></canvas>
 	<script>
 		var visitsData = {
-labels: {{ stats|map(s => s.referrer ?: 'Direct')|json_encode()|raw }},
+labels: {{ stats|map(s => s.source)|json_encode()|raw }}, // Source des visites (Google, Direct, etc.)
 datasets: [
 {
-label: 'Nombre de visites',
-data: {{ stats|map(s => s.visitCount)|json_encode()|raw }},
-backgroundColor: 'rgba(54, 162, 235, 0.5)',
-borderColor: 'rgba(54, 162, 235, 1)',
+label: 'Nombre de visites par source',
+data: {{ stats|map(s => s.visitCount)|json_encode()|raw }}, // Nombre de visites par source
+backgroundColor: [
+'rgba(255, 99, 132, 0.5)', // Rouge
+'rgba(54, 162, 235, 0.5)', // Bleu
+'rgba(255, 206, 86, 0.5)', // Jaune
+'rgba(75, 192, 192, 0.5)', // Vert
+'rgba(153, 102, 255, 0.5)' // Violet
+],
+borderColor: [
+'rgba(255, 99, 132, 1)',
+'rgba(54, 162, 235, 1)',
+'rgba(255, 206, 86, 1)',
+'rgba(75, 192, 192, 1)',
+'rgba(153, 102, 255, 1)'
+],
 borderWidth: 1
 }
 ]

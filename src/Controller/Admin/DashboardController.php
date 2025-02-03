@@ -47,11 +47,13 @@ class DashboardController extends AbstractDashboardController
         public function stats(VisitRepository $visitRepository): Response
         {
             $stats = $visitRepository->countBySource();
-    
+        
+            dump($stats); // Ajoute ceci pour voir les données en console
             return $this->render('admin/stats.html.twig', [
                 'stats' => $stats,
             ]);
         }
+        
         
 
     public function configureDashboard(): Dashboard

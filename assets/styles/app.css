@@ -1538,3 +1538,13 @@ thead {
   justify-content: center;
   height: 5% !important;
 }
+
+/*--------------------------------------------------------------
+# Stats
+--------------------------------------------------------------*/
+
+#visitsChart {
+  max-width: 400px;
+  max-height: 400px;
+  margin: 0 auto; /* Pour centrer le graphique */
+}
