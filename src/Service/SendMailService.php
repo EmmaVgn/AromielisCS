@@ -42,7 +42,7 @@ class SendMailService
         dump('Contexte de l\'email:', $order);
         // Création de l'email
         $email = (new Email())
-            ->from('no-reply@Marie Farjaud.com')
+            ->from('no-reply@Aromielis.com')
             ->to($to)
             ->subject('Changement d\'état de votre commande')
             ->html($this->templating->render('emails/order_status_change.html.twig', [

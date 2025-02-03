@@ -123,7 +123,7 @@ class PaymentController extends AbstractController
         $order = $repository->findOneByStripeSession($stripeSession);
 
         if (!$order || $order->getUser() != $this->getUser() || $order->getState() == 1) {
-            throw $this->createNotFoundException('Commande inaccessible ou déjà validée');
+            throw $this->createNotFoundException('Commande inaccessible ou                          déjà validée');
         }
 
         // Mettre à jour l'état de la commande si ce n'est pas déjà fait
