@@ -29,8 +29,9 @@ class Images
     #[ORM\JoinColumn(nullable: false)]
     private ?Product $product = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $path = null;
+    
 
     public function getId(): ?int
     {
