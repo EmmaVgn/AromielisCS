@@ -19,8 +19,9 @@ class Images
     #[Vich\UploadableField(mapping: 'products', fileNameProperty: 'imageName')]
     private ?File $imageFile = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $imageName = null;
+    
 
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
@@ -50,13 +51,14 @@ class Images
     public function setImageFile(?File $imageFile = null): void
     {
         $this->imageFile = $imageFile;
-
+    
         if (null !== $imageFile) {
-            // It is required that at least one field changes if you are using doctrine
-            // otherwise the event listeners won't be called and the file is lost
             $this->updatedAt = new \DateTimeImmutable();
+            // Ici, après le traitement par VichUploaderBundle, le nom du fichier devrait être attribué à imageName.
+            // Si ce n'est pas le cas, vérifiez la configuration de VichUploaderBundle.
         }
     }
+    
 
     public function getImageFile(): ?File
     {
@@ -69,12 +71,12 @@ class Images
         return $this->imageName;
     }
 
-    public function setImageName(string $imageName): static
+    public function setImageName(?string $imageName): static
     {
         $this->imageName = $imageName;
-
         return $this;
     }
+    
 
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
