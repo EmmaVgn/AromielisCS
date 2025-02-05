@@ -32,14 +32,13 @@ class SendMailService
             ->htmlTemplate("emails/$template.html.twig")
             ->context($context)
             ->subject($subject);
-            dump('Email prêt à être envoyé:', $email);
+      
         $this->mailer->send($email);
     }
 
     public function sendOrderStatusChangeEmail($to, $order)
     {
-        dump('Envoi d\'email à:', $to);
-        dump('Contexte de l\'email:', $order);
+
         // Création de l'email
         $email = (new Email())
             ->from('no-reply@Aromielis.com')

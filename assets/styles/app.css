@@ -112,29 +112,17 @@ h4 {
   justify-content: space-between;
 }
 
-/* Assurer que chaque section ait la même hauteur */
-.featurette {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: stretch; /* Étire les colonnes pour les aligner */
+.img-fluid {
+  max-width: 100%;
+  height: 700px;
+  margin-top: 180px;
 }
 
-/* S’assurer que les colonnes prennent toute la hauteur */
-.featurette .col-lg-7,
-.featurette .col-lg-5 {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+.img-fluid-marie {
+  max-width: 100%;
+  height: auto;
+  margin-top: 200px;
 }
-
-/* Garantir que l'image prend la hauteur de la colonne */
-.featurette img {
-  width: 100%;
-  height: 100%; /* Remplir toute la hauteur */
-  max-height: 500px; /* Ajuster si nécessaire */
-  object-fit: cover; /* Ajuste l'image sans déformation */
-}
-
 
 /* Fixer une hauteur minimale pour les titres et paragraphes */
 h2 {
