@@ -29,11 +29,6 @@ body {
   height: 32rem;
 }
 
-.carousel-inner {
-  width: 100vw;
-  max-width: 100vw;
-}
-
 .carousel {
   margin-bottom: 4rem;
 }

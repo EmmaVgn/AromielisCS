@@ -1270,6 +1270,37 @@ thead {
 }
 
 
+.responsive-iframe {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* Ratio 16:9 */
+  height: 0;
+  overflow: hidden;
+}
+
+.responsive-iframe iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.carousel-inner {
+  text-align: center !important; /* Centre l'image */
+  width: 300px !important; /* Ajuste la largeur */
+}
+
+.carousel-item.active {
+  display: inline-block; /* Garde la bonne largeur */
+}
+
+.carousel-item img {
+  object-fit: contain; /* Empêche le recadrage */
+  max-height: 450px; /* Ajuste la hauteur max */
+  display: inline-block; /* Garde la bonne largeur */
+}
+
 /*--------------------------------------------------------------
 # Contact rapide
 --------------------------------------------------------------*/

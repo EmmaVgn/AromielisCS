@@ -8,7 +8,7 @@
 		<div class="carousel-inner">
 			{% for key, image in product.images %}
 				<div class="carousel-item {% if loop.first %}active{% endif %}">
-					<img src="{{ vich_uploader_asset(image, 'imageFile') }}" alt="{{ ad.name }}" class="d-block w-100">
+					<img src="{{ vich_uploader_asset(image, 'imageFile') }}" alt="{{ product.name }}" class="d-block w-100">
 				</div>
 			{% endfor %}
 		</div>
