@@ -38,21 +38,12 @@
 		<meta name="twitter:description" content="Explorez les produits naturels de Aromielis : huiles essentielles, miels, nougats et hydrolats. Fabrication artisanale dans le Lot-et-Garonne.">
 		<meta name="twitter:image" content="{{ asset('images/og-image.jpg') }}">
 
-		{% block stylesheets %}
-			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-			<script src="{{ asset('/tarteaucitron/tarteaucitron.css') }}"></script>
 
-		{% endblock %}
-
-		{% block javascripts %}
-			{% block importmap %}
-				{{ importmap('app') }}
-				<script src="{{ asset('/tarteaucitron/tarteaucitron.js') }}"></script>
-				<script src="{{ asset('/tarteaucitron/tarteaucitron.fr.js') }}"></script>
-				<script>
-					document.addEventListener("DOMContentLoaded", function () {
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
 if (typeof tarteaucitron !== "undefined") {
 console.log("Tarteaucitron chargé !");
+
 // Initialisation de tarteaucitron
 tarteaucitron.init({
 privacyUrl: "/politique-de-confidentialite", /* Lien vers la politique de confidentialité */
@@ -74,6 +65,7 @@ mandatory: true, /* Afficher les cookies obligatoires */
 googleConsentMode: true, /* Activer Google Consent Mode */
 readmoreLink: "/cookies", /* Page dédiée aux informations des cookies */
 });
+
 // Ajout des services (Google Tag Manager, Google Analytics)
 tarteaucitron.user.googletagmanagerId = 'GTM-WK8RDPNS';
 tarteaucitron.user.gtagUa = 'G-0887VNK328'; // UA ou ID GA4
@@ -83,9 +75,22 @@ tarteaucitron.user.gtagUa = 'G-0887VNK328'; // UA ou ID GA4
 console.error("Tarteaucitron n'est pas défini !");
 }
 });
-				</script>
+		</script>
+		{% block stylesheets %}
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+			<link rel="stylesheet" href="{{ asset('/tarteaucitron/css/tarteaucitron.css') }}">
+
+		{% endblock %}
+
+		{% block javascripts %}
+			{% block importmap %}
+				{{ importmap('app') }}
+				<script src="{{ asset('/tarteaucitron/tarteaucitron.js') }}"></script>
+				<script src="{{ asset('/tarteaucitron/lang/tarteaucitron.fr.js') }}"></script>
+
 			{% endblock %}
 		{% endblock %}
+
 
 	</head>
 	<body>
@@ -93,17 +98,8 @@ console.error("Tarteaucitron n'est pas défini !");
 			{% include "shared/_navbar.html.twig" %}
 		</header>
 		<main>
-			{% if app.environment == 'prod' %}
-				<!-- Google Tag Manager (noscript) -->
-				<noscript>
-					<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TFZ2VG76" height="0" width="0" style="display:none;visibility:hidden"></iframe>
-				</noscript>
-				<!-- End Google Tag Manager (noscript) -->
-				<script type="text/javascript">
-					tarteaucitron.user.gtagUa = 'G-0887VNK328';
-(tarteaucitron.job = tarteaucitron.job || []).push('gtag');
-				</script>
-			{% endif %}
+
+
 			{% include "shared/_flash.html.twig" %}
 			{% set margin = '' %}
 			{% if carousel is defined %}
@@ -112,12 +108,29 @@ console.error("Tarteaucitron n'est pas défini !");
 				{% set margin = carousel is defined ? '' : 'mt-5' %}
 			{% endif %}
 
-			<div class="container marketing {{ margin }}"> {% block body %}{% endblock %}
-				</div>
-				{% include "shared/_footer.html.twig" %}
-				<!-- Bouton Retour en haut -->
-				<button id="scrollToTopBtn" title="Retour en haut">↑</button>
-			</main>
-		</body>
+			<div class="container marketing {{ margin }}">
+				{% block body %}
+					{% if app.environment == 'prod' %}
+						<!-- Google Tag Manager (noscript) -->
+						<noscript>
+							<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WK8RDPNS" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+						</noscript>
+						<!-- End Google Tag Manager (noscript) -->
+						<script type="text/javascript">
+							tarteaucitron.user.gtagUa = 'G-0887VNK328';
+// tarteaucitron.user.gtagCrossdomain = ['example.com', 'example2.com'];
+tarteaucitron.user.gtagMore = function () { /* add here your optionnal gtag() */
+};
+(tarteaucitron.job = tarteaucitron.job || []).push('gtag');
+						</script>
 
-	</html>
+					{% endif %}
+				{% endblock %}
+			</div>
+			{% include "shared/_footer.html.twig" %}
+			<!-- Bouton Retour en haut -->
+			<button id="scrollToTopBtn" title="Retour en haut">↑</button>
+		</main>
+	</body>
+
+</html>

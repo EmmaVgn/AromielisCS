@@ -86,7 +86,7 @@ class PaymentController extends AbstractController
         Stripe::setApiKey($_ENV['STRIPE_SECRET_KEY']);
 
 
-        $YOUR_DOMAIN = 'https://mariefarjaud.fr/';
+        $YOUR_DOMAIN = 'http://mariefarjaud.fr';
 
         try {
             // Création de la session Stripe avec les données du panier
@@ -123,7 +123,7 @@ class PaymentController extends AbstractController
         $order = $repository->findOneByStripeSession($stripeSession);
 
         if (!$order || $order->getUser() != $this->getUser() || $order->getState() == 1) {
-            throw $this->createNotFoundException('Commande inaccessible ou                          déjà validée');
+            throw $this->createNotFoundException('Commande inaccessible ou déjà validée');
         }
 
         // Mettre à jour l'état de la commande si ce n'est pas déjà fait
@@ -133,22 +133,19 @@ class PaymentController extends AbstractController
         }
 
         // Suppression du panier une fois la commande validée
-        $cart->empty();
+        $this->cartService->empty();
+
+        $this->addFlash('debug', 'Après suppression du panier, utilisateur connecté : ' . (null !== $this->getUser() ? 'oui' : 'non'));
+
+
         // Lancer un événement qui permet d'envoyer un mail à la prise d'une commande
         $orderEvent = new OrderSuccessEvent($order);
         $dispatcher->dispatch($orderEvent, 'order.success');
-        // Vérifiez si l'utilisateur est toujours connecté après la suppression du panier
-        if ($this->getUser()) {
-            // Si l'utilisateur est connecté, redirigez-le avec succès
-            $this->addFlash('success', 'La commande a été payée et confirmée');
-            return $this->redirectToRoute('account_orders', ['reference' => $order->getReference()]);
-        } else {
-            // Si l'utilisateur est déconnecté, redirigez-le vers la page de connexion
-            $this->addFlash('error', 'Vous avez été déconnecté. Veuillez vous reconnecter.');
-            return $this->redirectToRoute('app_login');
-        }
-    }
 
+        // 4. Je redirige avec un flash vers la liste des commandes
+        $this->addFlash('success', 'La commande a été payée et confirmée');
+        return $this->redirectToRoute('account_orders', ['reference' => $order->getReference()]);
+    }
 
     /**
      * Commande annulée (clic sur retour dans la fenêtre)
