@@ -37,8 +37,19 @@
 		<meta name="twitter:title" content="Aromielis | Huiles essentielles et produits de la ruche">
 		<meta name="twitter:description" content="Explorez les produits naturels de Aromielis : huiles essentielles, miels, nougats et hydrolats. Fabrication artisanale dans le Lot-et-Garonne.">
 		<meta name="twitter:image" content="{{ asset('images/og-image.jpg') }}">
+		{% block stylesheets %}
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+			<link rel="stylesheet" href="{{ asset('/tarteaucitron/css/tarteaucitron.css') }}">
+		{% endblock %}
+		{% block javascripts %}
+			{% block importmap %}
+				{{ importmap('app') }}
 
 
+			{% endblock %}
+		{% endblock %}
+		<script src="/tarteaucitron/tarteaucitron.js"></script>
+		<script src="{{ asset('tarteaucitron/lang/tarteaucitron.fr.js') }}"></script>
 		<script>
 			document.addEventListener("DOMContentLoaded", function () {
 if (typeof tarteaucitron !== "undefined") {
@@ -76,61 +87,42 @@ console.error("Tarteaucitron n'est pas défini !");
 }
 });
 		</script>
-		{% block stylesheets %}
-			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-			<link rel="stylesheet" href="{{ asset('/tarteaucitron/css/tarteaucitron.css') }}">
-
-		{% endblock %}
-
-		{% block javascripts %}
-			{% block importmap %}
-				{{ importmap('app') }}
-				<script src="{{ asset('/tarteaucitron/tarteaucitron.js') }}"></script>
-				<script src="{{ asset('/tarteaucitron/lang/tarteaucitron.fr.js') }}"></script>
-
-			{% endblock %}
-		{% endblock %}
-
 
 	</head>
 	<body>
 		<header>
 			{% include "shared/_navbar.html.twig" %}
-		</header>
-		<main>
-
-
-			{% include "shared/_flash.html.twig" %}
-			{% set margin = '' %}
 			{% if carousel is defined %}
 				{% include "shared/_carousel.html.twig" %}
-			{% else %}
-				{% set margin = carousel is defined ? '' : 'mt-5' %}
 			{% endif %}
 
-			<div class="container marketing {{ margin }}">
-				{% block body %}
-					{% if app.environment == 'prod' %}
-						<!-- Google Tag Manager (noscript) -->
-						<noscript>
-							<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WK8RDPNS" height="0" width="0" style="display:none;visibility:hidden"></iframe>
-						</noscript>
-						<!-- End Google Tag Manager (noscript) -->
-						<script type="text/javascript">
-							tarteaucitron.user.gtagUa = 'G-0887VNK328';
+		</header>
+
+		<main>
+			{% block body %}
+				{% if app.environment == 'prod' %}
+					<!-- Google Tag Manager (noscript) -->
+					<noscript>
+						<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WK8RDPNS" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+					</noscript>
+					<!-- End Google Tag Manager (noscript) -->
+					<script type="text/javascript">
+						tarteaucitron.user.gtagUa = 'G-0887VNK328';
 // tarteaucitron.user.gtagCrossdomain = ['example.com', 'example2.com'];
 tarteaucitron.user.gtagMore = function () { /* add here your optionnal gtag() */
 };
 (tarteaucitron.job = tarteaucitron.job || []).push('gtag');
-						</script>
+					</script>
+				{% endif %}
+				<div class="container marketing {{ margin }}">
+					{% include "shared/_flash.html.twig" %}
+				</div>
 
-					{% endif %}
-				{% endblock %}
-			</div>
+			{% endblock %}
+
 			{% include "shared/_footer.html.twig" %}
 			<!-- Bouton Retour en haut -->
 			<button id="scrollToTopBtn" title="Retour en haut">↑</button>
 		</main>
 	</body>
-
 </html>
