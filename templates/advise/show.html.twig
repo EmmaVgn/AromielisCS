@@ -49,10 +49,10 @@
 					</div>
 
 					<div class="social-share">
-						<a href="https://www.facebook.com/sharer/sharer.php?u={{ url('advise_show', { 'slug': advise.slug }, 'absolute') }}" target="_blank">
+						<a href="https://www.facebook.com/sharer/sharer.php?u={{ app.request.schemeAndHttpHost }}{{ path('advise_show', { 'slug': advise.slug }) }}" target="_blank">
 							<img src="{{ asset('images/icons/facebook.svg') }}" alt="Partager sur Facebook">
 						</a>
-						<a href="https://api.whatsapp.com/send?text={{ advise.name }} {{ url('advise_show', { 'slug': advise.slug }, 'absolute') }}" target="_blank">
+						<a href="https://api.whatsapp.com/send?text={{ advise.name }} {{ app.request.schemeAndHttpHost }}{{ path('advise_show', { 'slug': advise.slug }) }}" target="_blank">
 							<img src="{{ asset('images/icons/whatsapp.svg') }}" alt="Partager sur WhatsApp">
 						</a>
 					</div>
